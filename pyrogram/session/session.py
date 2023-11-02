@@ -114,7 +114,7 @@ class Session:
 
                 self.recv_task = self.loop.create_task(self.recv_worker())
 
-                await self.send(raw.functions.Ping(ping_id=0), timeout=self.START_TIMEOUT)
+                # await self.send(raw.functions.Ping(ping_id=0), timeout=self.START_TIMEOUT)
 
                 if not self.is_cdn:
                     await self.send(
