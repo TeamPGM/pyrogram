@@ -151,7 +151,7 @@ class Session:
             )
         )
         try:
-            await self.send(raw.functions.Ping(ping_id=0), timeout=self.START_TIMEOUT)
+            # await self.send(raw.functions.Ping(ping_id=0), timeout=self.START_TIMEOUT)
 
             if not self.is_cdn:
                 await self.send(
