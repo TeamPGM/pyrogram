@@ -15,6 +15,7 @@
 #
 #  You should have received a copy of the GNU Lesser General Public License
 #  along with Pyrogram.  If not, see <http://www.gnu.org/licenses/>.
+import struct
 
 from .exceptions import *
 from .rpc_error import UnknownError
@@ -63,3 +64,35 @@ class CDNFileHashMismatch(SecurityError):
 
     def __init__(self, msg: str = None):
         super().__init__("A CDN file hash mismatch has occurred." if msg is None else msg)
+
+
+class InvalidChecksumError(SecurityCheckMismatch):
+    """
+    Occurs when using the TCP full mode and the checksum of a received
+    packet doesn't match the expected checksum.
+    """
+    def __init__(self, checksum, valid_checksum):
+        super().__init__(
+            'Invalid checksum ({} when {} was expected). '
+            'This packet should be skipped.'
+            .format(checksum, valid_checksum))
+
+        self.checksum = checksum
+        self.valid_checksum = valid_checksum
+
+
+class InvalidBufferError(BufferError):
+    """
+    Occurs when the buffer is invalid, and may contain an HTTP error code.
+    For instance, 404 means "forgotten/broken authorization key", while
+    """
+    def __init__(self, payload):
+        self.payload = payload
+        if len(payload) == 4:
+            self.code = -struct.unpack('<i', payload)[0]
+            super().__init__(
+                'Invalid response buffer (HTTP code {})'.format(self.code))
+        else:
+            self.code = None
+            super().__init__(
+                'Invalid response buffer (too short {})'.format(self.payload))

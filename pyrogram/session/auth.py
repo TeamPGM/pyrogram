@@ -25,7 +25,7 @@ from os import urandom
 
 import pyrogram
 from pyrogram import raw
-from pyrogram.connection import Connection
+from pyrogram.connection import get_connection_class
 from pyrogram.crypto import aes, rsa, prime
 from pyrogram.errors import SecurityCheckMismatch
 from pyrogram.raw.core import TLObject, Long, Int
@@ -72,11 +72,12 @@ class Auth:
         https://core.telegram.org/mtproto/samples-auth_key
         """
         retries_left = self.MAX_RETRIES
+        connection_type = get_connection_class(self.proxy.get("connection_type") if self.proxy else "")
 
         # The server may close the connection at any time, causing the auth key creation to fail.
         # If that happens, just try again up to MAX_RETRIES times.
         while True:
-            self.connection = Connection(self.dc_id, self.test_mode, self.ipv6, self.proxy)
+            self.connection = connection_type(self.dc_id, self.test_mode, self.ipv6, self.proxy)
 
             try:
                 log.info("Start creating a new auth key on DC%s", self.dc_id)
@@ -278,4 +279,4 @@ class Auth:
             else:
                 return auth_key
             finally:
-                await self.connection.close()
+                await self.connection.disconnect()

@@ -60,3 +60,17 @@ class GzipPacked(TLObject):
         )
 
         return b.getvalue()
+
+    @staticmethod
+    def gzip_if_smaller(content_related: bool, data: TLObject) -> TLObject:
+        """Calls bytes(request), and based on a certain threshold,
+           optionally gzips the resulting data. If the gzipped data is
+           smaller than the original byte array, this is returned instead.
+
+           Note that this only applies to content related requests.
+        """
+        if content_related and len(data) > 512:
+            gzipped = GzipPacked(data)
+            return gzipped if len(gzipped) < len(data) else data
+        else:
+            return data

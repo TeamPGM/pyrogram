@@ -22,6 +22,7 @@ import functools
 import hashlib
 import os
 import struct
+import sys
 from concurrent.futures.thread import ThreadPoolExecutor
 from datetime import datetime, timezone
 from getpass import getpass
@@ -472,3 +473,68 @@ def get_first_url(text):
     matches = re.findall(r"(https?):\/\/([\w_-]+(?:(?:\.[\w_-]+)+))([\w.,@?^=%&:\/~+#-]*[\w@?^=%&\/~+#-])", text)
 
     return f"{matches[0][0]}://{matches[0][1]}{matches[0][2]}" if matches else None
+
+
+async def _cancel(log, **tasks):
+    """
+    Helper to cancel one or more tasks gracefully, logging exceptions.
+    """
+    for name, task in tasks.items():
+        if not task:
+            continue
+
+        task.cancel()
+        try:
+            await task
+        except asyncio.CancelledError:
+            pass
+        except RuntimeError:
+            # Probably: RuntimeError: await wasn't used with future
+            #
+            # See: https://github.com/python/cpython/blob/12d3061c7819a73d891dcce44327410eaf0e1bc2/Lib/asyncio/futures.py#L265
+            #
+            # Happens with _asyncio.Task instances (in "Task cancelling" state)
+            # trying to SIGINT the program right during initial connection, on
+            # _recv_loop coroutine (but we're creating its task explicitly with
+            # a loop, so how can it bug out like this?).
+            #
+            # Since we're aware of this error there's no point in logging it.
+            # *May* be https://bugs.python.org/issue37172
+            pass
+        except AssertionError as e:
+            # In Python 3.6, the above RuntimeError is an AssertionError
+            # See https://github.com/python/cpython/blob/7df32f844efed33ca781a016017eab7050263b90/Lib/asyncio/futures.py#L328
+            if e.args != ("yield from wasn't used with future",):
+                log.exception('Unhandled exception from %s after cancelling '
+                              '%s (%s)', name, type(task), task)
+        except Exception:
+            log.exception('Unhandled exception from %s after cancelling '
+                          '%s (%s)', name, type(task), task)
+
+
+def get_running_loop():
+    if sys.version_info >= (3, 7):
+        try:
+            return asyncio.get_running_loop()
+        except RuntimeError:
+            return asyncio.get_event_loop_policy().get_event_loop()
+    else:
+        return asyncio.get_event_loop()
+
+
+def retry_range(retries, force_retry=True):
+    """
+    Generates an integer sequence starting from 1. If `retries` is
+    not a zero or a positive integer value, the sequence will be
+    infinite, otherwise it will end at `retries + 1`.
+    """
+
+    # We need at least one iteration even if the retries are 0
+    # when force_retry is True.
+    if force_retry and not (retries is None or retries < 0):
+        retries += 1
+
+    attempt = 0
+    while attempt != retries:
+        attempt += 1
+        yield attempt
