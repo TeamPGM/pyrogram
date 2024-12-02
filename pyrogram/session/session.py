@@ -18,6 +18,7 @@
 
 import asyncio
 import bisect
+import contextlib
 import logging
 import os
 from hashlib import sha1
@@ -97,6 +98,7 @@ class Session:
         self.recv_task = None
 
         self.is_started = asyncio.Event()
+        self.restart_event = asyncio.Event()
 
         self.loop = asyncio.get_event_loop()
 
@@ -150,6 +152,7 @@ class Session:
                 raise e
             except (OSError, RPCError):
                 await self.stop()
+                await asyncio.sleep(1)
             except Exception as e:
                 await self.stop()
                 raise e
@@ -168,14 +171,16 @@ class Session:
         self.ping_task_event.set()
 
         if self.ping_task is not None:
-            await self.ping_task
+            with contextlib.suppress(Exception):
+                await self.ping_task
 
         self.ping_task_event.clear()
 
         await self.connection.close()
 
         if self.recv_task:
-            await self.recv_task
+            with contextlib.suppress(Exception):
+                await self.recv_task
 
         if not self.is_media and callable(self.client.disconnect_handler):
             try:
@@ -186,8 +191,12 @@ class Session:
         log.info("Session stopped")
 
     async def restart(self):
+        if self.restart_event.is_set():
+            return
+        self.restart_event.set()
         await self.stop()
         await self.start()
+        self.restart_event.clear()
 
     async def handle_packet(self, packet):
         try:
@@ -426,6 +435,16 @@ class Session:
                     Session.MAX_RETRIES - retries + 1,
                     query_name, str(e) or repr(e)
                 )
+
+                # restart was never being called after Exception block
+                self.loop.create_task(self.restart())
+                if self.restart_event.is_set():
+                    # multiple Exceptions can be raised in a row, so we need to wait for the restart to finish
+                    try:
+                        await asyncio.wait_for(self.restart_event.wait(), self.WAIT_TIMEOUT)
+                    except asyncio.TimeoutError:
+                        if self.restart_event.is_set():
+                            self.restart_event.clear()
 
                 await asyncio.sleep(0.5)
 
