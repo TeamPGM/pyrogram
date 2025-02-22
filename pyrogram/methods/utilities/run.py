@@ -25,7 +25,8 @@ from pyrogram.methods.utilities.idle import idle
 
 class Run:
     def run(
-        self: "pyrogram.Client", *,
+        self: "pyrogram.Client",
+        coroutine=None,
         use_qr: bool = False,
         except_ids: List[int] = [],
     ):
@@ -35,9 +36,16 @@ class Run:
         :meth:`~pyrogram.Client.start`, :meth:`~pyrogram.idle` and :meth:`~pyrogram.Client.stop` in sequence.
         It makes running a single client less verbose.
 
+        In case a coroutine is passed as argument, runs the coroutine until it's completed and doesn't do any client
+        operation. This is almost the same as :py:obj:`asyncio.run` except for the fact that Pyrogram's ``run`` uses the
+        current event loop instead of a new one.
+
         If you want to run multiple clients at once, see :meth:`pyrogram.compose`.
 
         Parameters:
+            coroutine (``Coroutine``, *optional*):
+                Pass a coroutine to run it until it completes.
+
             use_qr (``bool``, *optional*):
                 Use QR code authorization instead of the interactive prompt.
                 For new authorizations only.
@@ -57,14 +65,31 @@ class Run:
                 app = Client("my_account")
                 ...  # Set handlers up
                 app.run()
+
+            .. code-block:: python
+
+                from pyrogram import Client
+
+                app = Client("my_account")
+
+
+                async def main():
+                    async with app:
+                        print(await app.get_me())
+
+
+                app.run(main())
         """
         run = self.loop.run_until_complete
 
-        if inspect.iscoroutinefunction(self.start):
-            run(self.start(use_qr=use_qr, except_ids=except_ids))
-            run(idle())
-            run(self.stop())
+        if coroutine is not None:
+            run(coroutine)
         else:
-            self.start(use_qr=use_qr, except_ids=except_ids)
-            run(idle())
-            self.stop()
+            if inspect.iscoroutinefunction(self.start):
+                run(self.start(use_qr=use_qr, except_ids=except_ids))
+                run(idle())
+                run(self.stop())
+            else:
+                self.start(use_qr=use_qr, except_ids=except_ids)
+                run(idle())
+                self.stop()
