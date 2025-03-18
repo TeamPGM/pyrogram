@@ -100,6 +100,10 @@ class Session:
         self.is_started = asyncio.Event()
         self.restart_event = asyncio.Event()
 
+    @property
+    def loop(self):
+        return self.client.loop
+
     async def start(self):
         while True:
             self.connection = self.client.connection_factory(
