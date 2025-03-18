@@ -193,6 +193,10 @@ class Session:
                 if isinstance(result, Exception):
                     log.error("Task failed while the session was stopping", exc_info=result)
 
+    @property
+    def loop(self):
+        return self.client.loop
+
     async def start(self):
         if self._state in (SessionState.STARTED, SessionState.STARTING):
             log.debug("Session already started")
