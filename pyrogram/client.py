@@ -470,6 +470,10 @@ class Client(Methods):
         self._app_config: raw.types.help.AppConfig | None = None
         self.__config: raw.types.Config | None = None
 
+    @property
+    def loop(self):
+        return self._loop
+
     def __enter__(self):
         return self.start()
 
