@@ -154,6 +154,10 @@ class Session:
 
             log.debug("Session state changed: %s -> %s", old_state.name, new_state.name)
 
+    @property
+    def loop(self):
+        return self.client.loop
+
     async def start(self):
         if self._state in (SessionState.STARTED, SessionState.STARTING):
             log.debug("Session already started")
