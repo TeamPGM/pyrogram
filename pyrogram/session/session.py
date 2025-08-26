@@ -177,7 +177,7 @@ class Session:
 
             self.recv_task = self.client.loop.create_task(self.recv_worker())
 
-            await self.send(raw.functions.Ping(ping_id=0), timeout=self.START_TIMEOUT)
+            # await self.send(raw.functions.Ping(ping_id=0), timeout=self.START_TIMEOUT)
 
             init_connection_params = self.client.init_connection_params
 
