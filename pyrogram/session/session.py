@@ -18,6 +18,7 @@
 
 import asyncio
 import bisect
+import contextlib
 import logging
 import os
 from enum import Enum, auto
@@ -248,14 +249,16 @@ class Session:
         self.ping_task_event.set()
 
         if self.ping_task is not None:
-            await self.ping_task
+            with contextlib.suppress(Exception):
+                await self.ping_task
 
         self.ping_task_event.clear()
 
         await self.connection.close()
 
         if self.recv_task:
-            await self.recv_task
+            with contextlib.suppress(Exception):
+                await self.recv_task
             self.recv_task = None
 
         await self._set_state(SessionState.STOPPED)
