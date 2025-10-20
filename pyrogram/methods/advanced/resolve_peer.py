@@ -62,6 +62,11 @@ class ResolvePeer:
         if peer_id == "empty":
             return raw.types.InputPeerEmpty()
 
+        try:
+            peer_id = int(peer_id)
+        except (ValueError, TypeError):
+            pass
+
         if isinstance(peer_id, int):
             try:
                 return await self.storage.get_peer_by_id(peer_id)
