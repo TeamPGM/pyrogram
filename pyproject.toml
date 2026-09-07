@@ -1,5 +1,7 @@
 [build-system]
-requires = ["hatchling"]
+# PEP 639 metadata (`license` as an expression, `license-files` as a list) needs 1.26.3.
+#  Below it the build fails with `TypeError: Field project.license-files must be a table`.
+requires = ["hatchling>=1.26.3"]
 build-backend = "hatchling.build"
 
 [project]
@@ -35,7 +37,17 @@ classifiers = [
     "Topic :: Software Development :: Libraries :: Python Modules",
     "Topic :: Software Development :: Libraries :: Application Frameworks",
 ]
-dependencies = ["pyaes<=1.6.1", "python-socks[asyncio]<=2.8.1"]
+# Every constraint is a floor, measured rather than guessed: the oldest version this code
+#  works with, and the start of an unbroken range up to the newest. No ceilings, because an
+#  upper bound propagates into every downstream resolve and ages by hand.
+dependencies = [
+    # 1.1.0 and below are Python 2 only: the import fails with a `SyntaxError` on a `print`
+    #  statement, and 1.0.0 with a `NameError` on `xrange`.
+    "pyaes>=1.2.0",
+    # `tcp.py` builds the proxy as `Proxy(proxy_type=..., host=..., port=...)`, and 2.3.0
+    #  and below have no such constructor: `TypeError: Proxy() takes no arguments`.
+    "python-socks[asyncio]>=2.4.0",
+]
 license = "LGPL-3.0-or-later"
 license-files = ["COPYING", "COPYING.lesser"]
 keywords = [
@@ -58,17 +70,27 @@ Community = "https://t.me/kurigram_chat"
 
 [project.optional-dependencies]
 fast = [
-    "tgcrypto<=1.2.5",
-    "uvloop<=0.22.1; sys_platform == 'darwin' or sys_platform == 'linux'",
+    # 1.2.1 shipped no sdist and no wheel past `cp38`, so it cannot be installed on a
+    #  current interpreter at all, while 1.2.0 below it and 1.2.2 above it both can. The
+    #  floor sits above that hole rather than at the oldest working release.
+    "tgcrypto>=1.2.2",
+    "uvloop>=0.21.0; sys_platform == 'darwin' or sys_platform == 'linux'",
 ]
 
 qrcode = [
-    "qrcode<=8.2",
+    # `Client.authorize_qr` calls `print_ascii(tty=True)`, and on 5.2 and 5.2.1 that raises
+    #  a `TypeError`: it writes bytes into a text buffer. 5.1 below the hole and 5.2.2 above
+    #  it both work, so the floor sits above the hole.
+    "qrcode>=5.2.2",
 ]
 
 # `dev` and `docs` are tooling, not something a user of the library installs, so they are
 #  dependency groups rather than extras: `uv sync` takes them from the lock file and `pip
 #  install kurigram[dev]` stops being a thing anyone can type by accident.
+#
+# Their floors are deliberately above the oldest version that runs. A linter or a
+#  documentation theme resolved a year back gives a different verdict and a different site
+#  from the one CI gives, which is worse than a version conflict.
 [dependency-groups]
 # `dev` is the aggregate one `uv sync` installs by default. It lists groups, never packages,
 #  so every package below sits in a group that says what it is for and a leaner install can
@@ -83,33 +105,33 @@ lint = [
     # The build backend, already named in `[build-system]`. It is here because
     #  `hatch_build.py` imports `hatchling.builders.hooks.plugin.interface` and `ty` checks
     #  that file like any other: without it, `make typecheck` fails on an unresolved import.
-    "hatchling<=1.32.0",
-    "pre-commit<=4.6.2",
-    "ruff<=0.16.3",
-    "ty<=0.0.78",
+    "hatchling>=1.27.0",
+    "pre-commit>=3.5.0",
+    "ruff>=0.16.3",
+    "ty>=0.0.78",
 ]
 
 release = [
     # `twine` stores the upload token through `keyring`.
-    "keyring<=25.7.0",
-    "twine<=6.2.0",
+    "keyring>=25.5.0",
+    "twine>=6.1.0",
 ]
 
 test = [
-    "pytest<=9.1.1",
-    "pytest-asyncio<=1.4.0",
-    "pytest-cov<=7.1.0",
-    "pytest-timeout<=2.4.0",
+    "pytest>=8.3.5",
+    "pytest-asyncio>=0.24.0",
+    "pytest-cov>=5.0.0",
+    "pytest-timeout>=2.4.0",
 ]
 
 docs = [
-    "Sphinx<=9.1.0",
-    "shibuya<=2026.5.19",
-    "sphinx-autobuild<=2025.8.25",
-    "sphinx-copybutton<=0.5.2",
-    "sphinx-iconify<=0.3.0",
-    "sphinx-design<=0.7.0",
-    "pygments<=2.20.0",
+    "Sphinx>=7.4.7",
+    "shibuya>=2025.10.21",
+    "sphinx-autobuild>=2024.10.3",
+    "sphinx-copybutton>=0.5.2",
+    "sphinx-iconify>=0.3.0",
+    "sphinx-design>=0.6.1",
+    "pygments>=2.19.2",
 ]
 
 # No `sphinx-iconify` release supports 3.8, so resolving `docs` against the library's own
