@@ -85,10 +85,7 @@ class ChosenInlineResult(Object, Update):
             result_id=str(chosen_inline_result.id),
             from_user=await types.User._parse(client, users[chosen_inline_result.user_id]),
             query=chosen_inline_result.query,
-            location=types.Location(
-                longitude=chosen_inline_result.geo.long,
-                latitude=chosen_inline_result.geo.lat
-            ) if chosen_inline_result.geo else None,
+            location=types.Location._parse(chosen_inline_result.geo),
             inline_message_id=utils.pack_inline_message_id(
                 chosen_inline_result.msg_id
             ) if getattr(chosen_inline_result, "msg_id", None) else None

@@ -187,7 +187,7 @@ class MessageContent(Object):
             location = types.Location._parse(media.geo)
             media_type = enums.MessageMediaType.LOCATION
         elif isinstance(media, raw.types.MessageMediaGeoLive):
-            location = types.Location._parse_media(media)
+            location = types.Location._parse(media)
             media_type = enums.MessageMediaType.LOCATION
         elif isinstance(media, raw.types.MessageMediaContact):
             contact = types.Contact._parse(client, media)

@@ -824,7 +824,7 @@ class User(Object, Update):
         parsed_user.business_work_hours = types.BusinessWorkingHours._parse(
             user.business_work_hours
         )
-        parsed_user.business_location = types.Location._parse_business(user.business_location)
+        parsed_user.business_location = types.Location._parse(user.business_location)
         parsed_user.business_greeting_message = await types.BusinessMessage._parse(
             client, user.business_greeting_message, users
         )
