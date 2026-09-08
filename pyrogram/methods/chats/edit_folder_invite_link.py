@@ -16,21 +16,22 @@
 #  You should have received a copy of the GNU Lesser General Public License
 #  along with Pyrogram.  If not, see <http://www.gnu.org/licenses/>.
 
+from __future__ import annotations as _annotations
+
 import re
 
-from typing import List, Union, Optional
 import pyrogram
 from pyrogram import raw, types
 
 
 class EditFolderInviteLink:
     async def edit_folder_invite_link(
-        self: "pyrogram.Client",
+        self: pyrogram.Client,
         chat_folder_id: int,
         invite_link: str,
-        chat_ids: Optional[List[Union[int, str]]] = None,
-        name: Optional[str] = None,
-    ) -> "types.FolderInviteLink":
+        chat_ids: list[int | str] | None = None,
+        name: str | None = None,
+    ) -> types.FolderInviteLink:
         """Edits an invite link for a chat folder.
 
         .. include:: /_includes/usable-by/users.rst

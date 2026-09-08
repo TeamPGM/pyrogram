@@ -16,8 +16,9 @@
 #  You should have received a copy of the GNU Lesser General Public License
 #  along with Pyrogram.  If not, see <http://www.gnu.org/licenses/>.
 
+from __future__ import annotations as _annotations
+
 import re
-from typing import Optional, Union
 
 import pyrogram
 from pyrogram import raw, utils
@@ -26,9 +27,9 @@ from pyrogram.errors import PeerIdInvalid
 
 class ResolvePeer:
     async def resolve_peer(
-        self: "pyrogram.Client",
-        peer_id: Union[int, str]
-    ) -> Optional["raw.base.InputPeer"]:
+        self: pyrogram.Client,
+        peer_id: int | str
+    ) -> raw.base.InputPeer | None:
         """Get the InputPeer of a known peer id. Useful whenever an InputPeer type is required.
 
         .. note::

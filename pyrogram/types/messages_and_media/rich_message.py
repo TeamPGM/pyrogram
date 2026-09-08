@@ -16,7 +16,7 @@
 #  You should have received a copy of the GNU Lesser General Public License
 #  along with Pyrogram.  If not, see <http://www.gnu.org/licenses/>.
 
-from typing import Dict, List, Optional
+from __future__ import annotations as _annotations
 
 import pyrogram
 from pyrogram import raw, types
@@ -35,7 +35,7 @@ class RichMessage(Object):
             True, if the rich message must be shown right-to-left.
     """
 
-    def __init__(self, *, blocks: List["types.RichBlock"], is_rtl: Optional[bool] = None):
+    def __init__(self, *, blocks: list[types.RichBlock], is_rtl: bool | None = None):
         super().__init__()
 
         self.blocks = blocks
@@ -43,11 +43,11 @@ class RichMessage(Object):
 
     @staticmethod
     async def _parse(
-        client: "pyrogram.Client",
-        rich_message: "raw.types.RichMessage",
-        users: Dict[int, "raw.base.User"] = {},
-        chats: Dict[int, "raw.base.Chat"] = {},
-    ) -> "RichMessage":
+        client: pyrogram.Client,
+        rich_message: raw.types.RichMessage,
+        users: dict[int, raw.base.User] = {},
+        chats: dict[int, raw.base.Chat] = {},
+    ) -> RichMessage:
         if isinstance(rich_message, raw.types.RichMessage):
             photos = {photo.id: photo for photo in rich_message.photos}
             documents = {document.id: document for document in rich_message.documents}

@@ -16,7 +16,7 @@
 #  You should have received a copy of the GNU Lesser General Public License
 #  along with Pyrogram.  If not, see <http://www.gnu.org/licenses/>.
 
-from typing import Union, List
+from __future__ import annotations as _annotations
 
 import pyrogram
 from pyrogram import raw
@@ -24,8 +24,8 @@ from pyrogram import raw
 
 class ArchiveChats:
     async def archive_chats(
-        self: "pyrogram.Client",
-        chat_ids: Union[int, str, List[Union[int, str]]],
+        self: pyrogram.Client,
+        chat_ids: int | str | list[int | str],
     ) -> bool:
         """Archive one or more chats.
 

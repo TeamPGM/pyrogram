@@ -16,9 +16,12 @@
 #  You should have received a copy of the GNU Lesser General Public License
 #  along with Pyrogram.  If not, see <http://www.gnu.org/licenses/>.
 
+from __future__ import annotations as _annotations
+
 import logging
 from datetime import datetime
-from typing import AsyncGenerator, BinaryIO, Dict, List, Optional, Union
+from typing import BinaryIO
+from collections.abc import AsyncGenerator
 
 import pyrogram
 from pyrogram import enums, raw, types, utils
@@ -558,153 +561,151 @@ class Chat(Object):
     def __init__(
         self,
         *,
-        client: Optional["pyrogram.Client"] = None,
-        id: Optional[int] = None,
-        type: Optional["enums.ChatType"] = None,
-        is_forum: Optional[bool] = None,
-        is_direct_messages: Optional[bool] = None,
-        is_min: Optional[bool] = None,
-        is_members_hidden: Optional[bool] = None,
-        is_restricted: Optional[bool] = None,
-        is_creator: Optional[bool] = None,
-        is_admin: Optional[bool] = None,
-        is_deactivated: Optional[bool] = None,
-        is_support: Optional[bool] = None,
-        is_stories_hidden: Optional[bool] = None,
-        is_stories_unavailable: Optional[bool] = None,
-        is_business_bot: Optional[bool] = None,
-        is_preview: Optional[bool] = None,
-        is_banned: Optional[bool] = None,
-        is_call_active: Optional[bool] = None,
-        is_call_not_empty: Optional[bool] = None,
-        is_public: Optional[bool] = None,
-        is_paid_reactions_available: Optional[bool] = None,
-        verification_status: Optional["types.VerificationStatus"] = None,
-        can_send_gift: Optional[bool] = None,
-        title: Optional[str] = None,
-        username: Optional[str] = None,
-        usernames: Optional[List["types.Username"]] = None,
-        first_name: Optional[str] = None,
-        last_name: Optional[str] = None,
-        personal_photo: Optional["types.ChatPhoto"] = None,
-        photo: Optional["types.ChatPhoto"] = None,
-        public_photo: Optional["types.ChatPhoto"] = None,
-        stories: Optional[List["types.Story"]] = None,
-        chat_background: Optional["types.ChatBackground"] = None,
-        bio: Optional[str] = None,
-        description: Optional[str] = None,
-        show_message_sender_name: Optional[bool] = None,
-        sign_messages: Optional[bool] = None,
-        emoji_status: Optional["types.EmojiStatus"] = None,
-        dc_id: Optional[int] = None,
-        folder_id: Optional[int] = None,
-        has_protected_content: Optional[bool] = None,
-        has_visible_history: Optional[bool] = None,
-        has_aggressive_anti_spam_enabled: Optional[bool] = None,
-        has_automatic_translation: Optional[bool] = None,
-        has_forum_tabs: Optional[bool] = None,
-        has_direct_messages_group: Optional[bool] = None,
-        has_welcome_messages: Optional[bool] = None,
-        invite_link: Optional[str] = None,
-        pinned_message: Optional["types.Message"] = None,
-        sticker_set_name: Optional[str] = None,
-        custom_emoji_sticker_set_name: Optional[str] = None,
-        can_set_sticker_set: Optional[bool] = None,
-        can_send_paid_media: Optional[bool] = None,
-        members: Optional[List["types.User"]] = None,
-        members_count: Optional[int] = None,
-        restrictions: Optional[List["types.Restriction"]] = None,
-        permissions: Optional["types.ChatPermissions"] = None,
-        personal_channel: Optional["types.Chat"] = None,
-        personal_channel_message: Optional["types.Message"] = None,
-        linked_chat_id: Optional[int] = None,
-        direct_messages_chat_id: Optional[int] = None,
-        parent_chat: Optional["types.Chat"] = None,
-        linked_chat: Optional["types.Chat"] = None,
-        send_as_chat: Optional["types.Chat"] = None,
-        available_reactions: Optional["types.ChatReactions"] = None,
-        level: Optional[int] = None,
-        accent_color_id: Optional[int] = None,
-        background_custom_emoji_id: Optional[str] = None,
-        profile_accent_color_id: Optional[int] = None,
-        profile_background_custom_emoji_id: Optional[str] = None,
-        business_away_message: Optional["types.BusinessMessage"] = None,
-        business_greeting_message: Optional["types.BusinessMessage"] = None,
-        business_work_hours: Optional["types.BusinessMessage"] = None,
-        business_location: Optional["types.Location"] = None,
-        business_intro: Optional["types.BusinessIntro"] = None,
-        birthday: Optional["types.Birthday"] = None,
-        message_auto_delete_time: Optional[int] = None,
-        unrestrict_boost_count: Optional[int] = None,
-        slow_mode_delay: Optional[int] = None,
-        slowmode_next_send_date: Optional[datetime] = None,
-        join_by_request: Optional[bool] = None,
-        join_requests_count: Optional[int] = None,
-        banned_until_date: Optional[datetime] = None,
-        subscription_until_date: Optional[datetime] = None,
-        reactions_limit: Optional[int] = None,
-        gift_count: Optional[int] = None,
-        bot_verification: Optional["types.BotVerification"] = None,
-        main_profile_tab: Optional["enums.ProfileTab"] = None,
-        first_profile_audio: Optional["types.Audio"] = None,
-        rating: Optional["types.UserRating"] = None,
-        pending_rating: Optional["types.UserRating"] = None,
-        pending_rating_date: Optional[datetime] = None,
-        settings: Optional["types.ChatSettings"] = None,
-        admins_count: Optional[int] = None,
-        kicked_count: Optional[int] = None,
-        banned_count: Optional[int] = None,
-        available_min_id: Optional[int] = None,
-        boosts_applied: Optional[int] = None,
-        channel_admin_rights: Optional["types.ChatAdministratorRights"] = None,
-        chat_admin_rights: Optional["types.ChatAdministratorRights"] = None,
-        bot_can_manage_emoji_status: Optional[bool] = None,
-        can_delete_channel: Optional[bool] = None,
-        can_pin_message: Optional[bool] = None,
-        can_schedule_messages: Optional[bool] = None,
-        can_set_location: Optional[bool] = None,
-        can_set_username: Optional[bool] = None,
-        can_view_participants: Optional[bool] = None,
-        can_view_revenue: Optional[bool] = None,
-        can_view_stars_revenue: Optional[bool] = None,
-        can_view_stats: Optional[bool] = None,
-        can_send_voice_messages: Optional[bool] = None,
-        can_manage_bots: Optional[bool] = None,
-        common_chats: Optional[int] = None,
-        is_ads_enabled: Optional[bool] = None,
-        is_blocked: Optional[bool] = None,
-        is_blocked_my_stories_from: Optional[bool] = None,
-        is_contact_require_premium: Optional[bool] = None,
-        is_phone_calls_available: Optional[bool] = None,
-        is_phone_calls_private: Optional[bool] = None,
-        is_pinned_stories_available: Optional[bool] = None,
-        is_read_dates_available: Optional[bool] = None,
-        is_translations_disabled: Optional[bool] = None,
-        is_video_calls_available: Optional[bool] = None,
-        is_wallpaper_overridden: Optional[bool] = None,
-        migrated_from_chat_id: Optional[int] = None,
-        migrated_from_max_message_id: Optional[int] = None,
-        online_count: Optional[int] = None,
-        private_forward_name: Optional[str] = None,
-        read_inbox_max_id: Optional[int] = None,
-        read_outbox_max_id: Optional[int] = None,
-        is_ads_restricted: Optional[bool] = None,
-        stats_dc_id: Optional[int] = None,
-        theme: Optional[str] = None,
-        unread_count: Optional[int] = None,
-        view_forum_as_messages: Optional[bool] = None,
-        paid_message_star_count: Optional[int] = None,
-        is_paid_messages_available: Optional[bool] = None,
-        display_gifts_button: Optional[bool] = None,
-        uses_unofficial_app: Optional[bool] = None,
-        accepted_gift_types: Optional["types.AcceptedGiftTypes"] = None,
-        note: Optional["types.FormattedText"] = None,
-        guard_bot: Optional["types.User"] = None,
-        community_id: Optional[int] = None,
-        community: Optional["types.Community"] = None,
-        raw: Optional[
-            Union["raw.types.UserFull", "raw.types.ChatFull", "raw.types.ChannelFull"]
-        ] = None,
+        client: pyrogram.Client | None = None,
+        id: int | None = None,
+        type: enums.ChatType | None = None,
+        is_forum: bool | None = None,
+        is_direct_messages: bool | None = None,
+        is_min: bool | None = None,
+        is_members_hidden: bool | None = None,
+        is_restricted: bool | None = None,
+        is_creator: bool | None = None,
+        is_admin: bool | None = None,
+        is_deactivated: bool | None = None,
+        is_support: bool | None = None,
+        is_stories_hidden: bool | None = None,
+        is_stories_unavailable: bool | None = None,
+        is_business_bot: bool | None = None,
+        is_preview: bool | None = None,
+        is_banned: bool | None = None,
+        is_call_active: bool | None = None,
+        is_call_not_empty: bool | None = None,
+        is_public: bool | None = None,
+        is_paid_reactions_available: bool | None = None,
+        verification_status: types.VerificationStatus | None = None,
+        can_send_gift: bool | None = None,
+        title: str | None = None,
+        username: str | None = None,
+        usernames: list[types.Username] | None = None,
+        first_name: str | None = None,
+        last_name: str | None = None,
+        personal_photo: types.ChatPhoto | None = None,
+        photo: types.ChatPhoto | None = None,
+        public_photo: types.ChatPhoto | None = None,
+        stories: list[types.Story] | None = None,
+        chat_background: types.ChatBackground | None = None,
+        bio: str | None = None,
+        description: str | None = None,
+        show_message_sender_name: bool | None = None,
+        sign_messages: bool | None = None,
+        emoji_status: types.EmojiStatus | None = None,
+        dc_id: int | None = None,
+        folder_id: int | None = None,
+        has_protected_content: bool | None = None,
+        has_visible_history: bool | None = None,
+        has_aggressive_anti_spam_enabled: bool | None = None,
+        has_automatic_translation: bool | None = None,
+        has_forum_tabs: bool | None = None,
+        has_direct_messages_group: bool | None = None,
+        has_welcome_messages: bool | None = None,
+        invite_link: str | None = None,
+        pinned_message: types.Message | None = None,
+        sticker_set_name: str | None = None,
+        custom_emoji_sticker_set_name: str | None = None,
+        can_set_sticker_set: bool | None = None,
+        can_send_paid_media: bool | None = None,
+        members: list[types.User] | None = None,
+        members_count: int | None = None,
+        restrictions: list[types.Restriction] | None = None,
+        permissions: types.ChatPermissions | None = None,
+        personal_channel: types.Chat | None = None,
+        personal_channel_message: types.Message | None = None,
+        linked_chat_id: int | None = None,
+        direct_messages_chat_id: int | None = None,
+        parent_chat: types.Chat | None = None,
+        linked_chat: types.Chat | None = None,
+        send_as_chat: types.Chat | None = None,
+        available_reactions: types.ChatReactions | None = None,
+        level: int | None = None,
+        accent_color_id: int | None = None,
+        background_custom_emoji_id: str | None = None,
+        profile_accent_color_id: int | None = None,
+        profile_background_custom_emoji_id: str | None = None,
+        business_away_message: types.BusinessMessage | None = None,
+        business_greeting_message: types.BusinessMessage | None = None,
+        business_work_hours: types.BusinessMessage | None = None,
+        business_location: types.Location | None = None,
+        business_intro: types.BusinessIntro | None = None,
+        birthday: types.Birthday | None = None,
+        message_auto_delete_time: int | None = None,
+        unrestrict_boost_count: int | None = None,
+        slow_mode_delay: int | None = None,
+        slowmode_next_send_date: datetime | None = None,
+        join_by_request: bool | None = None,
+        join_requests_count: int | None = None,
+        banned_until_date: datetime | None = None,
+        subscription_until_date: datetime | None = None,
+        reactions_limit: int | None = None,
+        gift_count: int | None = None,
+        bot_verification: types.BotVerification | None = None,
+        main_profile_tab: enums.ProfileTab | None = None,
+        first_profile_audio: types.Audio | None = None,
+        rating: types.UserRating | None = None,
+        pending_rating: types.UserRating | None = None,
+        pending_rating_date: datetime | None = None,
+        settings: types.ChatSettings | None = None,
+        admins_count: int | None = None,
+        kicked_count: int | None = None,
+        banned_count: int | None = None,
+        available_min_id: int | None = None,
+        boosts_applied: int | None = None,
+        channel_admin_rights: types.ChatAdministratorRights | None = None,
+        chat_admin_rights: types.ChatAdministratorRights | None = None,
+        bot_can_manage_emoji_status: bool | None = None,
+        can_delete_channel: bool | None = None,
+        can_pin_message: bool | None = None,
+        can_schedule_messages: bool | None = None,
+        can_set_location: bool | None = None,
+        can_set_username: bool | None = None,
+        can_view_participants: bool | None = None,
+        can_view_revenue: bool | None = None,
+        can_view_stars_revenue: bool | None = None,
+        can_view_stats: bool | None = None,
+        can_send_voice_messages: bool | None = None,
+        can_manage_bots: bool | None = None,
+        common_chats: int | None = None,
+        is_ads_enabled: bool | None = None,
+        is_blocked: bool | None = None,
+        is_blocked_my_stories_from: bool | None = None,
+        is_contact_require_premium: bool | None = None,
+        is_phone_calls_available: bool | None = None,
+        is_phone_calls_private: bool | None = None,
+        is_pinned_stories_available: bool | None = None,
+        is_read_dates_available: bool | None = None,
+        is_translations_disabled: bool | None = None,
+        is_video_calls_available: bool | None = None,
+        is_wallpaper_overridden: bool | None = None,
+        migrated_from_chat_id: int | None = None,
+        migrated_from_max_message_id: int | None = None,
+        online_count: int | None = None,
+        private_forward_name: str | None = None,
+        read_inbox_max_id: int | None = None,
+        read_outbox_max_id: int | None = None,
+        is_ads_restricted: bool | None = None,
+        stats_dc_id: int | None = None,
+        theme: str | None = None,
+        unread_count: int | None = None,
+        view_forum_as_messages: bool | None = None,
+        paid_message_star_count: int | None = None,
+        is_paid_messages_available: bool | None = None,
+        display_gifts_button: bool | None = None,
+        uses_unofficial_app: bool | None = None,
+        accepted_gift_types: types.AcceptedGiftTypes | None = None,
+        note: types.FormattedText | None = None,
+        guard_bot: types.User | None = None,
+        community_id: int | None = None,
+        community: types.Community | None = None,
+        raw: raw.types.UserFull | raw.types.ChatFull | raw.types.ChannelFull | None = None,
     ):
         super().__init__(client)
 
@@ -857,21 +858,21 @@ class Chat(Object):
     # TODO: Remove later
 
     @property
-    def is_verified(self) -> Optional[bool]:
+    def is_verified(self) -> bool | None:
         log.warning(
             "`chat.is_verified` is deprecated and will be removed in future updates. Use `chat.verification_status.is_verified` instead."
         )
         return getattr(self.verification_status, "is_verified", None)
 
     @property
-    def is_scam(self) -> Optional[bool]:
+    def is_scam(self) -> bool | None:
         log.warning(
             "`chat.is_scam` is deprecated and will be removed in future updates. Use `chat.verification_status.is_scam` instead."
         )
         return getattr(self.verification_status, "is_scam", None)
 
     @property
-    def is_fake(self) -> Optional[bool]:
+    def is_fake(self) -> bool | None:
         log.warning(
             "`chat.is_fake` is deprecated and will be removed in future updates. Use `chat.verification_status.is_fake` instead."
         )
@@ -882,8 +883,8 @@ class Chat(Object):
     @staticmethod
     async def _parse_user_chat(
         client,
-        user: "raw.types.User",
-    ) -> Optional["Chat"]:
+        user: raw.types.User,
+    ) -> Chat | None:
         if user is None or isinstance(user, raw.types.UserEmpty):
             return None
 
@@ -940,7 +941,7 @@ class Chat(Object):
         )
 
     @staticmethod
-    async def _parse_chat_chat(client, chat: "raw.types.Chat") -> Optional["Chat"]:
+    async def _parse_chat_chat(client, chat: raw.types.Chat) -> Chat | None:
         if chat is None or isinstance(chat, raw.types.ChatEmpty):
             return None
 
@@ -979,8 +980,8 @@ class Chat(Object):
     @staticmethod
     async def _parse_channel_chat(
         client,
-        channel: "raw.types.Channel",
-    ) -> Optional["Chat"]:
+        channel: raw.types.Channel,
+    ) -> Chat | None:
         if channel is None:
             return None
 
@@ -1083,11 +1084,11 @@ class Chat(Object):
     @staticmethod
     async def _parse(
         client,
-        message: Union["raw.types.Message", "raw.types.MessageService"],
-        users: Dict[int, "raw.base.User"],
-        chats: Dict[int, "raw.base.Chat"],
+        message: raw.types.Message | raw.types.MessageService,
+        users: dict[int, raw.base.User],
+        chats: dict[int, raw.base.Chat],
         is_chat: bool,
-    ) -> Optional["Chat"]:
+    ) -> Chat | None:
         from_id = utils.get_raw_peer_id(message.from_id)
         peer_id = utils.get_raw_peer_id(message.peer_id)
         chat_id = (peer_id or from_id) if is_chat else (from_id or peer_id)
@@ -1102,9 +1103,9 @@ class Chat(Object):
     @staticmethod
     async def _parse_dialog(
         client,
-        peer: "raw.base.Peer",
-        users: Dict[int, "raw.base.User"],
-        chats: Dict[int, "raw.base.Chat"],
+        peer: raw.base.Peer,
+        users: dict[int, raw.base.User],
+        chats: dict[int, raw.base.Chat],
     ):
         if isinstance(peer, (raw.types.PeerUser, raw.types.InputPeerUser)):
             return await Chat._parse_user_chat(client, users.get(peer.user_id))
@@ -1115,11 +1116,11 @@ class Chat(Object):
 
     @staticmethod
     async def _parse_full_user(
-        client: "pyrogram.Client",
-        user: "raw.types.UserFull",
-        users: Dict[int, "raw.base.User"],
-        chats: Dict[int, "raw.base.Chat"],
-    ) -> "Chat":
+        client: pyrogram.Client,
+        user: raw.types.UserFull,
+        users: dict[int, raw.base.User],
+        chats: dict[int, raw.base.Chat],
+    ) -> Chat:
         parsed_chat = await Chat._parse_user_chat(client, users[user.id])
         parsed_chat.raw = user
 
@@ -1243,11 +1244,11 @@ class Chat(Object):
 
     @staticmethod
     async def _parse_full_chat(
-        client: "pyrogram.Client",
-        chat: "raw.types.ChatFull",
-        users: Dict[int, "raw.base.User"],
-        chats: Dict[int, "raw.base.Chat"],
-    ) -> "Chat":
+        client: pyrogram.Client,
+        chat: raw.types.ChatFull,
+        users: dict[int, raw.base.User],
+        chats: dict[int, raw.base.Chat],
+    ) -> Chat:
         parsed_chat = await Chat._parse_chat_chat(client, chats[chat.id])
         parsed_chat.raw = chat
 
@@ -1288,11 +1289,11 @@ class Chat(Object):
 
     @staticmethod
     async def _parse_full_channel(
-        client: "pyrogram.Client",
-        channel: "raw.types.ChannelFull",
-        users: Dict[int, "raw.base.User"],
-        chats: Dict[int, "raw.base.Chat"],
-    ) -> "Chat":
+        client: pyrogram.Client,
+        channel: raw.types.ChannelFull,
+        users: dict[int, raw.base.User],
+        chats: dict[int, raw.base.Chat],
+    ) -> Chat:
         parsed_chat = await Chat._parse_channel_chat(client, chats[channel.id])
         parsed_chat.raw = channel
 
@@ -1420,9 +1421,9 @@ class Chat(Object):
 
     @staticmethod
     async def _parse_full(
-        client: "pyrogram.Client",
-        chat_full: Union["raw.types.UserFull", "raw.types.ChatFull", "raw.types.ChannelFull"],
-    ) -> Optional["Chat"]:
+        client: pyrogram.Client,
+        chat_full: raw.types.UserFull | raw.types.ChatFull | raw.types.ChannelFull,
+    ) -> Chat | None:
         users = {u.id: u for u in chat_full.users}
         chats = {c.id: c for c in chat_full.chats}
 
@@ -1440,8 +1441,8 @@ class Chat(Object):
     @staticmethod
     async def _parse_chat(
         client,
-        chat: Union[raw.types.Chat, raw.types.User, raw.types.Channel]
-    ) -> Optional["Chat"]:
+        chat: raw.types.Chat | raw.types.User | raw.types.Channel
+    ) -> Chat | None:
         if isinstance(chat, (raw.types.Chat, raw.types.ChatForbidden)):
             return await Chat._parse_chat_chat(client, chat)
         elif isinstance(chat, raw.types.User):
@@ -1450,7 +1451,7 @@ class Chat(Object):
             return await Chat._parse_channel_chat(client, chat)
 
     @staticmethod
-    async def _parse_preview(client, chat_invite: "raw.types.ChatInvite") -> "Chat":
+    async def _parse_preview(client, chat_invite: raw.types.ChatInvite) -> Chat:
         return Chat(
             type=(
                 enums.ChatType.SUPERGROUP
@@ -1478,7 +1479,7 @@ class Chat(Object):
         )
 
     @property
-    def full_name(self) -> Optional[str]:
+    def full_name(self) -> str | None:
         return " ".join(filter(None, [self.first_name, self.last_name])) or self.title or None
 
     async def archive(self) -> bool:
@@ -1525,7 +1526,7 @@ class Chat(Object):
         """
         return await self._client.unarchive_chats(self.id)
 
-    async def set_title(self, title: str) -> Optional["types.Message"]:
+    async def set_title(self, title: str) -> types.Message | None:
         """Bound method *set_title* of :obj:`~pyrogram.types.Chat`.
 
         Use as a shortcut for:
@@ -1589,10 +1590,10 @@ class Chat(Object):
     async def set_photo(
         self,
         *,
-        photo: Optional[Union[str, BinaryIO]] = None,
-        video: Optional[Union[str, BinaryIO]] = None,
-        video_start_ts: Optional[float] = None,
-    ) -> Optional["types.Message"]:
+        photo: str | BinaryIO | None = None,
+        video: str | BinaryIO | None = None,
+        video_start_ts: float | None = None,
+    ) -> types.Message | None:
         """Bound method *set_photo* of :obj:`~pyrogram.types.Chat`.
 
         Use as a shortcut for:
@@ -1646,7 +1647,7 @@ class Chat(Object):
             chat_id=self.id, photo=photo, video=video, video_start_ts=video_start_ts
         )
 
-    async def set_ttl(self, ttl_seconds: int) -> Optional["types.Message"]:
+    async def set_ttl(self, ttl_seconds: int) -> types.Message | None:
         """Bound method *set_ttl* of :obj:`~pyrogram.types.Chat`.
 
         Use as a shortcut for:
@@ -1671,10 +1672,10 @@ class Chat(Object):
 
     async def ban_member(
         self,
-        user_id: Union[int, str],
+        user_id: int | str,
         until_date: datetime = utils.zero_datetime(),
-        revoke_messages: Optional[bool] = None,
-    ) -> Union["types.Message", bool]:
+        revoke_messages: bool | None = None,
+    ) -> types.Message | bool:
         """Bound method *ban_member* of :obj:`~pyrogram.types.Chat`.
 
         Use as a shortcut for:
@@ -1718,7 +1719,7 @@ class Chat(Object):
             revoke_messages=revoke_messages,
         )
 
-    async def unban_member(self, user_id: Union[int, str]) -> bool:
+    async def unban_member(self, user_id: int | str) -> bool:
         """Bound method *unban_member* of :obj:`~pyrogram.types.Chat`.
 
         Use as a shortcut for:
@@ -1753,10 +1754,10 @@ class Chat(Object):
 
     async def restrict_member(
         self,
-        user_id: Union[int, str],
-        permissions: "types.ChatPermissions",
+        user_id: int | str,
+        permissions: types.ChatPermissions,
         until_date: datetime = utils.zero_datetime(),
-    ) -> "types.Chat":
+    ) -> types.Chat:
         """Bound method *unban_member* of :obj:`~pyrogram.types.Chat`.
 
         Use as a shortcut for:
@@ -1803,7 +1804,7 @@ class Chat(Object):
     # Set None as privileges default due to issues with partially initialized module, because at the time Chat
     # is being initialized, ChatAdministratorRights would be required here, but was not initialized yet.
     async def promote_member(
-        self, user_id: Union[int, str], privileges: Optional["types.ChatAdministratorRights"] = None
+        self, user_id: int | str, privileges: types.ChatAdministratorRights | None = None
     ) -> bool:
         """Bound method *promote_member* of :obj:`~pyrogram.types.Chat`.
 
@@ -1840,7 +1841,7 @@ class Chat(Object):
             chat_id=self.id, user_id=user_id, privileges=privileges
         )
 
-    async def join(self) -> "types.ChatJoinResult":
+    async def join(self) -> types.ChatJoinResult:
         """Bound method *join* of :obj:`~pyrogram.types.Chat`.
 
         Use as a shortcut for:
@@ -1885,7 +1886,7 @@ class Chat(Object):
         """
         return await self._client.leave_chat(self.id)
 
-    async def export_invite_link(self) -> "types.ChatInviteLink":
+    async def export_invite_link(self) -> types.ChatInviteLink:
         """Bound method *export_invite_link* of :obj:`~pyrogram.types.Chat`.
 
         Use as a shortcut for:
@@ -1909,8 +1910,8 @@ class Chat(Object):
 
     async def get_member(
         self,
-        user_id: Union[int, str],
-    ) -> "types.ChatMember":
+        user_id: int | str,
+    ) -> types.ChatMember:
         """Bound method *get_member* of :obj:`~pyrogram.types.Chat`.
 
         Use as a shortcut for:
@@ -1936,8 +1937,8 @@ class Chat(Object):
         self,
         query: str = "",
         limit: int = 0,
-        filter: "enums.ChatMembersFilter" = enums.ChatMembersFilter.SEARCH,
-    ) -> AsyncGenerator["types.ChatMember", None]:
+        filter: enums.ChatMembersFilter = enums.ChatMembersFilter.SEARCH,
+    ) -> AsyncGenerator[types.ChatMember, None]:
         """Bound method *get_members* of :obj:`~pyrogram.types.Chat`.
 
         Use as a shortcut for:
@@ -1974,8 +1975,8 @@ class Chat(Object):
         return self._client.get_chat_members(self.id, query=query, limit=limit, filter=filter)
 
     async def add_members(
-        self, user_ids: Union[Union[int, str], List[Union[int, str]]], forward_limit: int = 100
-    ) -> List["types.FailedToAddMember"]:
+        self, user_ids: int | str | list[int | str], forward_limit: int = 100
+    ) -> list[types.FailedToAddMember]:
         """Bound method *add_members* of :obj:`~pyrogram.types.Chat`.
 
         Use as a shortcut for:
@@ -2059,7 +2060,7 @@ class Chat(Object):
         """
         return await self._client.unpin_all_chat_messages(self.id)
 
-    async def mute(self, mute_until: Optional[datetime] = None) -> bool:
+    async def mute(self, mute_until: datetime | None = None) -> bool:
         """Bound method *mute* of :obj:`~pyrogram.types.Chat`.
 
         Use as a shortcut for:

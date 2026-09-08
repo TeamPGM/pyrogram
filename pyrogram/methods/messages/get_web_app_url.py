@@ -16,7 +16,7 @@
 #  You should have received a copy of the GNU Lesser General Public License
 #  along with Pyrogram.  If not, see <http://www.gnu.org/licenses/>.
 
-from typing import Optional, Union
+from __future__ import annotations as _annotations
 
 import pyrogram
 from pyrogram import raw, enums
@@ -24,10 +24,10 @@ from pyrogram import raw, enums
 
 class GetWebAppUrl:
     async def get_web_app_url(
-        self: "pyrogram.Client",
-        bot_user_id: Union[int, str],
-        url: Optional[str] = None,
-        platform: Optional["enums.ClientPlatform"] = None
+        self: pyrogram.Client,
+        bot_user_id: int | str,
+        url: str | None = None,
+        platform: enums.ClientPlatform | None = None
     ) -> str:
         """Returns an HTTPS URL of a Web App to open from the side menu,
         a :obj:`~pyrogram.types.KeyboardButton` button with web app type,

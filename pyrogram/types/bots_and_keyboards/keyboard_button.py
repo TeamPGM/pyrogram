@@ -16,7 +16,7 @@
 #  You should have received a copy of the GNU Lesser General Public License
 #  along with Pyrogram.  If not, see <http://www.gnu.org/licenses/>.
 
-from typing import Optional
+from __future__ import annotations as _annotations
 
 from pyrogram import enums, raw, types
 
@@ -77,15 +77,15 @@ class KeyboardButton(Object):
     def __init__(
         self,
         text: str,
-        icon_custom_emoji_id: Optional[str] = None,
-        style: "enums.ButtonStyle" = enums.ButtonStyle.DEFAULT,
-        request_contact: Optional[bool] = None,
-        request_location: Optional[bool] = None,
-        request_poll: Optional["types.KeyboardButtonPollType"] = None,
-        request_users: Optional["types.KeyboardButtonRequestUsers"] = None,
-        request_chat: Optional["types.KeyboardButtonRequestChat"] = None,
-        request_managed_bot: Optional["types.KeyboardButtonRequestManagedBot"] = None,
-        web_app: Optional["types.WebAppInfo"] = None,
+        icon_custom_emoji_id: str | None = None,
+        style: enums.ButtonStyle = enums.ButtonStyle.DEFAULT,
+        request_contact: bool | None = None,
+        request_location: bool | None = None,
+        request_poll: types.KeyboardButtonPollType | None = None,
+        request_users: types.KeyboardButtonRequestUsers | None = None,
+        request_chat: types.KeyboardButtonRequestChat | None = None,
+        request_managed_bot: types.KeyboardButtonRequestManagedBot | None = None,
+        web_app: types.WebAppInfo | None = None,
     ):
         super().__init__()
 
@@ -101,7 +101,7 @@ class KeyboardButton(Object):
         self.web_app = web_app
 
     @staticmethod
-    def read(button: "raw.base.KeyboardButton"):
+    def read(button: raw.base.KeyboardButton):
         button_text = button.text
         button_type = button.type
         button_style = enums.ButtonStyle.DEFAULT
@@ -205,7 +205,7 @@ class KeyboardButton(Object):
                 web_app=types.WebAppInfo(url=button_type.url),
             )
 
-    def write(self) -> "raw.types.KeyboardButton":
+    def write(self) -> raw.types.KeyboardButton:
         style = (
             raw.types.KeyboardButtonStyle(
                 bg_primary=self.style == enums.ButtonStyle.PRIMARY,

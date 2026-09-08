@@ -16,8 +16,10 @@
 #  You should have received a copy of the GNU Lesser General Public License
 #  along with Pyrogram.  If not, see <http://www.gnu.org/licenses/>.
 
+from __future__ import annotations as _annotations
+
 from pathlib import Path
-from typing import Dict, Final, List
+from typing import Final
 
 import pytest
 
@@ -30,14 +32,14 @@ _TESTS_DIR: Final[Path] = Path(__file__).parent
 #  and runs there whatever it opens. The environment `.env.test` carries is loaded by
 #  the runner (see `Makefile`), not from here: a test process that reads files of its
 #  own has two config sources.
-_LAYER_MARKERS: Final[Dict[str, str]] = {
+_LAYER_MARKERS: Final[dict[str, str]] = {
     "unit": "unit",
     "guards": "guard",
     "integrations": "integration",
 }
 
 
-def pytest_collection_modifyitems(items: List[pytest.Item]) -> None:
+def pytest_collection_modifyitems(items: list[pytest.Item]) -> None:
     for item in items:
         relative = Path(item.fspath).relative_to(_TESTS_DIR)
         layer = _LAYER_MARKERS.get(relative.parts[0])

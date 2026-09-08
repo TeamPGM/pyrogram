@@ -16,8 +16,11 @@
 #  You should have received a copy of the GNU Lesser General Public License
 #  along with Pyrogram.  If not, see <http://www.gnu.org/licenses/>.
 
+from __future__ import annotations as _annotations
+
 import os
-from typing import BinaryIO, Callable, List, Optional, Union
+from typing import BinaryIO
+from collections.abc import Callable
 
 import pyrogram
 from pyrogram import StopTransmission, enums, raw, types, utils
@@ -26,28 +29,28 @@ from pyrogram.errors import FilePartMissing
 
 class SendStory:
     async def send_story(
-        self: "pyrogram.Client",
-        chat_id: Union[int, str],
-        media: Union[str, BinaryIO],
-        caption: Optional[str] = None,
-        period: Optional[int] = None,
-        media_areas: Optional[List["types.MediaArea"]] = None,
+        self: pyrogram.Client,
+        chat_id: int | str,
+        media: str | BinaryIO,
+        caption: str | None = None,
+        period: int | None = None,
+        media_areas: list[types.MediaArea] | None = None,
         duration: int = 0,
         width: int = 0,
         height: int = 0,
-        thumb: Optional[Union[str, BinaryIO]] = None,
+        thumb: str | BinaryIO | None = None,
         supports_streaming: bool = True,
-        file_name: Optional[str] = None,
-        privacy: Optional["enums.StoriesPrivacyRules"] = None,
-        allowed_users: Optional[List[Union[int, str]]] = None,
-        disallowed_users: Optional[List[Union[int, str]]] = None,
-        pinned: Optional[bool] = None,
-        protect_content: Optional[bool] = None,
-        parse_mode: Optional["enums.ParseMode"] = None,
-        caption_entities: Optional[List["types.MessageEntity"]] = None,
-        progress: Optional[Callable] = None,
+        file_name: str | None = None,
+        privacy: enums.StoriesPrivacyRules | None = None,
+        allowed_users: list[int | str] | None = None,
+        disallowed_users: list[int | str] | None = None,
+        pinned: bool | None = None,
+        protect_content: bool | None = None,
+        parse_mode: enums.ParseMode | None = None,
+        caption_entities: list[types.MessageEntity] | None = None,
+        progress: Callable | None = None,
         progress_args: tuple = (),
-    ) -> Optional["types.Story"]:
+    ) -> types.Story | None:
         """Post new story.
 
         .. include:: /_includes/usable-by/users.rst

@@ -16,7 +16,7 @@
 #  You should have received a copy of the GNU Lesser General Public License
 #  along with Pyrogram.  If not, see <http://www.gnu.org/licenses/>.
 
-from typing import Optional
+from __future__ import annotations as _annotations
 
 from ..object import Object
 
@@ -57,12 +57,12 @@ class KeyboardButtonRequestUsers(Object):
     def __init__(
         self, *,
         button_id: int,
-        user_is_bot: Optional[bool] = None,
-        user_is_premium: Optional[bool] = None,
+        user_is_bot: bool | None = None,
+        user_is_premium: bool | None = None,
         max_quantity: int = 1,
-        request_name: Optional[bool] = None,
-        request_username: Optional[bool] = None,
-        request_photo: Optional[bool] = None,
+        request_name: bool | None = None,
+        request_username: bool | None = None,
+        request_photo: bool | None = None,
     ):
         super().__init__()
 

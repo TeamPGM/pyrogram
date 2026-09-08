@@ -16,7 +16,9 @@
 #  You should have received a copy of the GNU Lesser General Public License
 #  along with Pyrogram.  If not, see <http://www.gnu.org/licenses/>.
 
-from typing import List, Match, Optional
+from __future__ import annotations as _annotations
+
+from re import Match
 
 import pyrogram
 from pyrogram import raw
@@ -60,13 +62,13 @@ class ChosenInlineResult(Object, Update):
     def __init__(
         self,
         *,
-        client: Optional["pyrogram.Client"] = None,
+        client: pyrogram.Client | None = None,
         result_id: str,
-        from_user: "types.User",
+        from_user: types.User,
         query: str,
-        location: Optional["types.Location"] = None,
-        inline_message_id: Optional[str] = None,
-        matches: Optional[List[Match]] = None,
+        location: types.Location | None = None,
+        inline_message_id: str | None = None,
+        matches: list[Match] | None = None,
     ):
         super().__init__(client)
 
@@ -78,7 +80,7 @@ class ChosenInlineResult(Object, Update):
         self.matches = matches
 
     @staticmethod
-    async def _parse(client, chosen_inline_result: raw.types.UpdateBotInlineSend, users) -> "ChosenInlineResult":
+    async def _parse(client, chosen_inline_result: raw.types.UpdateBotInlineSend, users) -> ChosenInlineResult:
         return ChosenInlineResult(
             result_id=str(chosen_inline_result.id),
             from_user=await types.User._parse(client, users[chosen_inline_result.user_id]),

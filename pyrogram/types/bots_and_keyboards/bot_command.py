@@ -16,7 +16,7 @@
 #  You should have received a copy of the GNU Lesser General Public License
 #  along with Pyrogram.  If not, see <http://www.gnu.org/licenses/>.
 
-from typing import Optional
+from __future__ import annotations as _annotations
 
 from pyrogram import raw
 
@@ -38,14 +38,14 @@ class BotCommand(Object):
             True, if the command sends an ephemeral message, which can be seen only by the sender of the message and the bot.
     """
 
-    def __init__(self, command: str, description: str, is_ephemeral: Optional[bool] = None):
+    def __init__(self, command: str, description: str, is_ephemeral: bool | None = None):
         super().__init__()
 
         self.command = command
         self.description = description
         self.is_ephemeral = is_ephemeral
 
-    def write(self) -> "raw.types.BotCommand":
+    def write(self) -> raw.types.BotCommand:
         return raw.types.BotCommand(
             command=self.command,
             description=self.description,
@@ -53,7 +53,7 @@ class BotCommand(Object):
         )
 
     @staticmethod
-    def read(c: "raw.types.BotCommand") -> "BotCommand":
+    def read(c: raw.types.BotCommand) -> BotCommand:
         return BotCommand(
             command=c.command,
             description=c.description,

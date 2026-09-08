@@ -15,7 +15,8 @@
 #
 #  You should have received a copy of the GNU Lesser General Public License
 #  along with Pyrogram.  If not, see <http://www.gnu.org/licenses/>.
-from typing import List, Union
+
+from __future__ import annotations as _annotations
 
 import pyrogram
 from pyrogram import raw, types
@@ -23,10 +24,10 @@ from pyrogram import raw, types
 
 class ReorderGiftCollections:
     async def reorder_gift_collections(
-        self: "pyrogram.Client",
-        owner_id: Union[int, str],
-        collection_ids: List[int]
-    ) -> "types.GiftCollection":
+        self: pyrogram.Client,
+        owner_id: int | str,
+        collection_ids: list[int]
+    ) -> types.GiftCollection:
         """Changes order of gift collections.
 
         .. include:: /_includes/usable-by/users.rst

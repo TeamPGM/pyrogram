@@ -16,7 +16,7 @@
 #  You should have received a copy of the GNU Lesser General Public License
 #  along with Pyrogram.  If not, see <http://www.gnu.org/licenses/>.
 
-from typing import Union
+from __future__ import annotations as _annotations
 
 import pyrogram
 from pyrogram import raw
@@ -24,8 +24,8 @@ from pyrogram import raw
 
 class GetChatInviteLinkJoinersCount:
     async def get_chat_invite_link_joiners_count(
-        self: "pyrogram.Client",
-        chat_id: Union[int, str],
+        self: pyrogram.Client,
+        chat_id: int | str,
         invite_link: str
     ) -> int:
         """Get the count of the members who joined the chat with the invite link.

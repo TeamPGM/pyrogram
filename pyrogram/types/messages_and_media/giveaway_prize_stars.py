@@ -16,8 +16,9 @@
 #  You should have received a copy of the GNU Lesser General Public License
 #  along with Pyrogram.  If not, see <http://www.gnu.org/licenses/>.
 
+from __future__ import annotations as _annotations
+
 import random
-from typing import Dict, Optional
 
 import pyrogram
 from pyrogram import raw, types, utils
@@ -57,11 +58,11 @@ class GiveawayPrizeStars(Object):
         *,
         star_count: int,
         transaction_id: str,
-        boosted_chat: "types.Chat",
+        boosted_chat: types.Chat,
         giveaway_message_id: int,
-        giveaway_message: Optional["types.Message"] = None,
-        is_unclaimed: Optional[bool] = None,
-        sticker: Optional["types.Sticker"] = None
+        giveaway_message: types.Message | None = None,
+        is_unclaimed: bool | None = None,
+        sticker: types.Sticker | None = None
     ):
         super().__init__()
 
@@ -75,10 +76,10 @@ class GiveawayPrizeStars(Object):
 
     @staticmethod
     async def _parse(
-        client: "pyrogram.Client",
-        action: "raw.types.MessageActionPrizeStars",
-        chats: Dict[int, "raw.base.Chat"],
-    ) -> "GiveawayPrizeStars":
+        client: pyrogram.Client,
+        action: raw.types.MessageActionPrizeStars,
+        chats: dict[int, raw.base.Chat],
+    ) -> GiveawayPrizeStars:
         raw_stickers = await client.invoke(
             raw.functions.messages.GetStickerSet(
                 stickerset=raw.types.InputStickerSetPremiumGifts(),

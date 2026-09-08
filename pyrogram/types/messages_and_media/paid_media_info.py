@@ -16,7 +16,7 @@
 #  You should have received a copy of the GNU Lesser General Public License
 #  along with Pyrogram.  If not, see <http://www.gnu.org/licenses/>.
 
-from typing import List, Union
+from __future__ import annotations as _annotations
 
 import pyrogram
 from pyrogram import raw, types
@@ -38,7 +38,7 @@ class PaidMediaInfo(Object):
         self,
         *,
         stars_amount: int,
-        media: List[Union["types.Photo", "types.Video", "types.PaidMediaPreview"]]
+        media: list[types.Photo | types.Video | types.PaidMediaPreview]
     ):
         super().__init__()
 
@@ -47,9 +47,9 @@ class PaidMediaInfo(Object):
 
     @staticmethod
     def _parse(
-        client: "pyrogram.Client",
-        message_paid_media: "raw.types.MessageMediaPaidMedia"
-    ) -> "PaidMediaInfo":
+        client: pyrogram.Client,
+        message_paid_media: raw.types.MessageMediaPaidMedia
+    ) -> PaidMediaInfo:
         medias = []
 
         for extended_media in message_paid_media.extended_media:

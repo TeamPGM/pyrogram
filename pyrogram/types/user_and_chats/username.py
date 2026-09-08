@@ -16,7 +16,7 @@
 #  You should have received a copy of the GNU Lesser General Public License
 #  along with Pyrogram.  If not, see <http://www.gnu.org/licenses/>.
 
-from typing import Optional
+from __future__ import annotations as _annotations
 
 from pyrogram import raw
 from ..object import Object
@@ -36,7 +36,7 @@ class Username(Object):
             True, if the collectible username is active.
     """
 
-    def __init__(self, *, username: str, editable: Optional[bool] = None, active: Optional[bool] = None):
+    def __init__(self, *, username: str, editable: bool | None = None, active: bool | None = None):
         super().__init__(None)
 
         self.username = username
@@ -44,7 +44,7 @@ class Username(Object):
         self.active = active
 
     @staticmethod
-    def _parse(username: "raw.types.Username") -> "Username":
+    def _parse(username: raw.types.Username) -> Username:
         return Username(
             username=username.username,
             editable=username.editable,

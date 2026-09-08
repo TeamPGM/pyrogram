@@ -16,8 +16,9 @@
 #  You should have received a copy of the GNU Lesser General Public License
 #  along with Pyrogram.  If not, see <http://www.gnu.org/licenses/>.
 
+from __future__ import annotations as _annotations
+
 from datetime import datetime
-from typing import List, Optional, Union
 
 import pyrogram
 from pyrogram import raw, types, utils
@@ -25,20 +26,20 @@ from pyrogram import raw, types, utils
 
 class ForwardMediaGroup:
     async def forward_media_group(
-        self: "pyrogram.Client",
-        chat_id: Union[int, str],
-        from_chat_id: Union[int, str],
+        self: pyrogram.Client,
+        chat_id: int | str,
+        from_chat_id: int | str,
         message_id: int,
-        message_thread_id: Optional[int] = None,
-        disable_notification: Optional[bool] = None,
-        schedule_date: Optional[datetime] = None,
-        hide_sender_name: Optional[bool] = None,
-        hide_captions: Optional[bool] = None,
-        protect_content: Optional[bool] = None,
-        allow_paid_broadcast: Optional[bool] = None,
-        reply_parameters: Optional["types.ReplyParameters"] = None,
-        paid_message_star_count: Optional[int] = None
-    ) -> List["types.Message"]:
+        message_thread_id: int | None = None,
+        disable_notification: bool | None = None,
+        schedule_date: datetime | None = None,
+        hide_sender_name: bool | None = None,
+        hide_captions: bool | None = None,
+        protect_content: bool | None = None,
+        allow_paid_broadcast: bool | None = None,
+        reply_parameters: types.ReplyParameters | None = None,
+        paid_message_star_count: int | None = None
+    ) -> list[types.Message]:
         """Forward a media group by providing one of the message ids.
 
         .. include:: /_includes/usable-by/users-bots.rst

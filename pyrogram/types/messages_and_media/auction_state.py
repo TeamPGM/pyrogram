@@ -16,8 +16,9 @@
 #  You should have received a copy of the GNU Lesser General Public License
 #  along with Pyrogram.  If not, see <http://www.gnu.org/licenses/>.
 
+from __future__ import annotations as _annotations
+
 from datetime import datetime
-from typing import List, Optional
 
 from pyrogram import raw, types, utils
 
@@ -77,9 +78,9 @@ class AuctionStateActive(AuctionState):
         start_date: datetime,
         end_date: datetime,
         min_bid: int,
-        bid_levels: List["types.AuctionBid"],
-        top_bidder_user_ids: List[int],
-        auction_rounds: List["types.AuctionRound"],
+        bid_levels: list[types.AuctionBid],
+        top_bidder_user_ids: list[int],
+        auction_rounds: list[types.AuctionRound],
         current_round_end_date: datetime,
         current_round_number: int,
         total_round_count: int,
@@ -99,7 +100,7 @@ class AuctionStateActive(AuctionState):
         self.left_item_count = left_item_count
 
     @staticmethod
-    async def _parse(auction_state: "raw.types.StarGiftAuctionState"):
+    async def _parse(auction_state: raw.types.StarGiftAuctionState):
         return AuctionStateActive(
             start_date=utils.timestamp_to_datetime(auction_state.start_date),
             end_date=utils.timestamp_to_datetime(auction_state.end_date),
@@ -145,9 +146,9 @@ class AuctionStateFinished(AuctionState):
         start_date: datetime,
         end_date: datetime,
         average_price: int,
-        telegram_listed_item_count: Optional[int] = None,
-        fragment_listed_item_count: Optional[int] = None,
-        fragment_url: Optional[str] = None,
+        telegram_listed_item_count: int | None = None,
+        fragment_listed_item_count: int | None = None,
+        fragment_url: str | None = None,
     ):
         super().__init__()
 
@@ -160,7 +161,7 @@ class AuctionStateFinished(AuctionState):
 
     @staticmethod
     async def _parse(
-        auction_state: "raw.types.StarGiftAuctionStateFinished"
+        auction_state: raw.types.StarGiftAuctionStateFinished
     ):
         return AuctionStateFinished(
             start_date=utils.timestamp_to_datetime(auction_state.start_date),

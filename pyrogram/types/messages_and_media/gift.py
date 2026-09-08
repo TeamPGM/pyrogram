@@ -16,8 +16,9 @@
 #  You should have received a copy of the GNU Lesser General Public License
 #  along with Pyrogram.  If not, see <http://www.gnu.org/licenses/>.
 
+from __future__ import annotations as _annotations
+
 from datetime import datetime
-from typing import Dict, List, Optional, Union
 
 import pyrogram
 from pyrogram import enums, raw, types, utils
@@ -282,91 +283,86 @@ class Gift(Object):
     def __init__(
         self,
         *,
-        client: Optional["pyrogram.Client"] = None,
+        client: pyrogram.Client | None = None,
         id: int,
-        type: "enums.GiftType",
-        origin: Optional["enums.UpgradedGiftOrigin"] = None,
-        received_gift_id: Optional[str] = None,
-        regular_gift_id: Optional[int] = None,
-        publisher_chat: Optional["types.Chat"] = None,
-        sticker: Optional["types.Sticker"] = None,
-        text: Optional["types.FormattedText"] = None,
-        date: Optional[datetime] = None,
-        first_sale_date: Optional[datetime] = None,
-        last_sale_date: Optional[datetime] = None,
-        locked_until_date: Optional[datetime] = None,
-        craft_date: Optional[datetime] = None,
-        sender: Optional["types.Chat"] = None,
-        receiver: Optional["types.Chat"] = None,
-        host: Optional["types.Chat"] = None,
-        owner: Optional["types.Chat"] = None,
-        owner_address: Optional[str] = None,
-        owner_name: Optional[str] = None,
-        gift_address: Optional[str] = None,
-        title: Optional[str] = None,
-        name: Optional[str] = None,
-        model: Optional["types.GiftAttribute"] = None,
-        symbol: Optional["types.GiftAttribute"] = None,
-        backdrop: Optional["types.GiftAttribute"] = None,
-        original_details: Optional["types.UpgradedGiftOriginalDetails"] = None,
-        total_upgraded_count: Optional[int] = None,
-        max_upgraded_count: Optional[int] = None,
-        available_resale_count: Optional[int] = None,
-        unique_gift_variant_count: Optional[int] = None,
-        unique_gift_number: Optional[int] = None,
-        star_count: Optional[int] = None,
-        default_sell_star_count: Optional[int] = None,
-        convert_star_count: Optional[int] = None,
-        upgrade_star_count: Optional[int] = None,
-        transfer_star_count: Optional[int] = None,
-        drop_original_details_star_count: Optional[int] = None,
-        minimum_resell_star_count: Optional[int] = None,
-        minimum_offer_star_count: Optional[int] = None,
-        prepaid_upgrade_star_count: Optional[int] = None,
-        prepaid_upgrade_hash: Optional[str] = None,
-        auction_info: Optional["types.GiftAuction"] = None,
-        resale_parameters: Optional["types.GiftResaleParameters"] = None,
-        user_limits: Optional["types.GiftPurchaseLimit"] = None,
-        overall_limits: Optional["types.GiftPurchaseLimit"] = None,
-        value_currency: Optional[str] = None,
-        value_amount: Optional[int] = None,
-        value_usd_amount: Optional[int] = None,
-        last_resale_currency: Optional[str] = None,
-        last_resale_amount: Optional[int] = None,
-        next_send_date: Optional[datetime] = None,
-        next_transfer_date: Optional[datetime] = None,
-        next_resale_date: Optional[datetime] = None,
-        export_date: Optional[datetime] = None,
-        collection_ids: Optional[List[int]] = None,
-        used_theme_chat_id: Optional[int] = None,
-        craft_probability_per_mille: Optional[int] = None,
-        has_colors: Optional[bool] = None,
-        is_auction: Optional[bool] = None,
-        is_private: Optional[bool] = None,
-        is_saved: Optional[bool] = None,
-        is_pinned: Optional[bool] = None,
-        is_limited: Optional[bool] = None,
-        is_limited_per_user: Optional[bool] = None,
-        is_sold_out: Optional[bool] = None,
-        is_burned: Optional[bool] = None,
-        is_crafted: Optional[bool] = None,
-        is_premium: Optional[bool] = None,
-        is_for_birthday: Optional[bool] = None,
-        is_theme_available: Optional[bool] = None,
-        is_upgrade_separate: Optional[bool] = None,
-        is_name_hidden: Optional[bool] = None,
-        can_be_upgraded: Optional[bool] = None,
-        can_be_transferred: Optional[bool] = None,
-        can_send_purchase_offer: Optional[bool] = None,
-        was_converted: Optional[bool] = None,
-        was_upgraded: Optional[bool] = None,
-        was_refunded: Optional[bool] = None,
-        raw: Optional[
-            Union[
-                "raw.base.StarGift",
-                "raw.base.SavedStarGift"
-            ]
-        ]
+        type: enums.GiftType,
+        origin: enums.UpgradedGiftOrigin | None = None,
+        received_gift_id: str | None = None,
+        regular_gift_id: int | None = None,
+        publisher_chat: types.Chat | None = None,
+        sticker: types.Sticker | None = None,
+        text: types.FormattedText | None = None,
+        date: datetime | None = None,
+        first_sale_date: datetime | None = None,
+        last_sale_date: datetime | None = None,
+        locked_until_date: datetime | None = None,
+        craft_date: datetime | None = None,
+        sender: types.Chat | None = None,
+        receiver: types.Chat | None = None,
+        host: types.Chat | None = None,
+        owner: types.Chat | None = None,
+        owner_address: str | None = None,
+        owner_name: str | None = None,
+        gift_address: str | None = None,
+        title: str | None = None,
+        name: str | None = None,
+        model: types.GiftAttribute | None = None,
+        symbol: types.GiftAttribute | None = None,
+        backdrop: types.GiftAttribute | None = None,
+        original_details: types.UpgradedGiftOriginalDetails | None = None,
+        total_upgraded_count: int | None = None,
+        max_upgraded_count: int | None = None,
+        available_resale_count: int | None = None,
+        unique_gift_variant_count: int | None = None,
+        unique_gift_number: int | None = None,
+        star_count: int | None = None,
+        default_sell_star_count: int | None = None,
+        convert_star_count: int | None = None,
+        upgrade_star_count: int | None = None,
+        transfer_star_count: int | None = None,
+        drop_original_details_star_count: int | None = None,
+        minimum_resell_star_count: int | None = None,
+        minimum_offer_star_count: int | None = None,
+        prepaid_upgrade_star_count: int | None = None,
+        prepaid_upgrade_hash: str | None = None,
+        auction_info: types.GiftAuction | None = None,
+        resale_parameters: types.GiftResaleParameters | None = None,
+        user_limits: types.GiftPurchaseLimit | None = None,
+        overall_limits: types.GiftPurchaseLimit | None = None,
+        value_currency: str | None = None,
+        value_amount: int | None = None,
+        value_usd_amount: int | None = None,
+        last_resale_currency: str | None = None,
+        last_resale_amount: int | None = None,
+        next_send_date: datetime | None = None,
+        next_transfer_date: datetime | None = None,
+        next_resale_date: datetime | None = None,
+        export_date: datetime | None = None,
+        collection_ids: list[int] | None = None,
+        used_theme_chat_id: int | None = None,
+        craft_probability_per_mille: int | None = None,
+        has_colors: bool | None = None,
+        is_auction: bool | None = None,
+        is_private: bool | None = None,
+        is_saved: bool | None = None,
+        is_pinned: bool | None = None,
+        is_limited: bool | None = None,
+        is_limited_per_user: bool | None = None,
+        is_sold_out: bool | None = None,
+        is_burned: bool | None = None,
+        is_crafted: bool | None = None,
+        is_premium: bool | None = None,
+        is_for_birthday: bool | None = None,
+        is_theme_available: bool | None = None,
+        is_upgrade_separate: bool | None = None,
+        is_name_hidden: bool | None = None,
+        can_be_upgraded: bool | None = None,
+        can_be_transferred: bool | None = None,
+        can_send_purchase_offer: bool | None = None,
+        was_converted: bool | None = None,
+        was_upgraded: bool | None = None,
+        was_refunded: bool | None = None,
+        raw: raw.base.StarGift | raw.base.SavedStarGift | None
     ):
         super().__init__(client)
 
@@ -452,16 +448,16 @@ class Gift(Object):
 
     @staticmethod
     async def _parse(
-        client: "pyrogram.Client",
-        gift: Union[
-            "raw.base.StarGift",
-            "raw.base.SavedStarGift",
-            "raw.types.MessageActionStarGift",
-            "raw.types.MessageActionStarGiftUnique"
-        ],
-        receiver: Optional[Union["raw.base.User", "raw.base.Chat"]] = None,
-        users: Dict[int, "raw.base.User"] = {},
-        chats: Dict[int, "raw.base.Chat"] = {}
+        client: pyrogram.Client,
+        gift: (
+            raw.base.StarGift
+            | raw.base.SavedStarGift
+            | raw.types.MessageActionStarGift
+            | raw.types.MessageActionStarGiftUnique
+        ),
+        receiver: raw.base.User | raw.base.Chat | None = None,
+        users: dict[int, raw.base.User] = {},
+        chats: dict[int, raw.base.Chat] = {}
     ):
         if isinstance(gift, raw.types.StarGift):
             return await Gift._parse_regular(client, gift, receiver, users, chats)
@@ -474,12 +470,12 @@ class Gift(Object):
 
     @staticmethod
     async def _parse_regular(
-        client: "pyrogram.Client",
-        star_gift: "raw.types.StarGift",
-        receiver: Optional[Union["raw.base.User", "raw.base.Chat"]] = None,
-        users: Dict[int, "raw.base.User"] = {},
-        chats: Dict[int, "raw.base.Chat"] = {}
-    ) -> "Gift":
+        client: pyrogram.Client,
+        star_gift: raw.types.StarGift,
+        receiver: raw.base.User | raw.base.Chat | None = None,
+        users: dict[int, raw.base.User] = {},
+        chats: dict[int, raw.base.Chat] = {}
+    ) -> Gift:
         if not isinstance(star_gift, raw.types.StarGift):
             return
 
@@ -521,12 +517,12 @@ class Gift(Object):
 
     @staticmethod
     async def _parse_upgraded(
-        client: "pyrogram.Client",
-        star_gift: "raw.types.StarGiftUnique",
-        receiver: Optional[Union["raw.base.User", "raw.base.Chat"]] = None,
-        users: Dict[int, "raw.base.User"] = {},
-        chats: Dict[int, "raw.base.Chat"] = {}
-    ) -> "Gift":
+        client: pyrogram.Client,
+        star_gift: raw.types.StarGiftUnique,
+        receiver: raw.base.User | raw.base.Chat | None = None,
+        users: dict[int, raw.base.User] = {},
+        chats: dict[int, raw.base.Chat] = {}
+    ) -> Gift:
         if not isinstance(star_gift, raw.types.StarGiftUnique):
             return
 
@@ -589,11 +585,11 @@ class Gift(Object):
     @staticmethod
     async def _parse_received(
         client,
-        saved_gift: "raw.types.SavedStarGift",
-        receiver: Optional[Union["raw.base.User", "raw.base.Chat"]] = None,
-        users: Dict[int, "raw.base.User"] = {},
-        chats: Dict[int, "raw.base.Chat"] = {}
-    ) -> "Gift":
+        saved_gift: raw.types.SavedStarGift,
+        receiver: raw.base.User | raw.base.Chat | None = None,
+        users: dict[int, raw.base.User] = {},
+        chats: dict[int, raw.base.Chat] = {}
+    ) -> Gift:
         if not isinstance(saved_gift, raw.types.SavedStarGift):
             return
 
@@ -637,14 +633,11 @@ class Gift(Object):
     @staticmethod
     async def _parse_action(
         client,
-        action_gift: Union[
-            "raw.types.MessageActionStarGift",
-            "raw.types.MessageActionStarGiftUnique"
-        ],
-        receiver: Optional[Union["raw.base.User", "raw.base.Chat"]] = None,
-        users: Dict[int, "raw.base.User"] = {},
-        chats: Dict[int, "raw.base.Chat"] = {}
-    ) -> "Gift":
+        action_gift: raw.types.MessageActionStarGift | raw.types.MessageActionStarGiftUnique,
+        receiver: raw.base.User | raw.base.Chat | None = None,
+        users: dict[int, raw.base.User] = {},
+        chats: dict[int, raw.base.Chat] = {}
+    ) -> Gift:
         # TODO: fix receiver
         if isinstance(action_gift, raw.types.MessageActionStarGift):
             # auction_acquired
@@ -727,14 +720,14 @@ class Gift(Object):
             return parsed_gift
 
     @property
-    def link(self) -> Optional[str]:
+    def link(self) -> str | None:
         if not self.name:
             return None
 
         return f"https://t.me/nft/{self.name}"
 
     @property
-    def owned_gift_id(self) -> Optional[str]:
+    def owned_gift_id(self) -> str | None:
         if not self.received_gift_id:
             return None
 
@@ -816,7 +809,16 @@ class Gift(Object):
             owned_gift_id=self.owned_gift_id
         )
 
-    async def upgrade(self, keep_original_details: Optional[bool] = None, star_count: Optional[int] = None) -> Optional["types.Message"]:
+    async def upgrade(self, keep_original_details: (
+        bool
+        | None
+    ) = None, star_count: (
+        int
+        | None
+    ) = None) -> (
+        types.Message
+        | None
+    ):
         """Bound method *upgrade* of :obj:`~pyrogram.types.Gift`.
 
         .. note::
@@ -846,7 +848,7 @@ class Gift(Object):
             star_count=star_count
         )
 
-    async def transfer(self, to_chat_id: Union[int, str]) -> Optional["types.Message"]:
+    async def transfer(self, to_chat_id: int | str) -> types.Message | None:
         """Bound method *transfer* of :obj:`~pyrogram.types.Gift`.
 
         .. note::
@@ -906,7 +908,17 @@ class Gift(Object):
             )
         )
 
-    async def buy(self, new_owner_chat_id: Optional[Union[int, str]] = None, price: Optional["types.GiftResalePrice"] = None) -> Optional["types.Message"]:
+    async def buy(self, new_owner_chat_id: (
+        int
+        | str
+        | None
+    ) = None, price: (
+        types.GiftResalePrice
+        | None
+    ) = None) -> (
+        types.Message
+        | None
+    ):
         """Bound method *buy* of :obj:`~pyrogram.types.Gift`.
 
         .. note::
@@ -945,13 +957,13 @@ class Gift(Object):
 
     async def send(
         self,
-        chat_id: Union[int, str],
-        text: Optional[str] = None,
-        parse_mode: Optional["enums.ParseMode"] = None,
-        entities: Optional[List["types.MessageEntity"]] = None,
-        is_private: Optional[bool] = None,
-        pay_for_upgrade: Optional[bool] = None,
-    ) -> Optional["types.Message"]:
+        chat_id: int | str,
+        text: str | None = None,
+        parse_mode: enums.ParseMode | None = None,
+        entities: list[types.MessageEntity] | None = None,
+        is_private: bool | None = None,
+        pay_for_upgrade: bool | None = None,
+    ) -> types.Message | None:
         """Bound method *send* of :obj:`~pyrogram.types.Gift`.
 
         .. note::
@@ -987,7 +999,7 @@ class Gift(Object):
             pay_for_upgrade=pay_for_upgrade
         )
 
-    async def get_auction_state(self) -> "types.GiftAuctionState":
+    async def get_auction_state(self) -> types.GiftAuctionState:
         """Bound method *get_auction_state* of :obj:`~pyrogram.types.Gift`.
 
         .. note::
@@ -1010,10 +1022,10 @@ class Gift(Object):
 
     async def send_purchase_offer(
         self,
-        price: "types.GiftResalePrice",
+        price: types.GiftResalePrice,
         duration: int,
-        paid_message_star_count: Optional[int] = None
-    ) -> Optional["types.Message"]:
+        paid_message_star_count: int | None = None
+    ) -> types.Message | None:
         """Shortcut for method :obj:`~pyrogram.Client.send_gift_purchase_offer` will automatically fill method attributes:
 
         * owner_id

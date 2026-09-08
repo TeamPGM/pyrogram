@@ -16,7 +16,7 @@
 #  You should have received a copy of the GNU Lesser General Public License
 #  along with Pyrogram.  If not, see <http://www.gnu.org/licenses/>.
 
-from typing import Optional
+from __future__ import annotations as _annotations
 
 import pyrogram
 from pyrogram import raw, types, utils
@@ -42,9 +42,9 @@ class SuggestedPostApprovalFailed(Object):
     """
     def __init__(
         self, *,
-        suggested_post_message_id: Optional[int] = None,
-        suggested_post_message: Optional["types.Message"] = None,
-        price: Optional["types.SuggestedPostPrice"] = None
+        suggested_post_message_id: int | None = None,
+        suggested_post_message: types.Message | None = None,
+        price: types.SuggestedPostPrice | None = None
     ):
         super().__init__()
 
@@ -54,10 +54,10 @@ class SuggestedPostApprovalFailed(Object):
 
     @staticmethod
     async def _parse(
-        client: "pyrogram.Client",
-        message: "raw.types.MessageService"
-    ) -> "SuggestedPostApprovalFailed":
-        action: "raw.types.MessageActionSuggestedPostApproval" = message.action
+        client: pyrogram.Client,
+        message: raw.types.MessageService
+    ) -> SuggestedPostApprovalFailed:
+        action: raw.types.MessageActionSuggestedPostApproval = message.action
 
         if not isinstance(action, raw.types.MessageActionSuggestedPostApproval):
             return None

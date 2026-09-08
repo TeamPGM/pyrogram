@@ -16,7 +16,7 @@
 #  You should have received a copy of the GNU Lesser General Public License
 #  along with Pyrogram.  If not, see <http://www.gnu.org/licenses/>.
 
-from typing import Union
+from __future__ import annotations as _annotations
 
 import pyrogram
 from pyrogram import raw
@@ -24,8 +24,8 @@ from pyrogram import raw
 
 class ReplaceManagedBotToken:
     async def replace_managed_bot_token(
-        self: "pyrogram.Client",
-        user_id: Union[int, str],
+        self: pyrogram.Client,
+        user_id: int | str,
     ) -> str:
         """Use this method to revoke the current token of a managed bot and generate a new one.
 

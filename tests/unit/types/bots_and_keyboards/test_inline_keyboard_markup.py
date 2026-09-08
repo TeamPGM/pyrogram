@@ -23,15 +23,25 @@ layer that renames either constructor fails this test instead of silently going 
 wire as the previous layer's shape.
 """
 
+from __future__ import annotations as _annotations
+
+import inspect
 from typing import get_args
 
 from pyrogram import raw, types
 
 
 def declared_constructor(tl_type: type, *, field: str) -> str:
-    """Name of the constructor the schema declares for a vector field of `tl_type`."""
-    (forward_ref,) = get_args(tl_type.__init__.__annotations__[field])
-    return forward_ref.__forward_arg__.rsplit(".", 1)[-1]
+    """Name of the constructor the schema declares for a vector field of `tl_type`.
+
+    The generated modules carry `from __future__ import annotations`, so the annotation is a
+    string until `eval_str` evaluates it, and they import `raw` under `TYPE_CHECKING` only, so
+    their own globals cannot resolve that name: hand it in.
+    """
+    signature = inspect.signature(tl_type.__init__, globals={"raw": raw}, eval_str=True)
+
+    (element,) = get_args(signature.parameters[field].annotation)
+    return element.__name__
 
 
 async def test_write_builds_the_constructors_the_schema_declares() -> None:

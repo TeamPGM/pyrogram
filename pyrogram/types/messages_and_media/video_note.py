@@ -16,8 +16,9 @@
 #  You should have received a copy of the GNU Lesser General Public License
 #  along with Pyrogram.  If not, see <http://www.gnu.org/licenses/>.
 
+from __future__ import annotations as _annotations
+
 from datetime import datetime
-from typing import List, Optional
 
 import pyrogram
 from pyrogram import raw, utils
@@ -62,16 +63,16 @@ class VideoNote(Object):
     def __init__(
         self,
         *,
-        client: Optional["pyrogram.Client"] = None,
+        client: pyrogram.Client | None = None,
         file_id: str,
         file_unique_id: str,
         length: int,
         duration: int,
-        thumbs: Optional[List["types.Thumbnail"]] = None,
-        mime_type: Optional[str] = None,
-        file_size: Optional[int] = None,
-        date: Optional[datetime] = None,
-        ttl_seconds: Optional[int] = None
+        thumbs: list[types.Thumbnail] | None = None,
+        mime_type: str | None = None,
+        file_size: int | None = None,
+        date: datetime | None = None,
+        ttl_seconds: int | None = None
     ):
         super().__init__(client)
 
@@ -88,10 +89,10 @@ class VideoNote(Object):
     @staticmethod
     def _parse(
         client,
-        video_note: "raw.types.Document",
-        video_attributes: "raw.types.DocumentAttributeVideo",
-        ttl_seconds: Optional[int] = None
-    ) -> "VideoNote":
+        video_note: raw.types.Document,
+        video_attributes: raw.types.DocumentAttributeVideo,
+        ttl_seconds: int | None = None
+    ) -> VideoNote:
         return VideoNote(
             file_id=FileId(
                 file_type=FileType.VIDEO_NOTE,

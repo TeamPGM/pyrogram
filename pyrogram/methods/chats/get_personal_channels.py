@@ -16,7 +16,7 @@
 #  You should have received a copy of the GNU Lesser General Public License
 #  along with Pyrogram.  If not, see <http://www.gnu.org/licenses/>.
 
-from typing import List, Optional
+from __future__ import annotations as _annotations
 
 import pyrogram
 from pyrogram import raw, types
@@ -24,8 +24,8 @@ from pyrogram import raw, types
 
 class GetPersonalChannels:
     async def get_personal_channels(
-        self: "pyrogram.Client"
-    ) -> Optional[List["types.Chat"]]:
+        self: pyrogram.Client
+    ) -> list[types.Chat] | None:
         """Get all your public channels.
 
         .. include:: /_includes/usable-by/users.rst

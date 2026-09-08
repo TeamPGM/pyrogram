@@ -16,7 +16,7 @@
 #  You should have received a copy of the GNU Lesser General Public License
 #  along with Pyrogram.  If not, see <http://www.gnu.org/licenses/>.
 
-from typing import List, Optional
+from __future__ import annotations as _annotations
 
 from pyrogram import raw, types
 
@@ -55,13 +55,13 @@ class PhoneNumberAuthenticationSettings(Object):
     def __init__(
         self,
         *,
-        allow_flash_call: Optional[bool] = None,
-        allow_missed_call: Optional[bool] = None,
-        is_current_phone_number: Optional[bool] = None,
-        has_unknown_phone_number: Optional[bool] = None,
-        allow_sms_retriever_api: Optional[bool] = None,
-        firebase_authentication_settings: Optional["types.FirebaseAuthenticationSettings"] = None,
-        authentication_tokens: Optional[List[bytes]] = None,
+        allow_flash_call: bool | None = None,
+        allow_missed_call: bool | None = None,
+        is_current_phone_number: bool | None = None,
+        has_unknown_phone_number: bool | None = None,
+        allow_sms_retriever_api: bool | None = None,
+        firebase_authentication_settings: types.FirebaseAuthenticationSettings | None = None,
+        authentication_tokens: list[bytes] | None = None,
     ):
         super().__init__()
 

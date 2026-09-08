@@ -16,7 +16,7 @@
 #  You should have received a copy of the GNU Lesser General Public License
 #  along with Pyrogram.  If not, see <http://www.gnu.org/licenses/>.
 
-from typing import Optional, Union
+from __future__ import annotations as _annotations
 
 import pyrogram
 from pyrogram import raw, types
@@ -24,12 +24,12 @@ from pyrogram import raw, types
 
 class CreateForumTopic:
     async def create_forum_topic(
-        self: "pyrogram.Client",
-        chat_id: Union[int, str],
+        self: pyrogram.Client,
+        chat_id: int | str,
         title: str,
-        icon_color: Optional[int] = None,
-        icon_emoji_id: Optional[int] = None
-    ) -> "types.ForumTopicCreated":
+        icon_color: int | None = None,
+        icon_emoji_id: int | None = None
+    ) -> types.ForumTopicCreated:
         """Create a new forum topic.
 
         .. include:: /_includes/usable-by/users-bots.rst

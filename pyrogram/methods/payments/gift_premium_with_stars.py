@@ -16,8 +16,7 @@
 #  You should have received a copy of the GNU Lesser General Public License
 #  along with Pyrogram.  If not, see <http://www.gnu.org/licenses/>.
 
-
-from typing import List, Optional, Union
+from __future__ import annotations as _annotations
 
 import pyrogram
 from pyrogram import enums, raw, types, utils
@@ -25,14 +24,14 @@ from pyrogram import enums, raw, types, utils
 
 class GiftPremiumWithStars:
     async def gift_premium_with_stars(
-        self: "pyrogram.Client",
-        user_id: Union[int, str],
+        self: pyrogram.Client,
+        user_id: int | str,
         month_count: int,
-        text: Optional[str] = None,
-        parse_mode: Optional["enums.ParseMode"] = None,
-        entities: Optional[List["types.MessageEntity"]] = None,
-        star_count: Optional[int] = None,
-    ) -> Optional["types.Message"]:
+        text: str | None = None,
+        parse_mode: enums.ParseMode | None = None,
+        entities: list[types.MessageEntity] | None = None,
+        star_count: int | None = None,
+    ) -> types.Message | None:
         """Allows to buy a Telegram Premium subscription for another user with payment in Telegram Stars.
 
         .. include:: /_includes/usable-by/users-bots.rst

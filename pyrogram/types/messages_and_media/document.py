@@ -16,8 +16,9 @@
 #  You should have received a copy of the GNU Lesser General Public License
 #  along with Pyrogram.  If not, see <http://www.gnu.org/licenses/>.
 
+from __future__ import annotations as _annotations
+
 from datetime import datetime
-from typing import List, Optional
 
 import pyrogram
 from pyrogram import raw, utils
@@ -56,14 +57,14 @@ class Document(Object):
     def __init__(
         self,
         *,
-        client: Optional["pyrogram.Client"] = None,
+        client: pyrogram.Client | None = None,
         file_id: str,
         file_unique_id: str,
-        file_name: Optional[str] = None,
-        mime_type: Optional[str] = None,
-        file_size: Optional[int] = None,
-        date: Optional[datetime] = None,
-        thumbs: Optional[List["types.Thumbnail"]] = None
+        file_name: str | None = None,
+        mime_type: str | None = None,
+        file_size: int | None = None,
+        date: datetime | None = None,
+        thumbs: list[types.Thumbnail] | None = None
     ):
         super().__init__(client)
 
@@ -76,7 +77,7 @@ class Document(Object):
         self.thumbs = thumbs
 
     @staticmethod
-    def _parse(client, document: "raw.types.Document", file_name: str) -> "Document":
+    def _parse(client, document: raw.types.Document, file_name: str) -> Document:
         return Document(
             file_id=FileId(
                 file_type=FileType.DOCUMENT,

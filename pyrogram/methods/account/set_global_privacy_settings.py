@@ -15,7 +15,8 @@
 #
 #  You should have received a copy of the GNU Lesser General Public License
 #  along with Pyrogram.  If not, see <http://www.gnu.org/licenses/>.
-from typing import Optional
+
+from __future__ import annotations as _annotations
 
 import pyrogram
 from pyrogram import raw, types
@@ -23,16 +24,16 @@ from pyrogram import raw, types
 
 class SetGlobalPrivacySettings:
     async def set_global_privacy_settings(
-        self: "pyrogram.Client",
-        archive_and_mute_new_chats: Optional[bool] = None,
-        keep_unmuted_chats_archived: Optional[bool] = None,
-        keep_chats_from_folders_archived: Optional[bool] = None,
-        show_read_date: Optional[bool] = None,
-        allow_new_chats_from_unknown_users: Optional[bool] = None,
-        incoming_paid_message_star_count: Optional[int] = None,
-        show_gift_button: Optional[bool] = None,
-        accepted_gift_types: Optional[types.AcceptedGiftTypes] = None,
-    ) -> "types.GlobalPrivacySettings":
+        self: pyrogram.Client,
+        archive_and_mute_new_chats: bool | None = None,
+        keep_unmuted_chats_archived: bool | None = None,
+        keep_chats_from_folders_archived: bool | None = None,
+        show_read_date: bool | None = None,
+        allow_new_chats_from_unknown_users: bool | None = None,
+        incoming_paid_message_star_count: int | None = None,
+        show_gift_button: bool | None = None,
+        accepted_gift_types: types.AcceptedGiftTypes | None = None,
+    ) -> types.GlobalPrivacySettings:
         """Set account global privacy settings.
 
         .. include:: /_includes/usable-by/users.rst

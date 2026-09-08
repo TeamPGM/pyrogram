@@ -16,7 +16,7 @@
 #  You should have received a copy of the GNU Lesser General Public License
 #  along with Pyrogram.  If not, see <http://www.gnu.org/licenses/>.
 
-from typing import Optional
+from __future__ import annotations as _annotations
 
 import pyrogram
 from pyrogram import raw, types
@@ -24,11 +24,11 @@ from pyrogram import raw, types
 
 class SendPaymentForm:
     async def send_payment_form(
-        self: "pyrogram.Client",
+        self: pyrogram.Client,
         payment_form_id: int,
-        input_invoice: "types.InputInvoice",
-        credentials: Optional["types.InputCredentials"] = None
-    ) -> "types.PaymentResult":
+        input_invoice: types.InputInvoice,
+        credentials: types.InputCredentials | None = None
+    ) -> types.PaymentResult:
         """Send a filled-out payment form to the bot for final verification.
 
         .. include:: /_includes/usable-by/users.rst

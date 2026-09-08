@@ -16,7 +16,7 @@
 #  You should have received a copy of the GNU Lesser General Public License
 #  along with Pyrogram.  If not, see <http://www.gnu.org/licenses/>.
 
-from typing import Union
+from __future__ import annotations as _annotations
 
 import pyrogram
 from pyrogram import raw
@@ -36,7 +36,7 @@ class InputInvoiceMessage(InputInvoice):
     """
     def __init__(
         self,
-        chat_id: Union[int, str],
+        chat_id: int | str,
         message_id: int,
     ):
         super().__init__()
@@ -44,7 +44,7 @@ class InputInvoiceMessage(InputInvoice):
         self.chat_id = chat_id
         self.message_id = message_id
 
-    async def write(self, client: "pyrogram.Client"):
+    async def write(self, client: pyrogram.Client):
         return raw.types.InputInvoiceMessage(
             peer=await client.resolve_peer(self.chat_id),
             msg_id=self.message_id

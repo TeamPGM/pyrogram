@@ -16,7 +16,7 @@
 #  You should have received a copy of the GNU Lesser General Public License
 #  along with Pyrogram.  If not, see <http://www.gnu.org/licenses/>.
 
-from typing import List, Optional, Union
+from __future__ import annotations as _annotations
 
 import pyrogram
 from pyrogram import raw
@@ -24,10 +24,10 @@ from pyrogram import raw
 
 class SetManagedBotAccessSettings:
     async def set_managed_bot_access_settings(
-        self: "pyrogram.Client",
-        user_id: Union[int, str],
+        self: pyrogram.Client,
+        user_id: int | str,
         is_access_restricted: bool,
-        added_user_ids: Optional[List[Union[int, str]]] = None,
+        added_user_ids: list[int | str] | None = None,
     ) -> bool:
         """Use this method to get the access settings of a managed bot.
 

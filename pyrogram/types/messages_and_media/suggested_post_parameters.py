@@ -16,8 +16,9 @@
 #  You should have received a copy of the GNU Lesser General Public License
 #  along with Pyrogram.  If not, see <http://www.gnu.org/licenses/>.
 
+from __future__ import annotations as _annotations
+
 from datetime import datetime
-from typing import Optional
 
 from pyrogram import raw, types, utils
 
@@ -38,15 +39,15 @@ class SuggestedPostParameters(Object):
     """
     def __init__(
         self, *,
-        price: Optional["types.SuggestedPostPrice"] = None,
-        send_date: Optional[datetime] = None
+        price: types.SuggestedPostPrice | None = None,
+        send_date: datetime | None = None
     ):
         super().__init__()
 
         self.price = price
         self.send_date = send_date
 
-    def write(self) -> "raw.types.SuggestedPost":
+    def write(self) -> raw.types.SuggestedPost:
         return raw.types.SuggestedPost(
             price=self.price.write() if self.price else None,
             schedule_date=utils.datetime_to_timestamp(self.send_date)

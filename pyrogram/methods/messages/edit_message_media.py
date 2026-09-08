@@ -16,8 +16,9 @@
 #  You should have received a copy of the GNU Lesser General Public License
 #  along with Pyrogram.  If not, see <http://www.gnu.org/licenses/>.
 
+from __future__ import annotations as _annotations
+
 from datetime import datetime
-from typing import Optional, Union
 
 import pyrogram
 from pyrogram import raw, types, utils
@@ -25,15 +26,15 @@ from pyrogram import raw, types, utils
 
 class EditMessageMedia:
     async def edit_message_media(
-        self: "pyrogram.Client",
-        chat_id: Union[int, str],
+        self: pyrogram.Client,
+        chat_id: int | str,
         message_id: int,
-        media: "types.InputMedia",
-        show_caption_above_media: Optional[bool] = None,
-        schedule_date: Optional[datetime] = None,
-        business_connection_id: Optional[str] = None,
-        reply_markup: Optional["types.InlineKeyboardMarkup"] = None,
-    ) -> "types.Message":
+        media: types.InputMedia,
+        show_caption_above_media: bool | None = None,
+        schedule_date: datetime | None = None,
+        business_connection_id: str | None = None,
+        reply_markup: types.InlineKeyboardMarkup | None = None,
+    ) -> types.Message:
         """Edit animation, audio, document, photo or video messages, or to add media to text messages.
 
         If a message is part of a message album, then it can be edited only to an audio for audio albums, only to a document for document albums and to a photo or a video otherwise.

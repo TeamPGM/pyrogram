@@ -16,9 +16,10 @@
 #  You should have received a copy of the GNU Lesser General Public License
 #  along with Pyrogram.  If not, see <http://www.gnu.org/licenses/>.
 
+from __future__ import annotations as _annotations
+
 import logging
 from datetime import datetime
-from typing import Optional, Union
 
 import pyrogram
 from pyrogram import raw, types, utils
@@ -59,15 +60,15 @@ class Community(Object):
     def __init__(
         self,
         *,
-        client: Optional["pyrogram.Client"] = None,
-        id: Optional[int] = None,
-        have_access: Optional[bool] = None,
-        name: Optional[str] = None,
-        photo: Optional["types.ChatPhoto"] = None,
-        date: Optional[datetime] = None,
-        status: Optional["types.CommunityMemberStatus"] = None,
-        permissions: Optional["types.CommunityPermissions"] = None,
-        raw: "raw.base.Chat",
+        client: pyrogram.Client | None = None,
+        id: int | None = None,
+        have_access: bool | None = None,
+        name: str | None = None,
+        photo: types.ChatPhoto | None = None,
+        date: datetime | None = None,
+        status: types.CommunityMemberStatus | None = None,
+        permissions: types.CommunityPermissions | None = None,
+        raw: raw.base.Chat,
     ):
         super().__init__(client)
 
@@ -82,8 +83,8 @@ class Community(Object):
 
     @staticmethod
     async def _parse(
-        client: "pyrogram.Client", community: Union["raw.types.Community", "raw.types.CommunityForbidden"]
-    ) -> Optional["Community"]:
+        client: pyrogram.Client, community: raw.types.Community | raw.types.CommunityForbidden
+    ) -> Community | None:
         if isinstance(community, raw.types.CommunityForbidden):
             return Community(
                 id=utils.get_channel_id(community.id),

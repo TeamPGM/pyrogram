@@ -16,7 +16,7 @@
 #  You should have received a copy of the GNU Lesser General Public License
 #  along with Pyrogram.  If not, see <http://www.gnu.org/licenses/>.
 
-from typing import Optional
+from __future__ import annotations as _annotations
 
 from pyrogram import raw
 
@@ -62,10 +62,10 @@ class LoginUrl(Object):
         self,
         *,
         url: str,
-        forward_text: Optional[str] = None,
-        bot_username: Optional[str] = None,
-        request_write_access: Optional[str] = None,
-        button_id: Optional[int] = None,
+        forward_text: str | None = None,
+        bot_username: str | None = None,
+        request_write_access: str | None = None,
+        button_id: int | None = None,
     ):
         super().__init__()
 
@@ -76,6 +76,6 @@ class LoginUrl(Object):
         self.button_id = button_id
 
     @staticmethod
-    def read(b: "raw.types.InlineButtonTypeUrlAuth") -> "LoginUrl":
+    def read(b: raw.types.InlineButtonTypeUrlAuth) -> LoginUrl:
         return LoginUrl(url=b.url, forward_text=b.fwd_text, button_id=b.button_id)
 

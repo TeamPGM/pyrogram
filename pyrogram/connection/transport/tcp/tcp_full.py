@@ -16,11 +16,12 @@
 #  You should have received a copy of the GNU Lesser General Public License
 #  along with Pyrogram.  If not, see <http://www.gnu.org/licenses/>.
 
+from __future__ import annotations as _annotations
+
 import asyncio
 import logging
 from binascii import crc32
 from struct import pack, unpack
-from typing import Optional, Tuple
 
 from pyrogram.connection.proxy import Proxy
 from pyrogram.connection.transport.tcp.tcp import TCP
@@ -32,16 +33,16 @@ class TCPFull(TCP):
     def __init__(
         self,
         ipv6: bool,
-        proxy: Optional[Proxy] = None,
+        proxy: Proxy | None = None,
         crypto_executor_workers: int = 1,
-        loop: Optional[asyncio.AbstractEventLoop] = None,
-        dc_id: Optional[int] = None,
+        loop: asyncio.AbstractEventLoop | None = None,
+        dc_id: int | None = None,
     ) -> None:
         super().__init__(ipv6, proxy, crypto_executor_workers, loop, dc_id=dc_id)
 
         self.seq_no: int = 0
 
-    async def connect(self, address: Tuple[str, int]) -> None:
+    async def connect(self, address: tuple[str, int]) -> None:
         self.marker_event.clear()
         await super().connect(address)
         self.seq_no = 0
@@ -54,7 +55,7 @@ class TCPFull(TCP):
 
         await super().send(data, wait_for_marker=False)
 
-    async def recv(self, length: int = 0) -> Optional[bytes]:
+    async def recv(self, length: int = 0) -> bytes | None:
         length_bytes = await super().recv(4)
 
         if length_bytes is None:

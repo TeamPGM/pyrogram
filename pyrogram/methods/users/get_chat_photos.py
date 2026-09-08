@@ -16,20 +16,22 @@
 #  You should have received a copy of the GNU Lesser General Public License
 #  along with Pyrogram.  If not, see <http://www.gnu.org/licenses/>.
 
-from typing import AsyncGenerator, List, Union
+from __future__ import annotations as _annotations
+
+from collections.abc import AsyncGenerator
 
 import pyrogram
 from pyrogram import raw, types, utils
 
 
 async def get_chunk(
-    client: "pyrogram.Client",
+    client: pyrogram.Client,
     peer: raw.types.InputPeerChannel,
     peer_id: int,
     peer_access_hash: int,
     offset: int = 0,
     limit: int = 100,
-) -> List["types.ChatPhoto"]:
+) -> list[types.ChatPhoto]:
     r = await client.invoke(
         raw.functions.messages.Search(
             peer=peer,
@@ -70,10 +72,10 @@ async def get_chunk(
 
 class GetChatPhotos:
     async def get_chat_photos(
-        self: "pyrogram.Client",
-        chat_id: Union[int, str],
+        self: pyrogram.Client,
+        chat_id: int | str,
         limit: int = 0,
-    ) -> AsyncGenerator["types.ChatPhoto", None]:
+    ) -> AsyncGenerator[types.ChatPhoto, None]:
         """Get a chat or a user profile photos sequentially.
         Personal and public photo aren't returned.
 

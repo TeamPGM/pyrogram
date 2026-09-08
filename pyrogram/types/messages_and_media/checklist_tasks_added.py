@@ -16,7 +16,7 @@
 #  You should have received a copy of the GNU Lesser General Public License
 #  along with Pyrogram.  If not, see <http://www.gnu.org/licenses/>.
 
-from typing import Dict, List
+from __future__ import annotations as _annotations
 
 import pyrogram
 from pyrogram import raw, types
@@ -40,7 +40,7 @@ class ChecklistTasksAdded(Object):
         self,
         *,
         checklist_message_id: int,
-        tasks: List["types.ChecklistTask"]
+        tasks: list[types.ChecklistTask]
     ):
 
         super().__init__()
@@ -50,12 +50,12 @@ class ChecklistTasksAdded(Object):
 
     @staticmethod
     async def _parse(
-        client: "pyrogram.Client",
-        message: "raw.types.MessageService",
-        users: Dict[int, "raw.base.User"],
-        chats: Dict[int, "raw.base.Chat"]
-    ) -> "ChecklistTasksAdded":
-        action: "raw.types.MessageActionTodoAppendTasks" = message.action
+        client: pyrogram.Client,
+        message: raw.types.MessageService,
+        users: dict[int, raw.base.User],
+        chats: dict[int, raw.base.Chat]
+    ) -> ChecklistTasksAdded:
+        action: raw.types.MessageActionTodoAppendTasks = message.action
 
         return ChecklistTasksAdded(
             checklist_message_id=getattr(message.reply_to, "reply_to_msg_id", None),

@@ -16,8 +16,9 @@
 #  You should have received a copy of the GNU Lesser General Public License
 #  along with Pyrogram.  If not, see <http://www.gnu.org/licenses/>.
 
+from __future__ import annotations as _annotations
+
 import logging
-from typing import List, Optional, Union
 
 import pyrogram
 from pyrogram import enums, raw, utils, types
@@ -27,52 +28,51 @@ log = logging.getLogger(__name__)
 
 class SendInvoice:
     async def send_invoice(
-        self: "pyrogram.Client",
-        chat_id: Union[int, str],
+        self: pyrogram.Client,
+        chat_id: int | str,
         title: str,
         description: str,
-        payload: Union[str, bytes],
+        payload: str | bytes,
         currency: str,
-        prices: List["types.LabeledPrice"],
-        message_thread_id: Optional[int] = None,
-        provider_token: Optional[str] = None,
-        max_tip_amount: Optional[int] = None,
-        suggested_tip_amounts: Optional[List[int]] = None,
-        start_parameter: Optional[str] = None,
-        provider_data: Optional[str] = None,
-        photo_url: Optional[str] = None,
-        photo_size: Optional[int] = None,
-        photo_width: Optional[int] = None,
-        photo_height: Optional[int] = None,
-        need_name: Optional[bool] = None,
-        need_phone_number: Optional[bool] = None,
-        need_email: Optional[bool] = None,
-        need_shipping_address: Optional[bool] = None,
-        send_phone_number_to_provider: Optional[bool] = None,
-        send_email_to_provider: Optional[bool] = None,
-        is_flexible: Optional[bool] = None,
-        disable_notification: Optional[bool] = None,
-        protect_content: Optional[bool] = None,
-        message_effect_id: Optional[int] = None,
-        reply_parameters: Optional["types.ReplyParameters"] = None,
-        allow_paid_broadcast: Optional[bool] = None,
-        direct_messages_topic_id: Optional[int] = None,
-        suggested_post_parameters: Optional["types.SuggestedPostParameters"] = None,
-        subscription_expiration_date: Optional[int] = None,
-        reply_markup: Optional[
-            Union[
-                "types.InlineKeyboardMarkup",
-                "types.ReplyKeyboardMarkup",
-                "types.ReplyKeyboardRemove",
-                "types.ForceReply"
-            ]
-        ] = None,
+        prices: list[types.LabeledPrice],
+        message_thread_id: int | None = None,
+        provider_token: str | None = None,
+        max_tip_amount: int | None = None,
+        suggested_tip_amounts: list[int] | None = None,
+        start_parameter: str | None = None,
+        provider_data: str | None = None,
+        photo_url: str | None = None,
+        photo_size: int | None = None,
+        photo_width: int | None = None,
+        photo_height: int | None = None,
+        need_name: bool | None = None,
+        need_phone_number: bool | None = None,
+        need_email: bool | None = None,
+        need_shipping_address: bool | None = None,
+        send_phone_number_to_provider: bool | None = None,
+        send_email_to_provider: bool | None = None,
+        is_flexible: bool | None = None,
+        disable_notification: bool | None = None,
+        protect_content: bool | None = None,
+        message_effect_id: int | None = None,
+        reply_parameters: types.ReplyParameters | None = None,
+        allow_paid_broadcast: bool | None = None,
+        direct_messages_topic_id: int | None = None,
+        suggested_post_parameters: types.SuggestedPostParameters | None = None,
+        subscription_expiration_date: int | None = None,
+        reply_markup: (
+            types.InlineKeyboardMarkup
+            | types.ReplyKeyboardMarkup
+            | types.ReplyKeyboardRemove
+            | types.ForceReply
+            | None
+        ) = None,
         caption: str = "",
-        parse_mode: Optional["enums.ParseMode"] = None,
-        caption_entities: Optional[List["types.MessageEntity"]] = None,
+        parse_mode: enums.ParseMode | None = None,
+        caption_entities: list[types.MessageEntity] | None = None,
 
-        reply_to_message_id: Optional[int] = None,
-    ) -> Optional["types.Message"]:
+        reply_to_message_id: int | None = None,
+    ) -> types.Message | None:
         """Use this method to send invoices.
 
         .. include:: /_includes/usable-by/bots.rst

@@ -16,7 +16,7 @@
 #  You should have received a copy of the GNU Lesser General Public License
 #  along with Pyrogram.  If not, see <http://www.gnu.org/licenses/>.
 
-from typing import Optional, Union
+from __future__ import annotations as _annotations
 
 import pyrogram
 from pyrogram import raw, types
@@ -39,15 +39,15 @@ class InputPollOption(Object):
     def __init__(
         self,
         *,
-        text: Union[str, "types.FormattedText"],
-        media: Optional["types.InputPollOptionMedia"] = None,
+        text: str | types.FormattedText,
+        media: types.InputPollOptionMedia | None = None,
     ):
         super().__init__()
 
         self.text = text
         self.media = media
 
-    async def write(self, client: "pyrogram.Client") -> "raw.types.InputPollAnswer":
+    async def write(self, client: pyrogram.Client) -> raw.types.InputPollAnswer:
         if isinstance(self.text, str):
             self.text = types.FormattedText(text=self.text)
 

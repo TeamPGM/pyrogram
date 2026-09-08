@@ -16,8 +16,9 @@
 #  You should have received a copy of the GNU Lesser General Public License
 #  along with Pyrogram.  If not, see <http://www.gnu.org/licenses/>.
 
+from __future__ import annotations as _annotations
+
 import logging
-from typing import List, Optional
 
 import pyrogram
 from pyrogram import enums, raw, types, utils
@@ -27,15 +28,15 @@ log = logging.getLogger(__name__)
 
 class EditInlineText:
     async def edit_inline_text(
-        self: "pyrogram.Client",
+        self: pyrogram.Client,
         inline_message_id: str,
-        text: Optional[str] = None,
-        parse_mode: Optional["enums.ParseMode"] = None,
-        link_preview_options: Optional["types.LinkPreviewOptions"] = None,
-        entities: Optional[List["types.MessageEntity"]] = None,
-        rich_message: Optional["types.InputRichMessage"] = None,
-        reply_markup: Optional["types.InlineKeyboardMarkup"] = None,
-        disable_web_page_preview: Optional[bool] = None,
+        text: str | None = None,
+        parse_mode: enums.ParseMode | None = None,
+        link_preview_options: types.LinkPreviewOptions | None = None,
+        entities: list[types.MessageEntity] | None = None,
+        rich_message: types.InputRichMessage | None = None,
+        reply_markup: types.InlineKeyboardMarkup | None = None,
+        disable_web_page_preview: bool | None = None,
     ) -> bool:
         """Edit the text of inline messages.
 

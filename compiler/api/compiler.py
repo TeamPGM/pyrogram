@@ -16,13 +16,15 @@
 #  You should have received a copy of the GNU Lesser General Public License
 #  along with Pyrogram.  If not, see <http://www.gnu.org/licenses/>.
 
+from __future__ import annotations as _annotations
+
 import json
 import os
 import re
 import shutil
 from functools import partial
 from pathlib import Path
-from typing import NamedTuple, List, Tuple
+from typing import NamedTuple
 
 # from autoflake import fix_code
 # from black import format_str, FileMode
@@ -78,7 +80,7 @@ class Combinator(NamedTuple):
     name: str
     id: str
     has_flags: bool
-    args: List[Tuple[str, str]]
+    args: list[tuple[str, str]]
     qualtype: str
     typespace: str
     type: str
@@ -94,17 +96,31 @@ def camel(s: str):
     return "".join([i[0].upper() + i[1:] for i in s.split("_")])
 
 
+def vector_element(vector: str) -> str:
+    """The `X` of a `Vector<X>`"""
+    return vector.split("<")[1][:-1]
+
+
+def qualified_name(qualtype: str) -> str:
+    """`namespace.Name` for a namespaced type, `Name` for a bare one"""
+    namespace, name = qualtype.split(".") if "." in qualtype else ("", qualtype)
+
+    return ".".join([namespace, name]).strip(".")
+
+
 # noinspection PyShadowingBuiltins, PyShadowingNames
 def get_return_type_hint(qualtype: str) -> str:
     """Get return type hint for generic TLObject"""
     if qualtype.startswith("Vector"):
-        # Extract inner type from Vector<Type>
-        inner = qualtype.split("<")[1][:-1]
-        ns, name = inner.split(".") if "." in inner else ("", inner)
-        return f'"List[raw.base.{".".join([ns, name]).strip(".")}]"'
+        element = qualified_name(vector_element(qualtype))
+        hint = f"list[raw.base.{element}]"
     else:
-        ns, name = qualtype.split(".") if "." in qualtype else ("", qualtype)
-        return f'"raw.base.{".".join([ns, name]).strip(".")}"'
+        hint = f"raw.base.{qualified_name(qualtype)}"
+
+    # This goes in `class X(TLObject[...])`, a base-class subscript, not an annotation, so
+    #  the future import does not defer it: unquoted, `raw` is `TYPE_CHECKING`-only and it
+    #  raises `NameError: name 'raw' is not defined` at import time.
+    return f'"{hint}"'
 
 
 # noinspection PyShadowingBuiltins, PyShadowingNames
@@ -135,16 +151,15 @@ def get_type_hint(type: str) -> str:
     if re.match("^vector", type, re.I):
         is_core = True
 
-        sub_type = type.split("<")[1][:-1]
-        type = f"List[{get_type_hint(sub_type)}]"
+        element = get_type_hint(vector_element(type))
+        type = f"list[{element}]"
 
     if is_core:
-        return f"Optional[{type}] = None" if is_flag else type
-    else:
-        ns, name = type.split(".") if "." in type else ("", type)
-        type = '"raw.base.' + ".".join([ns, name]).strip(".") + '"'
+        return f"{type} | None = None" if is_flag else type
 
-        return f"Optional[{type}] = None" if is_flag else type
+    qualname = f"raw.base.{qualified_name(type)}"
+
+    return f"{qualname} | None = None" if is_flag else qualname
 
 
 def sort_args(args):
@@ -388,7 +403,7 @@ def start(format: bool = False):
                     docstring=docstring,
                     name=type,
                     qualname=qualtype,
-                    types=", ".join([f"raw.types.{c}" for c in constructors]),
+                    types=" | ".join([f"raw.types.{c}" for c in constructors]),
                     doc_name=snake(type).replace("_", "-")
                 )
             )

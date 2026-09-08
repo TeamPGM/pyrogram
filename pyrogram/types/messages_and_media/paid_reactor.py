@@ -16,7 +16,7 @@
 #  You should have received a copy of the GNU Lesser General Public License
 #  along with Pyrogram.  If not, see <http://www.gnu.org/licenses/>.
 
-from typing import Dict, Optional
+from __future__ import annotations as _annotations
 
 import pyrogram
 from pyrogram import raw, types, utils
@@ -49,11 +49,11 @@ class PaidReactor(Object):
     def __init__(
         self,
         *,
-        sender: Optional["types.Chat"] = None,
-        star_count: Optional[int] = None,
-        is_top: Optional[bool] = None,
-        is_me: Optional[bool] = None,
-        is_anonymous: Optional[bool] = None,
+        sender: types.Chat | None = None,
+        star_count: int | None = None,
+        is_top: bool | None = None,
+        is_me: bool | None = None,
+        is_anonymous: bool | None = None,
     ):
         super().__init__()
 
@@ -65,11 +65,11 @@ class PaidReactor(Object):
 
     @staticmethod
     async def _parse(
-        client: "pyrogram.Client",
-        paid_reactor: Optional["raw.base.MessageReactor"],
-        users: Dict[int, "raw.base.User"],
-        chats: Dict[int, "raw.base.Chat"],
-    ) -> Optional["PaidReactor"]:
+        client: pyrogram.Client,
+        paid_reactor: raw.base.MessageReactor | None,
+        users: dict[int, raw.base.User],
+        chats: dict[int, raw.base.Chat],
+    ) -> PaidReactor | None:
         if not paid_reactor:
             return None
 

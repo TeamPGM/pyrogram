@@ -16,7 +16,7 @@
 #  You should have received a copy of the GNU Lesser General Public License
 #  along with Pyrogram.  If not, see <http://www.gnu.org/licenses/>.
 
-from typing import Optional
+from __future__ import annotations as _annotations
 
 import pyrogram
 from pyrogram import raw
@@ -24,11 +24,11 @@ from pyrogram import raw
 
 class AnswerCallbackQuery:
     async def answer_callback_query(
-        self: "pyrogram.Client",
+        self: pyrogram.Client,
         callback_query_id: str,
-        text: Optional[str] = None,
-        show_alert: Optional[bool] = None,
-        url: Optional[str] = None,
+        text: str | None = None,
+        show_alert: bool | None = None,
+        url: str | None = None,
         cache_time: int = 0
     ) -> bool:
         """Send answers to callback queries sent from inline keyboards.

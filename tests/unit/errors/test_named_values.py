@@ -16,10 +16,11 @@
 #  You should have received a copy of the GNU Lesser General Public License
 #  along with Pyrogram.  If not, see <http://www.gnu.org/licenses/>.
 
+from __future__ import annotations as _annotations
 
 from importlib import import_module
 from types import ModuleType
-from typing import Final, Set, Type
+from typing import Final
 
 import pytest
 
@@ -106,7 +107,7 @@ NAMED_ERRORS: Final[int] = 32
 def test_an_error_says_what_its_value_means(
     code: int,
     message: str,
-    error_type: Type[RPCError],
+    error_type: type[RPCError],
     value_name: str,
     value: int
 ) -> None:
@@ -169,7 +170,7 @@ def test_no_message_asks_for_more_than_one_value() -> None:
 
 def test_every_named_value_is_the_value_under_another_name() -> None:
     errors: ModuleType = import_module("pyrogram.errors")
-    named: Set[Type[RPCError]] = set()
+    named: set[type[RPCError]] = set()
 
     for table in exceptions.values():
         for class_name in table.values():

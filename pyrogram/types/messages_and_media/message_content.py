@@ -16,7 +16,7 @@
 #  You should have received a copy of the GNU Lesser General Public License
 #  along with Pyrogram.  If not, see <http://www.gnu.org/licenses/>.
 
-from typing import Dict, Optional
+from __future__ import annotations as _annotations
 
 from pyrogram import enums, raw, types
 
@@ -100,28 +100,28 @@ class MessageContent(Object):
     def __init__(
         self,
         *,
-        type: "enums.MessageMediaType",
-        audio: Optional["types.Audio"] = None,
-        document: Optional["types.Document"] = None,
-        photo: Optional["types.Photo"] = None,
-        sticker: Optional["types.Sticker"] = None,
-        animation: Optional["types.Animation"] = None,
-        game: Optional["types.Game"] = None,
-        giveaway: Optional["types.Giveaway"] = None,
-        giveaway_winners: Optional["types.GiveawayWinners"] = None,
-        invoice: Optional["types.Invoice"] = None,
-        story: Optional["types.Story"] = None,
-        video: Optional["types.Video"] = None,
-        voice: Optional["types.Voice"] = None,
-        video_note: Optional["types.VideoNote"] = None,
-        contact: Optional["types.Contact"] = None,
-        location: Optional["types.Location"] = None,
-        venue: Optional["types.Venue"] = None,
-        web_page: Optional["types.WebPage"] = None,
-        poll: Optional["types.Poll"] = None,
-        dice: Optional["types.Dice"] = None,
-        paid_media: Optional["types.PaidMediaInfo"] = None,
-        checklist: Optional["types.Checklist"] = None,
+        type: enums.MessageMediaType,
+        audio: types.Audio | None = None,
+        document: types.Document | None = None,
+        photo: types.Photo | None = None,
+        sticker: types.Sticker | None = None,
+        animation: types.Animation | None = None,
+        game: types.Game | None = None,
+        giveaway: types.Giveaway | None = None,
+        giveaway_winners: types.GiveawayWinners | None = None,
+        invoice: types.Invoice | None = None,
+        story: types.Story | None = None,
+        video: types.Video | None = None,
+        voice: types.Voice | None = None,
+        video_note: types.VideoNote | None = None,
+        contact: types.Contact | None = None,
+        location: types.Location | None = None,
+        venue: types.Venue | None = None,
+        web_page: types.WebPage | None = None,
+        poll: types.Poll | None = None,
+        dice: types.Dice | None = None,
+        paid_media: types.PaidMediaInfo | None = None,
+        checklist: types.Checklist | None = None,
     ):
         super().__init__()
 
@@ -151,11 +151,11 @@ class MessageContent(Object):
     @staticmethod
     async def _parse(
         client,
-        media: "raw.base.MessageMedia",
-        message: Optional["raw.base.TextWithEntities"] = None,
-        users: Dict[int, "raw.types.User"] = {},
-        chats: Dict[int, "raw.types.Chat"] = {},
-    ) -> "MessageContent":
+        media: raw.base.MessageMedia,
+        message: raw.base.TextWithEntities | None = None,
+        users: dict[int, raw.types.User] = {},
+        chats: dict[int, raw.types.Chat] = {},
+    ) -> MessageContent:
         photo = None
         location = None
         contact = None

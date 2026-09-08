@@ -16,9 +16,12 @@
 #  You should have received a copy of the GNU Lesser General Public License
 #  along with Pyrogram.  If not, see <http://www.gnu.org/licenses/>.
 
+from __future__ import annotations as _annotations
+
 import logging
 from datetime import datetime
-from typing import BinaryIO, Callable, List, Optional, Union
+from typing import BinaryIO
+from collections.abc import Callable
 
 import pyrogram
 from pyrogram import StopTransmission, enums, raw, types, utils
@@ -29,41 +32,40 @@ log = logging.getLogger(__name__)
 
 class SendLivePhoto:
     async def send_live_photo(
-        self: "pyrogram.Client",
-        chat_id: Union[int, str],
-        live_photo: Union[str, BinaryIO],
-        photo: Union[str, BinaryIO],
+        self: pyrogram.Client,
+        chat_id: int | str,
+        live_photo: str | BinaryIO,
+        photo: str | BinaryIO,
         caption: str = "",
-        parse_mode: Optional["enums.ParseMode"] = None,
-        caption_entities: Optional[List["types.MessageEntity"]] = None,
-        has_spoiler: Optional[bool] = None,
+        parse_mode: enums.ParseMode | None = None,
+        caption_entities: list[types.MessageEntity] | None = None,
+        has_spoiler: bool | None = None,
         width: int = 0,
         height: int = 0,
-        disable_notification: Optional[bool] = None,
-        message_thread_id: Optional[int] = None,
-        direct_messages_topic_id: Optional[int] = None,
-        ephemeral_message_parameters: Optional["types.EphemeralMessageParameters"] = None,
-        effect_id: Optional[int] = None,
-        show_caption_above_media: Optional[bool] = None,
-        reply_parameters: Optional["types.ReplyParameters"] = None,
-        schedule_date: Optional[datetime] = None,
-        repeat_period: Optional[int] = None,
-        protect_content: Optional[bool] = None,
-        business_connection_id: Optional[str] = None,
-        allow_paid_broadcast: Optional[bool] = None,
-        paid_message_star_count: Optional[int] = None,
-        suggested_post_parameters: Optional["types.SuggestedPostParameters"] = None,
-        reply_markup: Optional[
-            Union[
-                "types.InlineKeyboardMarkup",
-                "types.ReplyKeyboardMarkup",
-                "types.ReplyKeyboardRemove",
-                "types.ForceReply",
-            ]
-        ] = None,
-        progress: Optional[Callable] = None,
+        disable_notification: bool | None = None,
+        message_thread_id: int | None = None,
+        direct_messages_topic_id: int | None = None,
+        ephemeral_message_parameters: types.EphemeralMessageParameters | None = None,
+        effect_id: int | None = None,
+        show_caption_above_media: bool | None = None,
+        reply_parameters: types.ReplyParameters | None = None,
+        schedule_date: datetime | None = None,
+        repeat_period: int | None = None,
+        protect_content: bool | None = None,
+        business_connection_id: str | None = None,
+        allow_paid_broadcast: bool | None = None,
+        paid_message_star_count: int | None = None,
+        suggested_post_parameters: types.SuggestedPostParameters | None = None,
+        reply_markup: (
+            types.InlineKeyboardMarkup
+            | types.ReplyKeyboardMarkup
+            | types.ReplyKeyboardRemove
+            | types.ForceReply
+            | None
+        ) = None,
+        progress: Callable | None = None,
         progress_args: tuple = (),
-    ) -> Optional["types.Message"]:
+    ) -> types.Message | None:
         """Send video files.
 
         .. include:: /_includes/usable-by/users-bots.rst

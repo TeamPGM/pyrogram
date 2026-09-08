@@ -16,7 +16,7 @@
 #  You should have received a copy of the GNU Lesser General Public License
 #  along with Pyrogram.  If not, see <http://www.gnu.org/licenses/>.
 
-from typing import Union
+from __future__ import annotations as _annotations
 
 import pyrogram
 from pyrogram import raw
@@ -24,8 +24,8 @@ from pyrogram import raw
 
 class GetDiscussionRepliesCount:
     async def get_discussion_replies_count(
-        self: "pyrogram.Client",
-        chat_id: Union[int, str],
+        self: pyrogram.Client,
+        chat_id: int | str,
         message_id: int,
     ) -> int:
         """Get the total count of replies in a discussion thread.

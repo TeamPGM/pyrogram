@@ -16,8 +16,11 @@
 #  You should have received a copy of the GNU Lesser General Public License
 #  along with Pyrogram.  If not, see <http://www.gnu.org/licenses/>.
 
+from __future__ import annotations as _annotations
+
 import os
-from typing import List, Union, BinaryIO, Callable, Optional
+from typing import BinaryIO
+from collections.abc import Callable
 
 import pyrogram
 from pyrogram import raw, types, utils, StopTransmission
@@ -25,20 +28,20 @@ from pyrogram.errors import FilePartMissing
 
 class EditStoryMedia:
     async def edit_story_media(
-        self: "pyrogram.Client",
-        chat_id: Union[int, str],
+        self: pyrogram.Client,
+        chat_id: int | str,
         story_id: int,
-        media: Optional[Union[str, BinaryIO]] = None,
-        media_areas: Optional[List["types.MediaArea"]] = None,
+        media: str | BinaryIO | None = None,
+        media_areas: list[types.MediaArea] | None = None,
         duration: int = 0,
         width: int = 0,
         height: int = 0,
-        thumb: Optional[Union[str, BinaryIO]] = None,
+        thumb: str | BinaryIO | None = None,
         supports_streaming: bool = True,
-        file_name: Optional[str] = None,
-        progress: Optional[Callable] = None,
+        file_name: str | None = None,
+        progress: Callable | None = None,
         progress_args: tuple = ()
-    ) -> Optional["types.Story"]:
+    ) -> types.Story | None:
         """Edit story media.
 
         .. include:: /_includes/usable-by/users.rst

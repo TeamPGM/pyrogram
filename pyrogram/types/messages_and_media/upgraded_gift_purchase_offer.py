@@ -16,8 +16,9 @@
 #  You should have received a copy of the GNU Lesser General Public License
 #  along with Pyrogram.  If not, see <http://www.gnu.org/licenses/>.
 
+from __future__ import annotations as _annotations
+
 from datetime import datetime
-from typing import Dict, Optional
 
 import pyrogram
 from pyrogram import enums, raw, types, utils
@@ -45,9 +46,9 @@ class UpgradedGiftPurchaseOffer(Object):
     def __init__(
         self,
         *,
-        gift: "types.Gift",
-        state: "enums.GiftPurchaseOfferState",
-        price: "types.GiftResalePrice",
+        gift: types.Gift,
+        state: enums.GiftPurchaseOfferState,
+        price: types.GiftResalePrice,
         expiration_date: datetime,
     ):
         super().__init__()
@@ -59,11 +60,11 @@ class UpgradedGiftPurchaseOffer(Object):
 
     @staticmethod
     async def _parse(
-        client: "pyrogram.Client",
-        action: "raw.types.MessageActionStarGiftPurchaseOffer",
-        users: Dict[int, "raw.base.User"] = {},
-        chats: Dict[int, "raw.base.Chat"] = {},
-    ) -> "UpgradedGiftPurchaseOffer":
+        client: pyrogram.Client,
+        action: raw.types.MessageActionStarGiftPurchaseOffer,
+        users: dict[int, raw.base.User] = {},
+        chats: dict[int, raw.base.Chat] = {},
+    ) -> UpgradedGiftPurchaseOffer:
         price = None
 
         if isinstance(action.price, raw.types.StarsTonAmount):
@@ -103,8 +104,8 @@ class UpgradedGiftPurchaseOfferRejected(Object):
     def __init__(
         self,
         *,
-        gift: "types.Gift",
-        price: "types.GiftResalePrice",
+        gift: types.Gift,
+        price: types.GiftResalePrice,
         offer_message_id: int,
         was_expired: bool,
     ):
@@ -117,12 +118,12 @@ class UpgradedGiftPurchaseOfferRejected(Object):
 
     @staticmethod
     async def _parse(
-        client: "pyrogram.Client",
-        action: "raw.types.MessageActionStarGiftPurchaseOfferDeclined",
-        offer_message_id: Optional[int] = None,
-        users: Dict[int, "raw.base.User"] = {},
-        chats: Dict[int, "raw.base.Chat"] = {},
-    ) -> "UpgradedGiftPurchaseOfferRejected":
+        client: pyrogram.Client,
+        action: raw.types.MessageActionStarGiftPurchaseOfferDeclined,
+        offer_message_id: int | None = None,
+        users: dict[int, raw.base.User] = {},
+        chats: dict[int, raw.base.Chat] = {},
+    ) -> UpgradedGiftPurchaseOfferRejected:
         price = None
 
         if isinstance(action.price, raw.types.StarsTonAmount):

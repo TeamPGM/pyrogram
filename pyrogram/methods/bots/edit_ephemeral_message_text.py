@@ -16,7 +16,7 @@
 #  You should have received a copy of the GNU Lesser General Public License
 #  along with Pyrogram.  If not, see <http://www.gnu.org/licenses/>.
 
-from typing import List, Optional, Union
+from __future__ import annotations as _annotations
 
 import pyrogram
 from pyrogram import enums, raw, types, utils
@@ -24,17 +24,17 @@ from pyrogram import enums, raw, types, utils
 
 class EditEphemeralMessageText:
     async def edit_ephemeral_message_text(
-        self: "pyrogram.Client",
-        chat_id: Union[int, str],
-        receiver_user_id: Union[int, str],
+        self: pyrogram.Client,
+        chat_id: int | str,
+        receiver_user_id: int | str,
         ephemeral_message_id: int,
-        text: Optional[str] = None,
-        parse_mode: Optional["enums.ParseMode"] = None,
-        entities: Optional[List["types.MessageEntity"]] = None,
-        rich_message: Optional["types.InputRichMessage"] = None,
-        link_preview_options: Optional["types.LinkPreviewOptions"] = None,
-        reply_markup: Optional["types.InlineKeyboardMarkup"] = None,
-    ) -> Optional["types.Message"]:
+        text: str | None = None,
+        parse_mode: enums.ParseMode | None = None,
+        entities: list[types.MessageEntity] | None = None,
+        rich_message: types.InputRichMessage | None = None,
+        link_preview_options: types.LinkPreviewOptions | None = None,
+        reply_markup: types.InlineKeyboardMarkup | None = None,
+    ) -> types.Message | None:
         """Use this method to edit an ephemeral text message.
         Note that it is not guaranteed that the user will receive the message edit event, especially if they are offline.
 

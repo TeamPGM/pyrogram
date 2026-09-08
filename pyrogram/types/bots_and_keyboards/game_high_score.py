@@ -16,7 +16,7 @@
 #  You should have received a copy of the GNU Lesser General Public License
 #  along with Pyrogram.  If not, see <http://www.gnu.org/licenses/>.
 
-from typing import Optional
+from __future__ import annotations as _annotations
 
 import pyrogram
 from pyrogram import raw, utils
@@ -41,10 +41,10 @@ class GameHighScore(Object):
     def __init__(
         self,
         *,
-        client: Optional["pyrogram.Client"] = None,
-        user: "types.User",
+        client: pyrogram.Client | None = None,
+        user: types.User,
         score: int,
-        position: Optional[int] = None
+        position: int | None = None
     ):
         super().__init__(client)
 
@@ -53,7 +53,7 @@ class GameHighScore(Object):
         self.position = position
 
     @staticmethod
-    async def _parse(client, game_high_score: raw.types.HighScore, users: dict) -> "GameHighScore":
+    async def _parse(client, game_high_score: raw.types.HighScore, users: dict) -> GameHighScore:
         users = {i.id: i for i in users}
 
         return GameHighScore(

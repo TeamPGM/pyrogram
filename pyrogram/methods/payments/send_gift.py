@@ -16,8 +16,7 @@
 #  You should have received a copy of the GNU Lesser General Public License
 #  along with Pyrogram.  If not, see <http://www.gnu.org/licenses/>.
 
-
-from typing import List, Optional, Union
+from __future__ import annotations as _annotations
 
 import pyrogram
 from pyrogram import enums, raw, types, utils
@@ -25,15 +24,15 @@ from pyrogram import enums, raw, types, utils
 
 class SendGift:
     async def send_gift(
-        self: "pyrogram.Client",
-        chat_id: Union[int, str],
+        self: pyrogram.Client,
+        chat_id: int | str,
         gift_id: int,
-        text: Optional[str] = None,
-        parse_mode: Optional["enums.ParseMode"] = None,
-        entities: Optional[List["types.MessageEntity"]] = None,
-        is_private: Optional[bool] = None,
-        pay_for_upgrade: Optional[bool] = None,
-    ) -> Optional["types.Message"]:
+        text: str | None = None,
+        parse_mode: enums.ParseMode | None = None,
+        entities: list[types.MessageEntity] | None = None,
+        is_private: bool | None = None,
+        pay_for_upgrade: bool | None = None,
+    ) -> types.Message | None:
         """Send a gift to another user or channel chat. May return an error with a message "STARGIFT_USAGE_LIMITED" if the gift was sold out.
 
         .. include:: /_includes/usable-by/users-bots.rst

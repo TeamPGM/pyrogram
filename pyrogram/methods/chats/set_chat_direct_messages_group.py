@@ -16,7 +16,7 @@
 #  You should have received a copy of the GNU Lesser General Public License
 #  along with Pyrogram.  If not, see <http://www.gnu.org/licenses/>.
 
-from typing import Optional, Union
+from __future__ import annotations as _annotations
 
 import pyrogram
 from pyrogram import errors, raw
@@ -24,10 +24,10 @@ from pyrogram import errors, raw
 
 class SetChatDirectMessagesGroup:
     async def set_chat_direct_messages_group(
-        self: "pyrogram.Client",
-        chat_id: Union[int, str],
+        self: pyrogram.Client,
+        chat_id: int | str,
         paid_message_star_count: int = 0,
-        is_enabled: Optional[bool] = None,
+        is_enabled: bool | None = None,
     ) -> bool:
         """Change direct messages group settings for a channel chat.
 

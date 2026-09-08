@@ -16,7 +16,7 @@
 #  You should have received a copy of the GNU Lesser General Public License
 #  along with Pyrogram.  If not, see <http://www.gnu.org/licenses/>.
 
-from typing import Optional
+from __future__ import annotations as _annotations
 
 from pyrogram import raw
 from ..object import Object
@@ -45,11 +45,11 @@ class ForumTopicEdited(Object):
 
     def __init__(
         self, *,
-        title: Optional[str] = None,
-        icon_color: Optional[int] = None,
-        custom_emoji_id: Optional[str] = None,
-        is_closed: Optional[bool] = None,
-        is_hidden: Optional[bool] = None
+        title: str | None = None,
+        icon_color: int | None = None,
+        custom_emoji_id: str | None = None,
+        is_closed: bool | None = None,
+        is_hidden: bool | None = None
     ):
         super().__init__()
 
@@ -60,7 +60,7 @@ class ForumTopicEdited(Object):
         self.is_hidden = is_hidden
 
     @staticmethod
-    def _parse(action: "raw.types.MessageActionTopicEdit") -> "ForumTopicEdited":
+    def _parse(action: raw.types.MessageActionTopicEdit) -> ForumTopicEdited:
         custom_emoji_id = getattr(action, "icon_emoji_id", None)
 
         return ForumTopicEdited(

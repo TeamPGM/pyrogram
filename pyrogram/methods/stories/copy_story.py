@@ -16,8 +16,9 @@
 #  You should have received a copy of the GNU Lesser General Public License
 #  along with Pyrogram.  If not, see <http://www.gnu.org/licenses/>.
 
+from __future__ import annotations as _annotations
+
 import logging
-from typing import Union, List, Optional
 
 import pyrogram
 from pyrogram import types, enums
@@ -27,19 +28,19 @@ log = logging.getLogger(__name__)
 
 class CopyStory:
     async def copy_story(
-        self: "pyrogram.Client",
-        chat_id: Union[int, str],
-        from_chat_id: Union[int, str],
+        self: pyrogram.Client,
+        chat_id: int | str,
+        from_chat_id: int | str,
         story_id: int,
-        caption: Optional[str] = None,
-        parse_mode: Optional["enums.ParseMode"] = None,
-        caption_entities: Optional[List["types.MessageEntity"]] = None,
-        period: Optional[int] = None,
-        privacy: Optional["enums.StoriesPrivacyRules"] = None,
-        allowed_users: Optional[List[Union[int, str]]] = None,
-        disallowed_users: Optional[List[Union[int, str]]] = None,
-        protect_content: Optional[bool] = None
-    ) -> Optional["types.Story"]:
+        caption: str | None = None,
+        parse_mode: enums.ParseMode | None = None,
+        caption_entities: list[types.MessageEntity] | None = None,
+        period: int | None = None,
+        privacy: enums.StoriesPrivacyRules | None = None,
+        allowed_users: list[int | str] | None = None,
+        disallowed_users: list[int | str] | None = None,
+        protect_content: bool | None = None
+    ) -> types.Story | None:
         """Copy story.
 
         .. include:: /_includes/usable-by/users.rst

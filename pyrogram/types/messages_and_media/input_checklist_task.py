@@ -16,7 +16,7 @@
 #  You should have received a copy of the GNU Lesser General Public License
 #  along with Pyrogram.  If not, see <http://www.gnu.org/licenses/>.
 
-from typing import List, Optional
+from __future__ import annotations as _annotations
 
 import pyrogram
 from pyrogram import enums, raw, types, utils
@@ -46,8 +46,8 @@ class InputChecklistTask(Object):
         *,
         id: int,
         text: str,
-        parse_mode: Optional["enums.ParseMode"] = None,
-        entities: Optional[List["types.MessageEntity"]] = None,
+        parse_mode: enums.ParseMode | None = None,
+        entities: list[types.MessageEntity] | None = None,
     ):
         super().__init__()
 
@@ -57,8 +57,8 @@ class InputChecklistTask(Object):
         self.entities = entities
 
     async def write(
-        self, client: "pyrogram.Client"
-    ) -> "raw.types.TodoItem":
+        self, client: pyrogram.Client
+    ) -> raw.types.TodoItem:
         task_title, task_entities = (await utils.parse_text_entities(
             client, self.text, self.parse_mode, self.entities
         )).values()

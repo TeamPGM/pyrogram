@@ -16,7 +16,7 @@
 #  You should have received a copy of the GNU Lesser General Public License
 #  along with Pyrogram.  If not, see <http://www.gnu.org/licenses/>.
 
-from typing import Optional, Union
+from __future__ import annotations as _annotations
 
 import pyrogram
 from pyrogram import enums, raw, types, utils
@@ -24,14 +24,14 @@ from pyrogram import enums, raw, types, utils
 
 class OpenWebApp:
     async def open_web_app(
-        self: "pyrogram.Client",
-        chat_id: Union[int, str],
-        bot_user_id: Union[int, str],
-        url: Optional[str] = None,
-        message_thread_id: Optional[int] = None,
-        direct_messages_topic_id: Optional[int] = None,
-        reply_parameters: Optional["types.ReplyParameters"] = None,
-        platform: Optional["enums.ClientPlatform"] = None
+        self: pyrogram.Client,
+        chat_id: int | str,
+        bot_user_id: int | str,
+        url: str | None = None,
+        message_thread_id: int | None = None,
+        direct_messages_topic_id: int | None = None,
+        reply_parameters: types.ReplyParameters | None = None,
+        platform: enums.ClientPlatform | None = None
     ) -> str:
         """Informs pyrogram that a Web App is being opened from the attachment menu,
         a :obj:`~pyrogram.types.MenuButton`, an url,

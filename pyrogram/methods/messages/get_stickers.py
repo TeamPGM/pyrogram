@@ -16,8 +16,9 @@
 #  You should have received a copy of the GNU Lesser General Public License
 #  along with Pyrogram.  If not, see <http://www.gnu.org/licenses/>.
 
+from __future__ import annotations as _annotations
+
 import logging
-from typing import List
 
 import pyrogram
 from pyrogram import raw
@@ -28,9 +29,9 @@ log = logging.getLogger(__name__)
 
 class GetStickers:
     async def get_stickers(
-        self: "pyrogram.Client",
+        self: pyrogram.Client,
         short_name: str
-    ) -> List["types.Sticker"]:
+    ) -> list[types.Sticker]:
         """Get all stickers from set by short name.
 
         .. include:: /_includes/usable-by/users.rst

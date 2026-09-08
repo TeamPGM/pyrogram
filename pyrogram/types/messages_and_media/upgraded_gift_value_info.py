@@ -16,8 +16,9 @@
 #  You should have received a copy of the GNU Lesser General Public License
 #  along with Pyrogram.  If not, see <http://www.gnu.org/licenses/>.
 
+from __future__ import annotations as _annotations
+
 from datetime import datetime
-from typing import Optional
 
 from pyrogram import raw, utils
 
@@ -78,14 +79,14 @@ class UpgradedGiftValueInfo(Object):
         initial_sale_date: datetime,
         initial_sale_star_count: int,
         initial_sale_price: int,
-        last_sale_date: Optional[datetime] = None,
-        last_sale_price: Optional[int] = None,
-        is_last_sale_on_fragment: Optional[bool] = None,
-        minimum_price: Optional[int] = None,
-        average_sale_price: Optional[int] = None,
-        telegram_listed_gift_count: Optional[int] = None,
-        fragment_listed_gift_count: Optional[int] = None,
-        fragment_url: Optional[str] = None
+        last_sale_date: datetime | None = None,
+        last_sale_price: int | None = None,
+        is_last_sale_on_fragment: bool | None = None,
+        minimum_price: int | None = None,
+        average_sale_price: int | None = None,
+        telegram_listed_gift_count: int | None = None,
+        fragment_listed_gift_count: int | None = None,
+        fragment_url: str | None = None
     ):
         super().__init__()
 
@@ -105,7 +106,7 @@ class UpgradedGiftValueInfo(Object):
         self.fragment_url = fragment_url
 
     @staticmethod
-    def _parse(value_info: "raw.types.payments.UniqueStarGiftValueInfo") -> "UpgradedGiftValueInfo":
+    def _parse(value_info: raw.types.payments.UniqueStarGiftValueInfo) -> UpgradedGiftValueInfo:
         return UpgradedGiftValueInfo(
             currency=value_info.currency,
             value=value_info.value,

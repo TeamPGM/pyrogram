@@ -16,7 +16,7 @@
 #  You should have received a copy of the GNU Lesser General Public License
 #  along with Pyrogram.  If not, see <http://www.gnu.org/licenses/>.
 
-from typing import Optional, Union
+from __future__ import annotations as _annotations
 
 import pyrogram
 from pyrogram import raw, types
@@ -87,23 +87,23 @@ class ChatBackground(Object):
         self,
         *,
         id: int,
-        document: Optional["types.Document"] = None,
-        is_creator: Optional[bool] = None,
-        is_default: Optional[bool] = None,
-        is_pattern: Optional[bool] = None,
-        is_dark: Optional[bool] = None,
-        is_blurred: Optional[bool] = None,
-        is_moving: Optional[bool] = None,
-        is_same: Optional[bool] = None,
-        only_for_self: Optional[bool] = None,
-        background_color: Optional[int] = None,
-        second_background_color: Optional[int] = None,
-        third_background_color: Optional[int] = None,
-        fourth_background_color: Optional[int] = None,
-        intensity: Optional[int] = None,
-        rotation_angle: Optional[int] = None,
-        emoji: Optional[str] = None,
-        raw: Optional["raw.base.WallPaper"] = None
+        document: types.Document | None = None,
+        is_creator: bool | None = None,
+        is_default: bool | None = None,
+        is_pattern: bool | None = None,
+        is_dark: bool | None = None,
+        is_blurred: bool | None = None,
+        is_moving: bool | None = None,
+        is_same: bool | None = None,
+        only_for_self: bool | None = None,
+        background_color: int | None = None,
+        second_background_color: int | None = None,
+        third_background_color: int | None = None,
+        fourth_background_color: int | None = None,
+        intensity: int | None = None,
+        rotation_angle: int | None = None,
+        emoji: str | None = None,
+        raw: raw.base.WallPaper | None = None
     ):
         super().__init__()
 
@@ -128,11 +128,11 @@ class ChatBackground(Object):
 
     @staticmethod
     def _parse(
-        client: "pyrogram.Client",
-        background: "raw.base.WallPaper",
-        is_same: Optional[bool] = None,
-        only_for_self: Optional[bool] = None
-    ) -> Optional["ChatBackground"]:
+        client: pyrogram.Client,
+        background: raw.base.WallPaper,
+        is_same: bool | None = None,
+        only_for_self: bool | None = None
+    ) -> ChatBackground | None:
         if not background:
             return None
 

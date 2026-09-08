@@ -16,8 +16,11 @@
 #  You should have received a copy of the GNU Lesser General Public License
 #  along with Pyrogram.  If not, see <http://www.gnu.org/licenses/>.
 
+from __future__ import annotations as _annotations
+
 import os
-from typing import BinaryIO, Callable, Optional, Union
+from typing import BinaryIO
+from collections.abc import Callable
 
 import pyrogram
 from pyrogram import StopTransmission, raw, utils
@@ -27,16 +30,16 @@ from pyrogram.file_id import FileType
 
 class AddProfileAudio:
     async def add_profile_audio(
-        self: "pyrogram.Client",
-        audio: Union[str, BinaryIO],
+        self: pyrogram.Client,
+        audio: str | BinaryIO,
         duration: int = 0,
-        performer: Optional[str] = None,
-        title: Optional[str] = None,
-        thumb: Optional[Union[str, BinaryIO]] = None,
-        file_name: Optional[str] = None,
-        progress: Optional[Callable] = None,
+        performer: str | None = None,
+        title: str | None = None,
+        thumb: str | BinaryIO | None = None,
+        file_name: str | None = None,
+        progress: Callable | None = None,
         progress_args: tuple = (),
-    ) -> Optional[bool]:
+    ) -> bool | None:
         """Adds an audio file to the beginning of the profile audio files of the current user.
 
         .. include:: /_includes/usable-by/users.rst

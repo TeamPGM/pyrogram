@@ -16,8 +16,9 @@
 #  You should have received a copy of the GNU Lesser General Public License
 #  along with Pyrogram.  If not, see <http://www.gnu.org/licenses/>.
 
+from __future__ import annotations as _annotations
+
 from datetime import datetime
-from typing import Dict, List, Optional, Type
 
 import pyrogram
 from pyrogram import enums, raw, types, utils
@@ -96,23 +97,23 @@ class Sticker(Object):
         *,
         file_id: str,
         file_unique_id: str,
-        type: "enums.StickerType",
+        type: enums.StickerType,
         width: int,
         height: int,
         is_animated: bool,
         is_video: bool,
-        file_name: Optional[str] = None,
-        mime_type: Optional[str] = None,
-        file_size: Optional[int] = None,
-        date: Optional[datetime] = None,
-        emoji: Optional[str] = None,
-        set_name: Optional[str] = None,
-        premium_animation: Optional["types.Animation"] = None,
-        mask_position: Optional["types.MaskPosition"] = None,
-        custom_emoji_id: Optional[str] = None,
-        needs_repainting: Optional[bool] = None,
-        thumbs: Optional[List["types.Thumbnail"]] = None,
-        raw: Optional["raw.types.Document"] = None
+        file_name: str | None = None,
+        mime_type: str | None = None,
+        file_size: int | None = None,
+        date: datetime | None = None,
+        emoji: str | None = None,
+        set_name: str | None = None,
+        premium_animation: types.Animation | None = None,
+        mask_position: types.MaskPosition | None = None,
+        custom_emoji_id: str | None = None,
+        needs_repainting: bool | None = None,
+        thumbs: list[types.Thumbnail] | None = None,
+        raw: raw.types.Document | None = None
     ):
         super().__init__()
 
@@ -171,10 +172,10 @@ class Sticker(Object):
 
     @staticmethod
     async def _parse(
-        client: "pyrogram.Client",
-        sticker: "raw.types.Document",
-        document_attributes: Dict[Type["raw.base.DocumentAttribute"], "raw.base.DocumentAttribute"],
-    ) -> "Sticker":
+        client: pyrogram.Client,
+        sticker: raw.types.Document,
+        document_attributes: dict[type[raw.base.DocumentAttribute], raw.base.DocumentAttribute],
+    ) -> Sticker:
         sticker_attribute = None
         set_name = None
 
@@ -210,7 +211,7 @@ class Sticker(Object):
                 set_name = await Sticker._get_sticker_set_name(client.invoke, input_sticker_set_id)
 
         if sticker.video_thumbs:
-            videos: List["raw.types.VideoSize"] = []
+            videos: list[raw.types.VideoSize] = []
 
             for v in sticker.video_thumbs:
                 if isinstance(v, raw.types.VideoSize):

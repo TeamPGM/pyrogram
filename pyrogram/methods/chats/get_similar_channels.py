@@ -16,7 +16,7 @@
 #  You should have received a copy of the GNU Lesser General Public License
 #  along with Pyrogram.  If not, see <http://www.gnu.org/licenses/>.
 
-from typing import Union, List, Optional
+from __future__ import annotations as _annotations
 
 import pyrogram
 from pyrogram import raw
@@ -25,9 +25,9 @@ from pyrogram import types
 
 class GetSimilarChannels:
     async def get_similar_channels(
-        self: "pyrogram.Client",
-        chat_id: Union[int, str]
-    ) -> Optional[List["types.Chat"]]:
+        self: pyrogram.Client,
+        chat_id: int | str
+    ) -> list[types.Chat] | None:
         """Get similar channels.
 
         .. include:: /_includes/usable-by/users.rst

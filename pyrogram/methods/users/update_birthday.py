@@ -16,7 +16,7 @@
 #  You should have received a copy of the GNU Lesser General Public License
 #  along with Pyrogram.  If not, see <http://www.gnu.org/licenses/>.
 
-from typing import Optional
+from __future__ import annotations as _annotations
 
 import pyrogram
 from pyrogram import raw
@@ -24,10 +24,10 @@ from pyrogram import raw
 
 class UpdateBirthday:
     async def update_birthday(
-        self: "pyrogram.Client",
-        day: Optional[int] = None,
-        month: Optional[int] = None,
-        year: Optional[int] = None
+        self: pyrogram.Client,
+        day: int | None = None,
+        month: int | None = None,
+        year: int | None = None
     ) -> bool:
         """Update birthday in your profile.
 

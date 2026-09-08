@@ -16,9 +16,10 @@
 #  You should have received a copy of the GNU Lesser General Public License
 #  along with Pyrogram.  If not, see <http://www.gnu.org/licenses/>.
 
+from __future__ import annotations as _annotations
+
 import logging
 from datetime import datetime
-from typing import List, Optional, Union
 
 import pyrogram
 from pyrogram import enums, raw, types, utils
@@ -27,35 +28,36 @@ log = logging.getLogger(__name__)
 
 class SendDice:
     async def send_dice(
-        self: "pyrogram.Client",
-        chat_id: Union[int, str],
+        self: pyrogram.Client,
+        chat_id: int | str,
         emoji: str = "🎲",
-        disable_notification: Optional[bool] = None,
-        message_thread_id: Optional[int] = None,
-        direct_messages_topic_id: Optional[int] = None,
-        effect_id: Optional[int] = None,
-        reply_parameters: Optional["types.ReplyParameters"] = None,
-        suggested_post_parameters: Optional["types.SuggestedPostParameters"] = None,
-        schedule_date: Optional[datetime] = None,
-        protect_content: Optional[bool] = None,
-        business_connection_id: Optional[str] = None,
-        allow_paid_broadcast: Optional[bool] = None,
-        paid_message_star_count: Optional[int] = None,
-        reply_markup: Optional[Union[
-            "types.InlineKeyboardMarkup",
-            "types.ReplyKeyboardMarkup",
-            "types.ReplyKeyboardRemove",
-            "types.ForceReply"
-        ]] = None,
+        disable_notification: bool | None = None,
+        message_thread_id: int | None = None,
+        direct_messages_topic_id: int | None = None,
+        effect_id: int | None = None,
+        reply_parameters: types.ReplyParameters | None = None,
+        suggested_post_parameters: types.SuggestedPostParameters | None = None,
+        schedule_date: datetime | None = None,
+        protect_content: bool | None = None,
+        business_connection_id: str | None = None,
+        allow_paid_broadcast: bool | None = None,
+        paid_message_star_count: int | None = None,
+        reply_markup: (
+            types.InlineKeyboardMarkup
+            | types.ReplyKeyboardMarkup
+            | types.ReplyKeyboardRemove
+            | types.ForceReply
+            | None
+        ) = None,
 
-        reply_to_message_id: Optional[int] = None,
-        reply_to_chat_id: Optional[Union[int, str]] = None,
-        reply_to_story_id: Optional[int] = None,
-        quote_text: Optional[str] = None,
-        parse_mode: Optional["enums.ParseMode"] = None,
-        quote_entities: Optional[List["types.MessageEntity"]] = None,
-        quote_offset: Optional[int] = None,
-    ) -> Optional["types.Message"]:
+        reply_to_message_id: int | None = None,
+        reply_to_chat_id: int | str | None = None,
+        reply_to_story_id: int | None = None,
+        quote_text: str | None = None,
+        parse_mode: enums.ParseMode | None = None,
+        quote_entities: list[types.MessageEntity] | None = None,
+        quote_offset: int | None = None,
+    ) -> types.Message | None:
         """Send a dice with a random value from 1 to 6.
 
         .. include:: /_includes/usable-by/users-bots.rst

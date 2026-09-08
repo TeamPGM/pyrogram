@@ -16,8 +16,9 @@
 #  You should have received a copy of the GNU Lesser General Public License
 #  along with Pyrogram.  If not, see <http://www.gnu.org/licenses/>.
 
+from __future__ import annotations as _annotations
+
 from datetime import datetime
-from typing import Dict, Optional
 
 import pyrogram
 from pyrogram import raw, types, utils
@@ -55,13 +56,13 @@ class ChatJoinRequest(Object, Update):
     def __init__(
         self,
         *,
-        client: Optional["pyrogram.Client"] = None,
-        chat: "types.Chat",
-        from_user: "types.User",
+        client: pyrogram.Client | None = None,
+        chat: types.Chat,
+        from_user: types.User,
         date: datetime,
-        bio: Optional[str] = None,
-        invite_link: Optional["types.ChatInviteLink"] = None,
-        query_id: Optional[str] = None,
+        bio: str | None = None,
+        invite_link: types.ChatInviteLink | None = None,
+        query_id: str | None = None,
     ):
         super().__init__(client)
 
@@ -74,11 +75,11 @@ class ChatJoinRequest(Object, Update):
 
     @staticmethod
     async def _parse(
-        client: "pyrogram.Client",
-        update: "raw.types.UpdateBotChatInviteRequester",
-        users: Dict[int, "raw.types.User"],
-        chats: Dict[int, "raw.types.Chat"],
-    ) -> "ChatJoinRequest":
+        client: pyrogram.Client,
+        update: raw.types.UpdateBotChatInviteRequester,
+        users: dict[int, raw.types.User],
+        chats: dict[int, raw.types.Chat],
+    ) -> ChatJoinRequest:
         chat_id = utils.get_raw_peer_id(update.peer)
 
         return ChatJoinRequest(

@@ -16,7 +16,9 @@
 #  You should have received a copy of the GNU Lesser General Public License
 #  along with Pyrogram.  If not, see <http://www.gnu.org/licenses/>.
 
-from typing import AsyncGenerator, Optional, Union
+from __future__ import annotations as _annotations
+
+from collections.abc import AsyncGenerator
 
 import pyrogram
 from pyrogram import raw, types
@@ -24,16 +26,16 @@ from pyrogram import raw, types
 
 class GetStoryViews:
     async def get_story_views(
-        self: "pyrogram.Client",
-        chat_id: Union[int, str],
+        self: pyrogram.Client,
+        chat_id: int | str,
         story_id: int,
         offset: str = "",
         limit: int = 0,
-        contacts_only: Optional[bool] = None,
-        reactions_first: Optional[bool] = None,
-        forwards_first: Optional[bool] = None,
-        query: Optional[str] = None
-    ) -> AsyncGenerator["types.StoryView", None]:
+        contacts_only: bool | None = None,
+        reactions_first: bool | None = None,
+        forwards_first: bool | None = None,
+        query: str | None = None
+    ) -> AsyncGenerator[types.StoryView, None]:
         """Obtain the list of users that have viewed a specific story we posted.
 
         .. include:: /_includes/usable-by/users.rst

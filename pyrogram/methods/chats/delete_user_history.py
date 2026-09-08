@@ -16,7 +16,7 @@
 #  You should have received a copy of the GNU Lesser General Public License
 #  along with Pyrogram.  If not, see <http://www.gnu.org/licenses/>.
 
-from typing import Union
+from __future__ import annotations as _annotations
 
 import pyrogram
 from pyrogram import raw
@@ -24,9 +24,9 @@ from pyrogram import raw
 
 class DeleteUserHistory:
     async def delete_user_history(
-        self: "pyrogram.Client",
-        chat_id: Union[int, str],
-        user_id: Union[int, str],
+        self: pyrogram.Client,
+        chat_id: int | str,
+        user_id: int | str,
     ) -> bool:
         """Delete all messages sent by a certain user in a supergroup.
 

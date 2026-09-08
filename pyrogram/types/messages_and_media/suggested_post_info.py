@@ -16,8 +16,9 @@
 #  You should have received a copy of the GNU Lesser General Public License
 #  along with Pyrogram.  If not, see <http://www.gnu.org/licenses/>.
 
+from __future__ import annotations as _annotations
+
 from datetime import datetime
-from typing import Optional
 
 from pyrogram import raw, types, utils, enums
 
@@ -42,9 +43,9 @@ class SuggestedPostInfo(Object):
     """
     def __init__(
         self, *,
-        price: Optional["types.SuggestedPostPrice"] = None,
-        send_date: Optional[datetime] = None,
-        state: Optional["enums.SuggestedPostState"] = None
+        price: types.SuggestedPostPrice | None = None,
+        send_date: datetime | None = None,
+        state: enums.SuggestedPostState | None = None
     ):
         super().__init__()
 
@@ -53,7 +54,7 @@ class SuggestedPostInfo(Object):
         self.state = state
 
     @staticmethod
-    def _parse(suggested_post: "raw.types.SuggestedPost") -> Optional["SuggestedPostInfo"]:
+    def _parse(suggested_post: raw.types.SuggestedPost) -> SuggestedPostInfo | None:
         if not suggested_post:
             return None
 

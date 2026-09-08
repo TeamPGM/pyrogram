@@ -34,7 +34,9 @@ Skipped unless the environment carries a proxy to run against. Fill in
     make test-integration
 """
 
-from typing import Final, Type
+from __future__ import annotations as _annotations
+
+from typing import Final
 
 from pyrogram import Client
 from pyrogram.connection.proxy import MTProxy
@@ -55,7 +57,7 @@ _UNUSED_DC_ADDRESS: Final[str] = "unused"
 async def test_req_pq_multi_round_trip_through_live_mtproxy(
     mtproxy_proxy: MTProxy,
     mtproxy_dc_id: int,
-    mtproxy_transport_class: Type[TCP],
+    mtproxy_transport_class: type[TCP],
 ) -> None:
     transport = mtproxy_transport_class(ipv6=False, proxy=mtproxy_proxy, dc_id=mtproxy_dc_id)
 

@@ -16,7 +16,7 @@
 #  You should have received a copy of the GNU Lesser General Public License
 #  along with Pyrogram.  If not, see <http://www.gnu.org/licenses/>.
 
-from typing import Optional, Union
+from __future__ import annotations as _annotations
 
 import pyrogram
 from pyrogram import raw, types
@@ -24,14 +24,14 @@ from pyrogram import raw, types
 
 class AddContact:
     async def add_contact(
-        self: "pyrogram.Client",
-        user_id: Union[int, str],
+        self: pyrogram.Client,
+        user_id: int | str,
         first_name: str,
         last_name: str = "",
         phone_number: str = "",
         share_phone_number: bool = False,
-        note: Optional[Union[str, "types.FormattedText"]] = None
-    ) -> "types.User":
+        note: str | types.FormattedText | None = None
+    ) -> types.User:
         """Add an existing Telegram user as contact, even without a phone number.
 
         .. include:: /_includes/usable-by/users.rst

@@ -16,7 +16,10 @@
 #  You should have received a copy of the GNU Lesser General Public License
 #  along with Pyrogram.  If not, see <http://www.gnu.org/licenses/>.
 
-from typing import TYPE_CHECKING, Any, Callable
+from __future__ import annotations as _annotations
+
+from typing import TYPE_CHECKING, Any
+from collections.abc import Callable
 
 from .handler import Handler
 
@@ -49,5 +52,5 @@ class StoryHandler(Handler):
             The received story.
     """
 
-    def __init__(self, callback: Callable[["pyrogram.Client", "types.Story"], Any], filters=None):
+    def __init__(self, callback: Callable[[pyrogram.Client, types.Story], Any], filters=None):
         super().__init__(callback, filters)

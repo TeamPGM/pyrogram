@@ -16,8 +16,9 @@
 #  You should have received a copy of the GNU Lesser General Public License
 #  along with Pyrogram.  If not, see <http://www.gnu.org/licenses/>.
 
+from __future__ import annotations as _annotations
+
 from datetime import datetime
-from typing import List, Optional
 
 import pyrogram
 from pyrogram import raw, utils
@@ -63,16 +64,16 @@ class Giveaway(Object):
     def __init__(
         self,
         *,
-        client: Optional["pyrogram.Client"] = None,
-        chats: Optional[List["types.Chat"]] = None,
-        quantity: Optional[int] = None,
-        months: Optional[int] = None,
-        until_date: Optional[datetime] = None,
-        description: Optional[str] = None,
-        only_new_subscribers: Optional[bool] = None,
-        only_for_countries: Optional[List[str]] = None,
-        winners_are_visible: Optional[bool] = None,
-        stars: Optional[int] = None
+        client: pyrogram.Client | None = None,
+        chats: list[types.Chat] | None = None,
+        quantity: int | None = None,
+        months: int | None = None,
+        until_date: datetime | None = None,
+        description: str | None = None,
+        only_new_subscribers: bool | None = None,
+        only_for_countries: list[str] | None = None,
+        winners_are_visible: bool | None = None,
+        stars: int | None = None
     ):
         super().__init__(client)
 
@@ -89,9 +90,9 @@ class Giveaway(Object):
     @staticmethod
     async def _parse(
         client,
-        giveaway: "raw.types.MessageMediaGiveaway",
+        giveaway: raw.types.MessageMediaGiveaway,
         chats: dict
-    ) -> "Giveaway":
+    ) -> Giveaway:
         return Giveaway(
             chats=types.List([await types.Chat._parse_channel_chat(client, chats.get(i)) for i in giveaway.channels]),
             quantity=giveaway.quantity,

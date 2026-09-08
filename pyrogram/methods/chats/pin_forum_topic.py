@@ -16,15 +16,16 @@
 #  You should have received a copy of the GNU Lesser General Public License
 #  along with Pyrogram.  If not, see <http://www.gnu.org/licenses/>.
 
+from __future__ import annotations as _annotations
+
 import pyrogram
 from pyrogram import raw
-from typing import Union
 
 
 class PinForumTopic:
     async def pin_forum_topic(
-        self: "pyrogram.Client",
-        chat_id: Union[int, str],
+        self: pyrogram.Client,
+        chat_id: int | str,
         topic_id: int
     ) -> bool:
         """Pin a forum topic.

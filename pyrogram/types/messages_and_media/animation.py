@@ -16,8 +16,9 @@
 #  You should have received a copy of the GNU Lesser General Public License
 #  along with Pyrogram.  If not, see <http://www.gnu.org/licenses/>.
 
+from __future__ import annotations as _annotations
+
 from datetime import datetime
-from typing import List, Optional
 
 import pyrogram
 from pyrogram import raw, utils
@@ -65,17 +66,17 @@ class Animation(Object):
     def __init__(
         self,
         *,
-        client: Optional["pyrogram.Client"] = None,
+        client: pyrogram.Client | None = None,
         file_id: str,
         file_unique_id: str,
         width: int,
         height: int,
         duration: int,
-        file_name: Optional[str] = None,
-        mime_type: Optional[str] = None,
-        file_size: Optional[int] = None,
-        date: Optional[datetime] = None,
-        thumbs: Optional[List["types.Thumbnail"]] = None
+        file_name: str | None = None,
+        mime_type: str | None = None,
+        file_size: int | None = None,
+        date: datetime | None = None,
+        thumbs: list[types.Thumbnail] | None = None
     ):
         super().__init__(client)
 
@@ -116,10 +117,10 @@ class Animation(Object):
     @staticmethod
     def _parse(
         client,
-        animation: "raw.types.Document",
-        video_attributes: "raw.types.DocumentAttributeVideo",
+        animation: raw.types.Document,
+        video_attributes: raw.types.DocumentAttributeVideo,
         file_name: str
-    ) -> "Animation":
+    ) -> Animation:
         return Animation(
             file_id=FileId(
                 file_type=FileType.ANIMATION,
@@ -146,14 +147,14 @@ class Animation(Object):
     @staticmethod
     def _parse_chat_animation(
         client,
-        video: "raw.types.Photo",
+        video: raw.types.Photo,
         file_name: str
-    ) -> Optional["Animation"]:
+    ) -> Animation | None:
         if isinstance(video, raw.types.Photo):
             if not video.video_sizes:
                 return None
 
-            videos: List[raw.types.VideoSize] = []
+            videos: list[raw.types.VideoSize] = []
 
             for v in video.video_sizes:
                 if isinstance(v, raw.types.VideoSize):

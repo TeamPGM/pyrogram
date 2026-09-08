@@ -16,9 +16,12 @@
 #  You should have received a copy of the GNU Lesser General Public License
 #  along with Pyrogram.  If not, see <http://www.gnu.org/licenses/>.
 
+from __future__ import annotations as _annotations
+
 import os
 from datetime import datetime
-from typing import Union, Optional, Callable, BinaryIO, List, Literal, overload
+from typing import BinaryIO, Literal, overload
+from collections.abc import Callable
 
 import pyrogram
 from pyrogram import types, utils
@@ -30,165 +33,165 @@ DEFAULT_DOWNLOAD_DIR = "downloads/"
 class DownloadMedia:
     @overload
     async def download_media(
-        self: "pyrogram.Client",
-        message: Union[
-            str,
-            "types.Message",
-            "types.Story",
-            "types.Audio",
-            "types.Document",
-            "types.Photo",
-            "types.Sticker",
-            "types.Animation",
-            "types.Video",
-            "types.Voice",
-            "types.VideoNote",
-            "types.PaidMediaInfo",
-            "types.Thumbnail",
-            "types.StrippedThumbnail",
-            "types.PaidMediaPreview",
-        ],
+        self: pyrogram.Client,
+        message: (
+            str
+            | types.Message
+            | types.Story
+            | types.Audio
+            | types.Document
+            | types.Photo
+            | types.Sticker
+            | types.Animation
+            | types.Video
+            | types.Voice
+            | types.VideoNote
+            | types.PaidMediaInfo
+            | types.Thumbnail
+            | types.StrippedThumbnail
+            | types.PaidMediaPreview
+        ),
         file_name: str = DEFAULT_DOWNLOAD_DIR,
         in_memory: Literal[False] = False,
         block: Literal[True] = True,
-        progress: Optional[Callable] = None,
+        progress: Callable | None = None,
         progress_args: tuple = (),
-    ) -> Union[str, List[str], None]: ...
+    ) -> str | list[str] | None: ...
 
     @overload
     async def download_media(
-        self: "pyrogram.Client",
-        message: Union[
-            str,
-            "types.Message",
-            "types.Story",
-            "types.Audio",
-            "types.Document",
-            "types.Photo",
-            "types.Sticker",
-            "types.Animation",
-            "types.Video",
-            "types.Voice",
-            "types.VideoNote",
-            "types.PaidMediaInfo",
-            "types.Thumbnail",
-            "types.StrippedThumbnail",
-            "types.PaidMediaPreview",
-        ],
+        self: pyrogram.Client,
+        message: (
+            str
+            | types.Message
+            | types.Story
+            | types.Audio
+            | types.Document
+            | types.Photo
+            | types.Sticker
+            | types.Animation
+            | types.Video
+            | types.Voice
+            | types.VideoNote
+            | types.PaidMediaInfo
+            | types.Thumbnail
+            | types.StrippedThumbnail
+            | types.PaidMediaPreview
+        ),
         file_name: str = DEFAULT_DOWNLOAD_DIR,
         in_memory: Literal[True] = True,
         block: Literal[True] = True,
-        progress: Optional[Callable] = None,
+        progress: Callable | None = None,
         progress_args: tuple = (),
-    ) -> Union[BinaryIO, List[BinaryIO], None]: ...
+    ) -> BinaryIO | list[BinaryIO] | None: ...
 
     @overload
     async def download_media(
-        self: "pyrogram.Client",
-        message: Union[
-            str,
-            "types.Message",
-            "types.Story",
-            "types.Audio",
-            "types.Document",
-            "types.Photo",
-            "types.Sticker",
-            "types.Animation",
-            "types.Video",
-            "types.Voice",
-            "types.VideoNote",
-            "types.PaidMediaInfo",
-            "types.Thumbnail",
-            "types.StrippedThumbnail",
-            "types.PaidMediaPreview",
-        ],
+        self: pyrogram.Client,
+        message: (
+            str
+            | types.Message
+            | types.Story
+            | types.Audio
+            | types.Document
+            | types.Photo
+            | types.Sticker
+            | types.Animation
+            | types.Video
+            | types.Voice
+            | types.VideoNote
+            | types.PaidMediaInfo
+            | types.Thumbnail
+            | types.StrippedThumbnail
+            | types.PaidMediaPreview
+        ),
         file_name: str = DEFAULT_DOWNLOAD_DIR,
         *,
         in_memory: bool = False,
         block: Literal[False],
-        progress: Optional[Callable] = None,
+        progress: Callable | None = None,
         progress_args: tuple = (),
     ) -> None: ...
 
     @overload
     async def download_media(
-        self: "pyrogram.Client",
-        message: Union[
-            str,
-            "types.Message",
-            "types.Story",
-            "types.Audio",
-            "types.Document",
-            "types.Photo",
-            "types.Sticker",
-            "types.Animation",
-            "types.Video",
-            "types.Voice",
-            "types.VideoNote",
-            "types.PaidMediaInfo",
-            "types.Thumbnail",
-            "types.StrippedThumbnail",
-            "types.PaidMediaPreview",
-        ],
+        self: pyrogram.Client,
+        message: (
+            str
+            | types.Message
+            | types.Story
+            | types.Audio
+            | types.Document
+            | types.Photo
+            | types.Sticker
+            | types.Animation
+            | types.Video
+            | types.Voice
+            | types.VideoNote
+            | types.PaidMediaInfo
+            | types.Thumbnail
+            | types.StrippedThumbnail
+            | types.PaidMediaPreview
+        ),
         file_name: str,
         in_memory: bool,
         block: Literal[False],
-        progress: Optional[Callable] = None,
+        progress: Callable | None = None,
         progress_args: tuple = (),
     ) -> None: ...
 
     @overload
     async def download_media(
-        self: "pyrogram.Client",
-        message: Union[
-            str,
-            "types.Message",
-            "types.Story",
-            "types.Audio",
-            "types.Document",
-            "types.Photo",
-            "types.Sticker",
-            "types.Animation",
-            "types.Video",
-            "types.Voice",
-            "types.VideoNote",
-            "types.PaidMediaInfo",
-            "types.Thumbnail",
-            "types.StrippedThumbnail",
-            "types.PaidMediaPreview",
-        ],
+        self: pyrogram.Client,
+        message: (
+            str
+            | types.Message
+            | types.Story
+            | types.Audio
+            | types.Document
+            | types.Photo
+            | types.Sticker
+            | types.Animation
+            | types.Video
+            | types.Voice
+            | types.VideoNote
+            | types.PaidMediaInfo
+            | types.Thumbnail
+            | types.StrippedThumbnail
+            | types.PaidMediaPreview
+        ),
         file_name: str = DEFAULT_DOWNLOAD_DIR,
         in_memory: bool = False,
         block: bool = True,
-        progress: Optional[Callable] = None,
+        progress: Callable | None = None,
         progress_args: tuple = (),
-    ) -> Union[str, BinaryIO, List[str], List[BinaryIO], None]: ...
+    ) -> str | BinaryIO | list[str] | list[BinaryIO] | None: ...
 
     async def download_media(
-        self: "pyrogram.Client",
-        message: Union[
-            str,
-            "types.Message",
-            "types.Story",
-            "types.Audio",
-            "types.Document",
-            "types.Photo",
-            "types.Sticker",
-            "types.Animation",
-            "types.Video",
-            "types.Voice",
-            "types.VideoNote",
-            "types.PaidMediaInfo",
-            "types.Thumbnail",
-            "types.StrippedThumbnail",
-            "types.PaidMediaPreview"
-        ],
+        self: pyrogram.Client,
+        message: (
+            str
+            | types.Message
+            | types.Story
+            | types.Audio
+            | types.Document
+            | types.Photo
+            | types.Sticker
+            | types.Animation
+            | types.Video
+            | types.Voice
+            | types.VideoNote
+            | types.PaidMediaInfo
+            | types.Thumbnail
+            | types.StrippedThumbnail
+            | types.PaidMediaPreview
+        ),
         file_name: str = DEFAULT_DOWNLOAD_DIR,
         in_memory: bool = False,
         block: bool = True,
-        progress: Optional[Callable] = None,
+        progress: Callable | None = None,
         progress_args: tuple = ()
-    ) -> Union[str, BinaryIO, List[str], List[BinaryIO], None]:
+    ) -> str | BinaryIO | list[str] | list[BinaryIO] | None:
         """Download the media from a message.
 
         .. include:: /_includes/usable-by/users-bots.rst
@@ -236,7 +239,7 @@ class DownloadMedia:
                 You can either keep ``*args`` or add every single extra argument in your function signature.
 
         Returns:
-            ``str`` | ``BinaryIO`` | ``List[str]`` | ``List[BinaryIO]`` | ``None``: On success, the absolute path of the
+            ``str`` | ``BinaryIO`` | ``list[str]`` | ``list[BinaryIO]`` | ``None``: On success, the absolute path of the
             downloaded file is returned. In case ``in_memory=True``, a binary file-like object with its attribute
             ".name" set is returned. If the message contains multiple media (purchased paid media), a list of paths or
             binary file-like objects is returned. In case the download failed or was deliberately stopped with

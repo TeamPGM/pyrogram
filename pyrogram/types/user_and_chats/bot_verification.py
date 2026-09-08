@@ -16,7 +16,7 @@
 #  You should have received a copy of the GNU Lesser General Public License
 #  along with Pyrogram.  If not, see <http://www.gnu.org/licenses/>.
 
-from typing import Optional
+from __future__ import annotations as _annotations
 
 from pyrogram import raw, types
 from ..object import Object
@@ -50,9 +50,9 @@ class BotVerification(Object):
     @staticmethod
     async def _parse(
         client,
-        verification: "raw.types.BotVerification",
+        verification: raw.types.BotVerification,
         users
-    ) -> Optional["BotVerification"]:
+    ) -> BotVerification | None:
         if not verification:
             return None
 

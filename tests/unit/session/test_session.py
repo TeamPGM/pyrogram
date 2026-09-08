@@ -16,8 +16,10 @@
 #  You should have received a copy of the GNU Lesser General Public License
 #  along with Pyrogram.  If not, see <http://www.gnu.org/licenses/>.
 
+from __future__ import annotations as _annotations
+
 import asyncio
-from typing import Final, Optional
+from typing import Final
 
 import pytest
 
@@ -43,7 +45,7 @@ class StubConnection:
         self.closed = asyncio.Event()
         self.packets = [_PACKET]
 
-    async def recv(self) -> Optional[bytes]:
+    async def recv(self) -> bytes | None:
         if self.packets:
             return self.packets.pop()
 

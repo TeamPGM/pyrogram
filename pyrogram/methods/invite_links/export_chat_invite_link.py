@@ -16,7 +16,7 @@
 #  You should have received a copy of the GNU Lesser General Public License
 #  along with Pyrogram.  If not, see <http://www.gnu.org/licenses/>.
 
-from typing import Union
+from __future__ import annotations as _annotations
 
 import pyrogram
 from pyrogram import raw
@@ -25,9 +25,9 @@ from pyrogram import types
 
 class ExportChatInviteLink:
     async def export_chat_invite_link(
-        self: "pyrogram.Client",
-        chat_id: Union[int, str],
-    ) -> "types.ChatInviteLink":
+        self: pyrogram.Client,
+        chat_id: int | str,
+    ) -> types.ChatInviteLink:
         """Generate a new primary invite link for a chat; any previously generated primary link is revoked.
 
         You must be an administrator in the chat for this to work and must have the appropriate admin rights.

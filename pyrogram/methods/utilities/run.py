@@ -16,8 +16,9 @@
 #  You should have received a copy of the GNU Lesser General Public License
 #  along with Pyrogram.  If not, see <http://www.gnu.org/licenses/>.
 
+from __future__ import annotations as _annotations
+
 import inspect
-from typing import List
 
 import pyrogram
 from pyrogram.methods.utilities.idle import idle
@@ -25,9 +26,9 @@ from pyrogram.methods.utilities.idle import idle
 
 class Run:
     def run(
-        self: "pyrogram.Client", *,
+        self: pyrogram.Client, *,
         use_qr: bool = False,
-        except_ids: List[int] = [],
+        except_ids: list[int] = [],
     ):
         """Start the client, idle the main script and finally stop the client.
 

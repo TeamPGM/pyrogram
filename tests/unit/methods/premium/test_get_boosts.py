@@ -16,7 +16,7 @@
 #  You should have received a copy of the GNU Lesser General Public License
 #  along with Pyrogram.  If not, see <http://www.gnu.org/licenses/>.
 
-from typing import List
+from __future__ import annotations as _annotations
 
 import pytest
 
@@ -27,7 +27,7 @@ from pyrogram.methods.premium.get_boosts import GetBoosts
 class FakeClient(GetBoosts):
     """A client that answers `premium.GetMyBoosts` with the boosts it was given."""
 
-    def __init__(self, my_boosts: List[raw.types.MyBoost]) -> None:
+    def __init__(self, my_boosts: list[raw.types.MyBoost]) -> None:
         self.my_boosts = my_boosts
 
     async def invoke(

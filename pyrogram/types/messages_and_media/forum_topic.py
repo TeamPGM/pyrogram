@@ -16,8 +16,9 @@
 #  You should have received a copy of the GNU Lesser General Public License
 #  along with Pyrogram.  If not, see <http://www.gnu.org/licenses/>.
 
+from __future__ import annotations as _annotations
+
 from datetime import datetime
-from typing import Optional
 
 import pyrogram
 from pyrogram import types, raw, utils
@@ -84,22 +85,22 @@ class ForumTopic(Object):
         self,
         *,
         id: int,
-        title: Optional[str] = None,
-        date: Optional[datetime] = None,
-        icon_color: Optional[str] = None,
-        icon_emoji_id: Optional[int] = None,
-        creator: Optional["types.Chat"] = None,
-        top_message: Optional["types.Message"] = None,
-        unread_count: Optional[int] = None,
-        unread_mentions_count: Optional[int] = None,
-        unread_reactions_count: Optional[int] = None,
-        unread_poll_vote_count: Optional[int] = None,
-        is_my: Optional[bool] = None,
-        is_closed: Optional[bool] = None,
-        is_pinned: Optional[bool] = None,
-        is_short: Optional[bool] = None,
-        is_hidden: Optional[bool] = None,
-        is_deleted: Optional[bool] = None
+        title: str | None = None,
+        date: datetime | None = None,
+        icon_color: str | None = None,
+        icon_emoji_id: int | None = None,
+        creator: types.Chat | None = None,
+        top_message: types.Message | None = None,
+        unread_count: int | None = None,
+        unread_mentions_count: int | None = None,
+        unread_reactions_count: int | None = None,
+        unread_poll_vote_count: int | None = None,
+        is_my: bool | None = None,
+        is_closed: bool | None = None,
+        is_pinned: bool | None = None,
+        is_short: bool | None = None,
+        is_hidden: bool | None = None,
+        is_deleted: bool | None = None
     ):
         super().__init__()
 
@@ -122,7 +123,7 @@ class ForumTopic(Object):
         self.is_deleted = is_deleted
 
     @staticmethod
-    async def _parse(client: "pyrogram.Client", forum_topic: "raw.types.ForumTopic", messages: dict = {},  users: dict = {}, chats: dict = {}) -> "ForumTopic":
+    async def _parse(client: pyrogram.Client, forum_topic: raw.types.ForumTopic, messages: dict = {},  users: dict = {}, chats: dict = {}) -> ForumTopic:
         if not forum_topic:
             return None
 

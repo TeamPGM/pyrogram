@@ -16,7 +16,7 @@
 #  You should have received a copy of the GNU Lesser General Public License
 #  along with Pyrogram.  If not, see <http://www.gnu.org/licenses/>.
 
-from typing import Optional
+from __future__ import annotations as _annotations
 
 from ..object import Object
 
@@ -31,7 +31,7 @@ class KeyboardButtonPollType(Object):
 
     def __init__(
         self, *,
-        is_quiz: Optional[bool] = None
+        is_quiz: bool | None = None
     ):
         super().__init__()
 

@@ -16,10 +16,12 @@
 #  You should have received a copy of the GNU Lesser General Public License
 #  along with Pyrogram.  If not, see <http://www.gnu.org/licenses/>.
 
+from __future__ import annotations as _annotations
+
 import asyncio
 from concurrent.futures import Executor
 from pathlib import Path
-from typing import Final, List, Optional, Union
+from typing import Final
 
 import pytest
 
@@ -41,13 +43,13 @@ class Storage:
 class Media:
     """A media session that records the parts it was asked to save."""
 
-    def __init__(self, rejects_part: Optional[int] = None) -> None:
+    def __init__(self, rejects_part: int | None = None) -> None:
         self.rejects_part = rejects_part
-        self.saved_parts: List[int] = []
+        self.saved_parts: list[int] = []
 
     async def invoke(
         self,
-        query: Union[raw.functions.upload.SaveFilePart, raw.functions.upload.SaveBigFilePart],
+        query: raw.functions.upload.SaveFilePart | raw.functions.upload.SaveBigFilePart,
     ) -> None:
         if query.file_part == self.rejects_part:
             raise ConnectionError("the server closed the connection")
@@ -58,9 +60,9 @@ class Media:
 class Uploader(SaveFile):
     def __init__(self, media: Media) -> None:
         self.media = media
-        self.me: Optional[types.User] = None
+        self.me: types.User | None = None
         self.storage = Storage()
-        self.executor: Optional[Executor] = None
+        self.executor: Executor | None = None
         self.save_file_semaphore = asyncio.Semaphore(1)
 
     @property

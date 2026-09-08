@@ -16,9 +16,10 @@
 #  You should have received a copy of the GNU Lesser General Public License
 #  along with Pyrogram.  If not, see <http://www.gnu.org/licenses/>.
 
+from __future__ import annotations as _annotations
+
 import asyncio
 import logging
-from typing import Optional, Tuple
 
 from pyrogram.connection.proxy import Proxy
 from pyrogram.connection.transport.tcp.tcp import ABRIDGED_OBFUSCATE_TAG, TCP
@@ -34,14 +35,14 @@ class TCPAbridged(TCP):
     def __init__(
         self,
         ipv6: bool = False,
-        proxy: Optional[Proxy] = None,
+        proxy: Proxy | None = None,
         crypto_executor_workers: int = 1,
-        loop: Optional[asyncio.AbstractEventLoop] = None,
-        dc_id: Optional[int] = None,
+        loop: asyncio.AbstractEventLoop | None = None,
+        dc_id: int | None = None,
     ) -> None:
         super().__init__(ipv6, proxy, crypto_executor_workers, loop, dc_id=dc_id)
 
-    async def connect(self, address: Tuple[str, int]) -> None:
+    async def connect(self, address: tuple[str, int]) -> None:
         self.marker_event.clear()
         await super().connect(address)
         if not self.opens_with_obfuscated2_header:
@@ -60,7 +61,7 @@ class TCPAbridged(TCP):
             + data
         )
 
-    async def recv(self, length: int = 0) -> Optional[bytes]:
+    async def recv(self, length: int = 0) -> bytes | None:
         length = await super().recv(1)
 
         if length is None:

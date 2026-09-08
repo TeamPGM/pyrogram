@@ -16,7 +16,9 @@
 #  You should have received a copy of the GNU Lesser General Public License
 #  along with Pyrogram.  If not, see <http://www.gnu.org/licenses/>.
 
-from typing import Final, Optional, Type
+from __future__ import annotations as _annotations
+
+from typing import Final
 
 import pytest
 
@@ -88,8 +90,8 @@ def test_connection_computes_protocol_dc_id_from_media_and_test_mode() -> None:
     ],
 )
 def test_transport_class_for_reads_the_framing_off_the_secret(
-    proxy: Optional[Proxy],
-    expected: Type[TCP],
+    proxy: Proxy | None,
+    expected: type[TCP],
 ) -> None:
     assert transport_class_for(proxy) is expected
 

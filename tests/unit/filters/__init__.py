@@ -16,8 +16,7 @@
 #  You should have received a copy of the GNU Lesser General Public License
 #  along with Pyrogram.  If not, see <http://www.gnu.org/licenses/>.
 
-from typing import Optional
-
+from __future__ import annotations as _annotations
 
 class FakeClient:
     def __init__(self):
@@ -28,12 +27,12 @@ class FakeClient:
 
 
 class User:
-    def __init__(self, username: Optional[str] = None):
+    def __init__(self, username: str | None = None):
         self.username = username
 
 
 class Message:
-    def __init__(self, text: Optional[str] = None, caption: Optional[str] = None):
+    def __init__(self, text: str | None = None, caption: str | None = None):
         self.text = text
         self.caption = caption
         self.command = None

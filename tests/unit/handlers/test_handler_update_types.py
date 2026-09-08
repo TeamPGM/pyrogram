@@ -23,11 +23,17 @@ nor stop the chain, because both live on `Update`. Neither failure announces its
 sender filters answer `False`, which reads as "no sender" rather than "never looked".
 """
 
+from __future__ import annotations as _annotations
+
 import inspect
 import re
+import sys
 import typing
-from typing import Any, Final, FrozenSet, Iterator, List, Optional, Pattern, Set, Tuple, Type
+from typing import Any, Final
+from re import Pattern
+from collections.abc import Iterator
 
+import pyrogram
 from pyrogram import handlers, types
 from pyrogram.types import Update
 
@@ -40,7 +46,7 @@ _OTHER_PARAMETERS: Final[str] = "Other parameters:"
 # The callbacks handed something other than a parsed update: `Handler` takes a bare
 #  `Callable`, `Start`/`Stop` the client, `Connect`/`Disconnect` the session it opened, and
 #  `Error`/`RawUpdate` the TL object before anything has parsed it.
-_TAKES_NO_PARSED_UPDATE: Final[FrozenSet[str]] = frozenset(
+_TAKES_NO_PARSED_UPDATE: Final[frozenset[str]] = frozenset(
     {
         "ConnectHandler",
         "DisconnectHandler",
@@ -53,7 +59,7 @@ _TAKES_NO_PARSED_UPDATE: Final[FrozenSet[str]] = frozenset(
 )
 
 
-def handler_classes() -> Iterator[Type[handlers.Handler]]:
+def handler_classes() -> Iterator[type[handlers.Handler]]:
     """Every handler the package exports, the base class included."""
     for name in sorted(vars(handlers)):
         one = getattr(handlers, name)
@@ -62,25 +68,29 @@ def handler_classes() -> Iterator[Type[handlers.Handler]]:
             yield one
 
 
-def name_of(annotation: Any) -> str:
-    """The last component of what an annotation names, whether or not it is still a string.
-
-    Handler modules import `types` under `TYPE_CHECKING` only, so their annotations survive
-    as `ForwardRef`s and `typing.get_type_hints` cannot evaluate them.
-    """
-    written = getattr(annotation, "__forward_arg__", None)
-
-    return (written or annotation.__name__).split(".")[-1]
+def name_of(annotation: type) -> str:
+    """The last component of what an annotation names."""
+    return annotation.__name__.split(".")[-1]
 
 
-def handed_to(handler: Type[handlers.Handler]) -> Optional[str]:
+def handed_to(handler: type[handlers.Handler]) -> str | None:
     """The type the callback of `handler` is handed, or `None` when it is handed no update.
 
-    `List[X]` reads as `X`: the two deleted-message handlers are given the whole batch at
+    `list[X]` reads as `X`: the two deleted-message handlers are given the whole batch at
     once. The element is what a sender filter would read, and the list carries neither that
     nor `stop_propagation()`: a separate shape, and a separate decision.
     """
-    callback = inspect.signature(handler.__init__).parameters["callback"].annotation
+    # Every module carries `from __future__ import annotations`, so the signature is a set
+    #  of strings until something evaluates them. A handler module imports `types` under
+    #  `TYPE_CHECKING` only, so its own globals cannot resolve that name: hand it in.
+    signature = inspect.signature(
+        handler.__init__,
+        globals=vars(sys.modules[handler.__module__]),
+        locals={"pyrogram": pyrogram, "types": types},
+        eval_str=True,
+    )
+
+    callback = signature.parameters["callback"].annotation
     arguments = typing.get_args(callback)
 
     if not arguments or len(arguments[0]) < 2:
@@ -91,7 +101,7 @@ def handed_to(handler: Type[handlers.Handler]) -> Optional[str]:
     return name_of(typing.get_args(update)[0] if typing.get_origin(update) is list else update)
 
 
-def documented_by(handler: Type[handlers.Handler]) -> Set[str]:
+def documented_by(handler: type[handlers.Handler]) -> set[str]:
     """The `pyrogram.types` names the handler's `Other parameters:` block points at."""
     documentation: str = handler.__doc__ or ""
 
@@ -101,7 +111,7 @@ def documented_by(handler: Type[handlers.Handler]) -> Set[str]:
     return set(_DOCUMENTED_TYPE.findall(documentation.split(_OTHER_PARAMETERS)[-1]))
 
 
-def handlers_with_an_update() -> List[Tuple[str, str]]:
+def handlers_with_an_update() -> list[tuple[str, str]]:
     return [
         (handler.__name__, handed_to(handler))
         for handler in handler_classes()

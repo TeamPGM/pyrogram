@@ -16,7 +16,7 @@
 #  You should have received a copy of the GNU Lesser General Public License
 #  along with Pyrogram.  If not, see <http://www.gnu.org/licenses/>.
 
-from typing import Optional
+from __future__ import annotations as _annotations
 
 from pyrogram import raw, enums
 from ..object import Object
@@ -43,8 +43,8 @@ class PhoneCallEnded(Object):
         self, *,
         id: int,
         is_video: bool,
-        reason: "enums.PhoneCallDiscardReason",
-        duration: Optional[int] = None
+        reason: enums.PhoneCallDiscardReason,
+        duration: int | None = None
     ):
         super().__init__()
 
@@ -54,7 +54,7 @@ class PhoneCallEnded(Object):
         self.duration = duration
 
     @staticmethod
-    def _parse(action: "raw.types.MessageActionPhoneCall") -> "PhoneCallEnded":
+    def _parse(action: raw.types.MessageActionPhoneCall) -> PhoneCallEnded:
         return PhoneCallEnded(
             id=action.call_id,
             is_video=action.video,

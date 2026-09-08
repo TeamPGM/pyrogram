@@ -16,7 +16,7 @@
 #  You should have received a copy of the GNU Lesser General Public License
 #  along with Pyrogram.  If not, see <http://www.gnu.org/licenses/>.
 
-from typing import List, Optional
+from __future__ import annotations as _annotations
 
 import pyrogram
 from pyrogram import enums, raw, types
@@ -83,24 +83,24 @@ class PaymentForm(Object):
     def __init__(
         self,
         *,
-        client: Optional["pyrogram.Client"] = None,
+        client: pyrogram.Client | None = None,
         id: int,
-        type: "enums.PaymentFormType",
-        title: Optional[str] = None,
-        description: Optional[str] = None,
-        photo: Optional["types.Photo"] = None,
-        seller_bot_user_id: Optional[int] = None,
-        seller_bot: Optional["types.User"] = None,
-        payment_provider_user_id: Optional[int] = None,
-        payment_provider: Optional["types.User"] = None,
-        additional_payment_options: Optional[List["types.PaymentOption"]] = None,
-        saved_credentials: Optional[List["types.SavedCredentials"]] = None,
-        invoice: Optional["types.Invoice"] = None,
-        url: Optional[str] = None,
-        can_save_credentials: Optional[bool] = None,
-        need_password: Optional[bool] = None,
-        native_provider: Optional[str] = None,
-        raw: Optional["raw.base.payments.PaymentForm"] = None,
+        type: enums.PaymentFormType,
+        title: str | None = None,
+        description: str | None = None,
+        photo: types.Photo | None = None,
+        seller_bot_user_id: int | None = None,
+        seller_bot: types.User | None = None,
+        payment_provider_user_id: int | None = None,
+        payment_provider: types.User | None = None,
+        additional_payment_options: list[types.PaymentOption] | None = None,
+        saved_credentials: list[types.SavedCredentials] | None = None,
+        invoice: types.Invoice | None = None,
+        url: str | None = None,
+        can_save_credentials: bool | None = None,
+        need_password: bool | None = None,
+        native_provider: str | None = None,
+        raw: raw.base.payments.PaymentForm | None = None,
     ):
         super().__init__(client)
 
@@ -123,7 +123,7 @@ class PaymentForm(Object):
         self.raw = raw
 
     @staticmethod
-    async def _parse(client, form: "raw.base.payments.PaymentForm") -> "PaymentForm":
+    async def _parse(client, form: raw.base.payments.PaymentForm) -> PaymentForm:
         users = {i.id: i for i in getattr(form, "users", [])}
 
         if isinstance(form, raw.types.payments.PaymentForm):

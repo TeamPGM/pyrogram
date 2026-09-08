@@ -16,7 +16,7 @@
 #  You should have received a copy of the GNU Lesser General Public License
 #  along with Pyrogram.  If not, see <http://www.gnu.org/licenses/>.
 
-from typing import Optional, Union
+from __future__ import annotations as _annotations
 
 import pyrogram
 from pyrogram import raw, types, utils
@@ -24,10 +24,10 @@ from pyrogram import raw, types, utils
 
 class SetChatTTL:
     async def set_chat_ttl(
-        self: "pyrogram.Client",
-        chat_id: Union[int, str],
+        self: pyrogram.Client,
+        chat_id: int | str,
         ttl_seconds: int
-    ) -> Optional["types.Message"]:
+    ) -> types.Message | None:
         """Set the time-to-live for the chat.
 
         .. include:: /_includes/usable-by/users.rst

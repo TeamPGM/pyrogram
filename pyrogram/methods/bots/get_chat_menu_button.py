@@ -16,7 +16,7 @@
 #  You should have received a copy of the GNU Lesser General Public License
 #  along with Pyrogram.  If not, see <http://www.gnu.org/licenses/>.
 
-from typing import Optional, Union
+from __future__ import annotations as _annotations
 
 import pyrogram
 from pyrogram import raw
@@ -25,9 +25,9 @@ from pyrogram import types
 
 class GetChatMenuButton:
     async def get_chat_menu_button(
-        self: "pyrogram.Client",
-        chat_id: Optional[Union[int, str]] = None,
-    ) -> "types.MenuButton":
+        self: pyrogram.Client,
+        chat_id: int | str | None = None,
+    ) -> types.MenuButton:
         """Get the current value of the bot's menu button in a private chat, or the default menu button.
 
         .. include:: /_includes/usable-by/bots.rst

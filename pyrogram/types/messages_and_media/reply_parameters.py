@@ -16,7 +16,7 @@
 #  You should have received a copy of the GNU Lesser General Public License
 #  along with Pyrogram.  If not, see <http://www.gnu.org/licenses/>.
 
-from typing import List, Optional, Union
+from __future__ import annotations as _annotations
 
 from pyrogram import enums, types
 
@@ -72,16 +72,16 @@ class ReplyParameters(Object):
     def __init__(
         self,
         *,
-        message_id: Optional[int] = None,
-        story_id: Optional[int] = None,
-        chat_id: Optional[Union[int, str]] = None,
-        ephemeral_message_id: Optional[int] = None,
-        quote: Optional[str] = None,
-        quote_parse_mode: Optional["enums.ParseMode"] = None,
-        quote_entities: Optional[List["types.MessageEntity"]] = None,
-        quote_position: Optional[int] = None,
-        checklist_task_id: Optional[int] = None,
-        poll_option_id: Optional[str] = None,
+        message_id: int | None = None,
+        story_id: int | None = None,
+        chat_id: int | str | None = None,
+        ephemeral_message_id: int | None = None,
+        quote: str | None = None,
+        quote_parse_mode: enums.ParseMode | None = None,
+        quote_entities: list[types.MessageEntity] | None = None,
+        quote_position: int | None = None,
+        checklist_task_id: int | None = None,
+        poll_option_id: str | None = None,
     ):
         super().__init__()
 

@@ -16,7 +16,9 @@
 #  You should have received a copy of the GNU Lesser General Public License
 #  along with Pyrogram.  If not, see <http://www.gnu.org/licenses/>.
 
-from typing import TYPE_CHECKING, List, Optional
+from __future__ import annotations as _annotations
+
+from typing import TYPE_CHECKING
 
 from ..object import Object
 
@@ -67,16 +69,16 @@ class PollOption(Object):
     def __init__(
         self,
         *,
-        client: Optional["pyrogram.Client"] = None,
+        client: pyrogram.Client | None = None,
         persistent_id: str,
-        text: Optional["types.FormattedText"] = None,
-        media: Optional["types.MessageContent"] = None,
-        voter_count: Optional[int] = None,
-        vote_percentage: Optional[int] = None,
-        recent_voters: Optional[List["types.Chat"]] = None,
-        added_by_user: Optional["types.User"] = None,
-        added_by_chat: Optional["types.Chat"] = None,
-        addition_date: Optional["datetime.datetime"] = None,
+        text: types.FormattedText | None = None,
+        media: types.MessageContent | None = None,
+        voter_count: int | None = None,
+        vote_percentage: int | None = None,
+        recent_voters: list[types.Chat] | None = None,
+        added_by_user: types.User | None = None,
+        added_by_chat: types.Chat | None = None,
+        addition_date: datetime.datetime | None = None,
     ):
         super().__init__(client)
 

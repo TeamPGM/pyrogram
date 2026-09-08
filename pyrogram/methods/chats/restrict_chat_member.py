@@ -16,8 +16,9 @@
 #  You should have received a copy of the GNU Lesser General Public License
 #  along with Pyrogram.  If not, see <http://www.gnu.org/licenses/>.
 
+from __future__ import annotations as _annotations
+
 from datetime import datetime
-from typing import Union
 
 import pyrogram
 from pyrogram import raw, utils
@@ -26,12 +27,12 @@ from pyrogram import types
 
 class RestrictChatMember:
     async def restrict_chat_member(
-        self: "pyrogram.Client",
-        chat_id: Union[int, str],
-        user_id: Union[int, str],
-        permissions: "types.ChatPermissions",
+        self: pyrogram.Client,
+        chat_id: int | str,
+        user_id: int | str,
+        permissions: types.ChatPermissions,
         until_date: datetime = utils.zero_datetime()
-    ) -> "types.Chat":
+    ) -> types.Chat:
         """Restrict a user in a supergroup.
 
         You must be an administrator in the supergroup for this to work and must have the appropriate admin rights.

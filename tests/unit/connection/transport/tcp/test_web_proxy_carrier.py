@@ -16,10 +16,11 @@
 #  You should have received a copy of the GNU Lesser General Public License
 #  along with Pyrogram.  If not, see <http://www.gnu.org/licenses/>.
 
+from __future__ import annotations as _annotations
+
 import asyncio
 import logging
 from http import HTTPStatus
-from typing import List
 
 import pytest
 
@@ -255,14 +256,14 @@ class _UplinkRecorder:
     carrier puts on the wire instead of POSTing it."""
 
     def __init__(self, carrier: WebProxyCarrier) -> None:
-        self.frames: List[bytes] = []
+        self.frames: list[bytes] = []
         carrier._send_frames = self._record
 
-    async def _record(self, frames: List[bytes]) -> None:
+    async def _record(self, frames: list[bytes]) -> None:
         self.frames.extend(frames)
 
     @property
-    def payload_sizes(self) -> List[int]:
+    def payload_sizes(self) -> list[int]:
         return [len(one_frame) - FRAME_HEADER_SIZE for one_frame in self.frames]
 
     @property
@@ -284,7 +285,7 @@ def _window_grant(amount: int) -> Frame:
     return parsed.frames[0]
 
 
-async def _run_until_blocked(sending: "asyncio.Task[None]") -> None:
+async def _run_until_blocked(sending: asyncio.Task[None]) -> None:
     # `send()` suspends once it runs out of credit, and waking it after a WINDOW
     #  grant costs three loop iterations below 3.12, where `asyncio.wait_for` ran the
     #  wait in a task of its own, against one on 3.12+, which awaits the coroutine
@@ -438,7 +439,7 @@ async def _run_failing_tracked_task(carrier: WebProxyCarrier) -> None:
     assert carrier._background_tasks == set(), "a finished task must not stay in the tracking set"
 
 
-def _carrier_records(caplog: pytest.LogCaptureFixture) -> List[logging.LogRecord]:
+def _carrier_records(caplog: pytest.LogCaptureFixture) -> list[logging.LogRecord]:
     # `caplog` collects at the root, so `asyncio` logging "Task was destroyed but it is
     #  pending!" over a task an earlier test left behind is otherwise read below as a
     #  line this module emitted.

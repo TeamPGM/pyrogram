@@ -16,10 +16,13 @@
 #  You should have received a copy of the GNU Lesser General Public License
 #  along with Pyrogram.  If not, see <http://www.gnu.org/licenses/>.
 
+from __future__ import annotations as _annotations
+
 import io
 import pathlib
 import re
-from typing import BinaryIO, Callable, List, Optional, Union
+from typing import BinaryIO
+from collections.abc import Callable
 
 import pyrogram
 from pyrogram import raw, utils
@@ -59,11 +62,11 @@ class InputMediaPhoto(InputMedia):
 
     def __init__(
         self,
-        media: Union[str, BinaryIO],
+        media: str | BinaryIO,
         caption: str = "",
-        parse_mode: Optional["enums.ParseMode"] = None,
-        caption_entities: Optional[List[MessageEntity]] = None,
-        has_spoiler: Optional[bool] = None
+        parse_mode: enums.ParseMode | None = None,
+        caption_entities: list[MessageEntity] | None = None,
+        has_spoiler: bool | None = None
     ):
         super().__init__(media, caption, parse_mode, caption_entities)
 
@@ -72,13 +75,13 @@ class InputMediaPhoto(InputMedia):
     async def write(
         self,
         *,
-        client: "pyrogram.Client",
-        chat_id: Optional[Union[int, str]] = None,
-        progress: Optional[Callable] = None,
+        client: pyrogram.Client,
+        chat_id: int | str | None = None,
+        progress: Callable | None = None,
         progress_args: tuple = (),
-        ttl_seconds: Optional[int] = None,
+        ttl_seconds: int | None = None,
         **kwargs
-    ) -> "raw.base.InputMedia":
+    ) -> raw.base.InputMedia:
         if chat_id is None:
             peer = raw.types.InputPeerSelf()
         else:

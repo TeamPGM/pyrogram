@@ -16,7 +16,7 @@
 #  You should have received a copy of the GNU Lesser General Public License
 #  along with Pyrogram.  If not, see <http://www.gnu.org/licenses/>.
 
-from typing import Union, List
+from __future__ import annotations as _annotations
 
 import pyrogram
 from pyrogram import raw, types
@@ -24,11 +24,11 @@ from pyrogram import raw, types
 
 class AddChatMembers:
     async def add_chat_members(
-        self: "pyrogram.Client",
-        chat_id: Union[int, str],
-        user_ids: Union[Union[int, str], List[Union[int, str]]],
+        self: pyrogram.Client,
+        chat_id: int | str,
+        user_ids: int | str | list[int | str],
         forward_limit: int = 100
-    ) -> List["types.FailedToAddMember"]:
+    ) -> list[types.FailedToAddMember]:
         """Add new chat members to a group, supergroup or channel.
         This method can't be used to join a chat. Members can't be added to a channel if it has more than 200 members.
 

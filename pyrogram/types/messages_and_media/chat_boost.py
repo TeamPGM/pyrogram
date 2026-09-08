@@ -16,8 +16,9 @@
 #  You should have received a copy of the GNU Lesser General Public License
 #  along with Pyrogram.  If not, see <http://www.gnu.org/licenses/>.
 
+from __future__ import annotations as _annotations
+
 from datetime import datetime
-from typing import Optional
 
 import pyrogram
 from pyrogram import raw, types, utils
@@ -69,13 +70,13 @@ class ChatBoost(Object):
         date: datetime,
         expire_date: datetime,
         multiplier: int,
-        from_user: Optional["types.User"] = None,
-        is_gift: Optional[bool] = None,
-        is_giveaway: Optional[bool] = None,
-        is_unclaimed: Optional[bool] = None,
-        giveaway_message_id: Optional[int] = None,
-        used_gift_slug: Optional[str] = None,
-        stars: Optional[int] = None
+        from_user: types.User | None = None,
+        is_gift: bool | None = None,
+        is_giveaway: bool | None = None,
+        is_unclaimed: bool | None = None,
+        giveaway_message_id: int | None = None,
+        used_gift_slug: str | None = None,
+        stars: int | None = None
     ):
         super().__init__()
 
@@ -92,7 +93,7 @@ class ChatBoost(Object):
         self.stars = stars
 
     @staticmethod
-    async def _parse(client: "pyrogram.Client", boost: "raw.types.Boost", users) -> "ChatBoost":
+    async def _parse(client: pyrogram.Client, boost: raw.types.Boost, users) -> ChatBoost:
         return ChatBoost(
             id=boost.id,
             date=utils.timestamp_to_datetime(boost.date),

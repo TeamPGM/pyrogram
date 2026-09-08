@@ -16,8 +16,10 @@
 #  You should have received a copy of the GNU Lesser General Public License
 #  along with Pyrogram.  If not, see <http://www.gnu.org/licenses/>.
 
+from __future__ import annotations as _annotations
+
 import logging
-from typing import Optional, TypeVar
+from typing import TypeVar
 
 import pyrogram
 from pyrogram import raw
@@ -31,14 +33,14 @@ ReturnType = TypeVar('ReturnType')
 
 class Invoke:
     async def invoke(
-        self: "pyrogram.Client",
+        self: pyrogram.Client,
         query: TLObject[ReturnType],
         retries: int = Session.MAX_RETRIES,
         timeout: float = Session.WAIT_TIMEOUT,
-        sleep_threshold: Optional[float] = None,
+        sleep_threshold: float | None = None,
         retry_delay: float = Session.RETRY_DELAY,
-        recaptcha_token: Optional[str] = None,
-        business_connection_id: Optional[str] = None
+        recaptcha_token: str | None = None,
+        business_connection_id: str | None = None
     ) -> ReturnType:
         """Invoke raw Telegram functions.
 

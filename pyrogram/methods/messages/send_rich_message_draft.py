@@ -16,7 +16,7 @@
 #  You should have received a copy of the GNU Lesser General Public License
 #  along with Pyrogram.  If not, see <http://www.gnu.org/licenses/>.
 
-from typing import Optional, Union
+from __future__ import annotations as _annotations
 
 import pyrogram
 from pyrogram import raw, types
@@ -24,13 +24,13 @@ from pyrogram import raw, types
 
 class SendRichMessageDraft:
     async def send_rich_message_draft(
-        self: "pyrogram.Client",
-        chat_id: Union[int, str],
+        self: pyrogram.Client,
+        chat_id: int | str,
         draft_id: int,
-        rich_message: "types.InputRichMessage",
-        message_thread_id: Optional[int] = None,
-        can_stop: Optional[bool] = None,
-        keep_on_stop: Optional[bool] = None
+        rich_message: types.InputRichMessage,
+        message_thread_id: int | None = None,
+        can_stop: bool | None = None,
+        keep_on_stop: bool | None = None
     ) -> bool:
         """Use this method to stream a partial rich message to a user while the message is being generated.
 

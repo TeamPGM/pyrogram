@@ -16,7 +16,7 @@
 #  You should have received a copy of the GNU Lesser General Public License
 #  along with Pyrogram.  If not, see <http://www.gnu.org/licenses/>.
 
-from typing import Optional
+from __future__ import annotations as _annotations
 
 from pyrogram import raw
 
@@ -50,11 +50,11 @@ class LinkPreviewOptions(Object):
     def __init__(
         self,
         *,
-        is_disabled: Optional[bool] = None,
-        url: Optional[str] = None,
-        prefer_small_media: Optional[bool] = None,
-        prefer_large_media: Optional[bool] = None,
-        show_above_text: Optional[bool] = None
+        is_disabled: bool | None = None,
+        url: str | None = None,
+        prefer_small_media: bool | None = None,
+        prefer_large_media: bool | None = None,
+        show_above_text: bool | None = None
     ):
         super().__init__()
 
@@ -66,10 +66,10 @@ class LinkPreviewOptions(Object):
 
     @staticmethod
     def _parse(
-        media: "raw.types.MessageMediaWebPage",
-        url: Optional[str] = None,
-        invert_media: Optional[bool] = None
-    ) -> Optional["LinkPreviewOptions"]:
+        media: raw.types.MessageMediaWebPage,
+        url: str | None = None,
+        invert_media: bool | None = None
+    ) -> LinkPreviewOptions | None:
         if isinstance(media, raw.types.MessageMediaWebPage) and not isinstance(media.webpage, raw.types.WebPageNotModified):
             return LinkPreviewOptions(
                 is_disabled=False,

@@ -16,7 +16,7 @@
 #  You should have received a copy of the GNU Lesser General Public License
 #  along with Pyrogram.  If not, see <http://www.gnu.org/licenses/>.
 
-from typing import Optional, List
+from __future__ import annotations as _annotations
 
 import pyrogram
 from pyrogram import raw
@@ -25,11 +25,11 @@ from pyrogram import types
 
 class AnswerShippingQuery:
     async def answer_shipping_query(
-        self: "pyrogram.Client",
+        self: pyrogram.Client,
         shipping_query_id: str,
         ok: bool,
-        shipping_options: Optional[List["types.ShippingOption"]] = None,
-        error_message: Optional[str] = None
+        shipping_options: list[types.ShippingOption] | None = None,
+        error_message: str | None = None
     ) -> bool:
         """If you sent an invoice requesting a shipping address and the parameter ``is_flexible`` was specified, the API sends the confirmation in the form of an :obj:`~pyrogram.handlers.ShippingQueryHandler`.
 

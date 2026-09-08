@@ -16,7 +16,7 @@
 #  You should have received a copy of the GNU Lesser General Public License
 #  along with Pyrogram.  If not, see <http://www.gnu.org/licenses/>.
 
-from typing import List
+from __future__ import annotations as _annotations
 
 from pyrogram import raw
 
@@ -42,8 +42,8 @@ class ChecklistTasksDone(Object):
         self,
         *,
         checklist_message_id: int,
-        marked_as_done_task_ids: List[int],
-        marked_as_not_done_task_ids: List[int]
+        marked_as_done_task_ids: list[int],
+        marked_as_not_done_task_ids: list[int]
     ):
 
         super().__init__()
@@ -53,8 +53,8 @@ class ChecklistTasksDone(Object):
         self.marked_as_not_done_task_ids = marked_as_not_done_task_ids
 
     @staticmethod
-    def _parse(message: "raw.types.MessageService") -> "ChecklistTasksDone":
-        action: "raw.types.MessageActionTodoCompletions" = message.action
+    def _parse(message: raw.types.MessageService) -> ChecklistTasksDone:
+        action: raw.types.MessageActionTodoCompletions = message.action
 
         return ChecklistTasksDone(
             checklist_message_id=getattr(message.reply_to, "reply_to_msg_id", None),

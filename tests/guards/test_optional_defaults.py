@@ -16,18 +16,21 @@
 #  You should have received a copy of the GNU Lesser General Public License
 #  along with Pyrogram.  If not, see <http://www.gnu.org/licenses/>.
 
+from __future__ import annotations as _annotations
+
 import ast
 import pathlib
-from typing import Dict, Final, Iterator, List, Tuple
+from typing import Final
+from collections.abc import Iterator
 
-from tests.guards.name_resolution import REPOSITORY_ROOT, hand_written_files
+from tests.guards.name_resolution import REPOSITORY_ROOT, hand_written_files, is_generated
 
 # A parameter annotated `Optional` and defaulting to something else says two things at once:
 #  the caller may pass `None`, and the caller who passes nothing does not get `None`. Almost
 #  always only the second is true, and the body then never handles the `None` it advertises.
 #
 # The exemptions are the cases where both really are true, keyed by file and parameter name.
-_EXEMPTIONS: Final[Dict[Tuple[str, str], str]] = {
+_EXEMPTIONS: Final[dict[tuple[str, str], str]] = {
     (
         "pyrogram/filters.py",
         "prefixes",
@@ -81,9 +84,9 @@ def defaults_to_none(node: ast.expr) -> bool:
     return isinstance(node, ast.Constant) and node.value is None
 
 
-def parameters_with_defaults(node: ast.AST) -> Iterator[Tuple[ast.arg, ast.expr]]:
+def parameters_with_defaults(node: ast.AST) -> Iterator[tuple[ast.arg, ast.expr]]:
     arguments = node.args
-    positional: List[ast.arg] = arguments.posonlyargs + arguments.args
+    positional: list[ast.arg] = arguments.posonlyargs + arguments.args
 
     for parameter, default in zip(reversed(positional), reversed(arguments.defaults)):
         yield parameter, default
@@ -93,8 +96,8 @@ def parameters_with_defaults(node: ast.AST) -> Iterator[Tuple[ast.arg, ast.expr]
             yield parameter, default
 
 
-def optional_parameters_that_do_not_default_to_none() -> List[Tuple[str, int, str]]:
-    found: List[Tuple[str, int, str]] = []
+def optional_parameters_that_do_not_default_to_none() -> list[tuple[str, int, str]]:
+    found: list[tuple[str, int, str]] = []
 
     for path in hand_written_files():
         relative = path.relative_to(REPOSITORY_ROOT).as_posix()
@@ -138,9 +141,10 @@ def test_the_sweep_reads_the_parameters_it_claims_to() -> None:
         "    written: Union[int, None] = 3,\n"
         "    quoted: 'Optional[int]' = 4,\n"
         "    modern: int | None = 5,\n"
+        "    deferred: 'types.User | None' = 6,\n"
         "    correct: Optional[int] = None,\n"
         "    *,\n"
-        "    keyword: Optional[int] = 6,\n"
+        "    keyword: Optional[int] = 7,\n"
         "): ...\n"
     )
     node = ast.parse(source).body[0]
@@ -153,7 +157,7 @@ def test_the_sweep_reads_the_parameters_it_claims_to() -> None:
         and mentions_none(parameter.annotation)
     ]
 
-    assert caught == ["modern", "quoted", "written", "old", "keyword"]
+    assert caught == ["deferred", "modern", "quoted", "written", "old", "keyword"]
 
 
 def test_the_sweep_reads_the_package_and_not_the_generated_tree() -> None:
@@ -161,7 +165,11 @@ def test_the_sweep_reads_the_package_and_not_the_generated_tree() -> None:
 
     assert len(files) > 100
     assert REPOSITORY_ROOT / "pyrogram" / "client.py" in files
-    assert not [path for path in files if (REPOSITORY_ROOT / "pyrogram" / "raw") in path.parents]
+
+    # `pyrogram/raw/core` is hand-written and sits inside the tree `make api` writes into,
+    #  so the two halves of `raw` are asserted separately.
+    assert REPOSITORY_ROOT / "pyrogram" / "raw" / "core" / "tl_object.py" in files
+    assert not [path for path in files if is_generated(path)]
 
 
 def test_a_module_outside_the_package_is_not_swept() -> None:

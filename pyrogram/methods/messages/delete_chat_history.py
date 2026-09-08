@@ -16,9 +16,10 @@
 #  You should have received a copy of the GNU Lesser General Public License
 #  along with Pyrogram.  If not, see <http://www.gnu.org/licenses/>.
 
+from __future__ import annotations as _annotations
+
 from datetime import datetime
 import logging
-from typing import Optional, Union
 
 import pyrogram
 from pyrogram import raw
@@ -29,13 +30,13 @@ log = logging.getLogger(__name__)
 
 class DeleteChatHistory:
     async def delete_chat_history(
-        self: "pyrogram.Client",
-        chat_id: Union[int, str],
+        self: pyrogram.Client,
+        chat_id: int | str,
         max_id: int = 0,
-        revoke: Optional[bool] = None,
+        revoke: bool | None = None,
         just_clear = None,
-        min_date: Optional[datetime] = None,
-        max_date: Optional[datetime] = None,
+        min_date: datetime | None = None,
+        max_date: datetime | None = None,
     ) -> int:
         """Delete the history of a chat.
 

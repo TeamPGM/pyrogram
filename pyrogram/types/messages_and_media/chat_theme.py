@@ -16,7 +16,7 @@
 #  You should have received a copy of the GNU Lesser General Public License
 #  along with Pyrogram.  If not, see <http://www.gnu.org/licenses/>.
 
-from typing import Optional
+from __future__ import annotations as _annotations
 
 from pyrogram import raw, types
 import pyrogram
@@ -37,14 +37,14 @@ class ChatTheme(Object):
             For themes based on an upgraded gifts.
     """
 
-    def __init__(self, *, name: Optional[str] = None, gift: Optional["types.Gift"] = None):
+    def __init__(self, *, name: str | None = None, gift: types.Gift | None = None):
         super().__init__()
 
         self.name = name
         self.gift = gift
 
     @staticmethod
-    async def _parse(client: "pyrogram.Client", theme: "raw.base.ChatTheme") -> "ChatTheme":
+    async def _parse(client: pyrogram.Client, theme: raw.base.ChatTheme) -> ChatTheme:
         if isinstance(theme, raw.types.ChatTheme):
             return ChatTheme(name=theme.emoticon)
         elif isinstance(theme, raw.types.ChatThemeUniqueGift):

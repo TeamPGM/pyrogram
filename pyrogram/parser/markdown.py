@@ -16,10 +16,11 @@
 #  You should have received a copy of the GNU Lesser General Public License
 #  along with Pyrogram.  If not, see <http://www.gnu.org/licenses/>.
 
+from __future__ import annotations as _annotations
+
 import html
 import re
 import urllib.parse
-from typing import List, Optional, Tuple, Union
 
 import pyrogram
 from pyrogram import types
@@ -66,18 +67,18 @@ FIXED_WIDTH_DELIMS = [CODE_DELIM, PRE_DELIM]
 
 class Markdown:
     # TODO: Full refactor
-    def __init__(self, client: Optional["pyrogram.Client"]):
+    def __init__(self, client: pyrogram.Client | None):
         self.html = HTML(client)
 
     @staticmethod
     def escape_and_create_quotes(text: str, strict: bool):
-        text_lines: List[Union[str, None]] = text.splitlines()
+        text_lines: list[str | None] = text.splitlines()
 
         # Indexes of Already escaped lines
-        html_escaped_list: List[int] = []
+        html_escaped_list: list[int] = []
 
         # Temporary Queue to hold lines to be quoted
-        to_quote_list: List[Tuple[int, str]] = []
+        to_quote_list: list[tuple[int, str]] = []
 
         def create_blockquote(expandable: bool = False) -> None:
             """
@@ -247,7 +248,7 @@ class Markdown:
         return await self.html.parse(text)
 
     @staticmethod
-    def unparse(text: str, entities: List["types.MessageEntity"]):
+    def unparse(text: str, entities: list[types.MessageEntity]):
         text = utils.add_surrogates(text)
 
         entities_offsets = []

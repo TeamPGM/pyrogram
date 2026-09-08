@@ -16,7 +16,7 @@
 #  You should have received a copy of the GNU Lesser General Public License
 #  along with Pyrogram.  If not, see <http://www.gnu.org/licenses/>.
 
-from typing import Dict
+from __future__ import annotations as _annotations
 
 import pyrogram
 from pyrogram import raw, types
@@ -36,7 +36,7 @@ class ManagedBotCreated(Object):
     def __init__(
         self,
         *,
-        bot: "types.User",
+        bot: types.User,
     ):
         super().__init__()
 
@@ -44,10 +44,10 @@ class ManagedBotCreated(Object):
 
     @staticmethod
     async def _parse(
-        client: "pyrogram.Client",
-        managed_bot_created: "raw.types.MessageActionManagedBotCreated",
-        users: Dict[int, "raw.types.User"],
-    ) -> "ManagedBotCreated":
+        client: pyrogram.Client,
+        managed_bot_created: raw.types.MessageActionManagedBotCreated,
+        users: dict[int, raw.types.User],
+    ) -> ManagedBotCreated:
         if not isinstance(managed_bot_created, raw.types.MessageActionManagedBotCreated):
             return
 

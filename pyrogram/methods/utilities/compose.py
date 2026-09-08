@@ -16,15 +16,16 @@
 #  You should have received a copy of the GNU Lesser General Public License
 #  along with Pyrogram.  If not, see <http://www.gnu.org/licenses/>.
 
+from __future__ import annotations as _annotations
+
 import asyncio
-from typing import List
 
 import pyrogram
 from .idle import idle
 
 
 async def compose(
-    clients: List["pyrogram.Client"],
+    clients: list[pyrogram.Client],
     sequential: bool = False
 ):
     """Run multiple clients at once.

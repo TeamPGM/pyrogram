@@ -16,8 +16,9 @@
 #  You should have received a copy of the GNU Lesser General Public License
 #  along with Pyrogram.  If not, see <http://www.gnu.org/licenses/>.
 
+from __future__ import annotations as _annotations
+
 from datetime import datetime
-from typing import List, Optional, Union
 
 import pyrogram
 from pyrogram import raw, types, utils
@@ -59,14 +60,14 @@ class ChatPhoto(Object):
     def __init__(
         self,
         *,
-        client: Optional["pyrogram.Client"] = None,
+        client: pyrogram.Client | None = None,
         small_file_id: str,
         small_photo_unique_id: str,
         big_file_id: str,
         big_photo_unique_id: str,
-        added_date: Optional[datetime] = None,
-        animation: Optional["types.AnimatedChatPhoto"] = None,
-        sticker: Optional["types.ChatPhotoSticker"] = None,
+        added_date: datetime | None = None,
+        animation: types.AnimatedChatPhoto | None = None,
+        sticker: types.ChatPhotoSticker | None = None,
     ):
         super().__init__(client)
 
@@ -81,7 +82,7 @@ class ChatPhoto(Object):
     @staticmethod
     async def _parse(
         client,
-        chat_photo: Union["raw.types.UserProfilePhoto", "raw.types.ChatPhoto", "raw.types.Photo"],
+        chat_photo: raw.types.UserProfilePhoto | raw.types.ChatPhoto | raw.types.Photo,
         peer_id: int,
         peer_access_hash: int,
     ):
@@ -125,7 +126,7 @@ class ChatPhoto(Object):
         ).encode()
 
         if isinstance(chat_photo, raw.types.Photo):
-            sizes: List[raw.types.PhotoSize] = sorted(
+            sizes: list[raw.types.PhotoSize] = sorted(
                 [size for size in chat_photo.sizes if isinstance(size, raw.types.PhotoSize)],
                 key=lambda size: size.w * size.h,
             )

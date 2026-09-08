@@ -16,7 +16,7 @@
 #  You should have received a copy of the GNU Lesser General Public License
 #  along with Pyrogram.  If not, see <http://www.gnu.org/licenses/>.
 
-from typing import Optional, Union
+from __future__ import annotations as _annotations
 
 import pyrogram
 from pyrogram import raw
@@ -24,10 +24,10 @@ from pyrogram import raw
 
 class SetBotInfoShortDescription:
     async def set_bot_info_short_description(
-        self: "pyrogram.Client",
+        self: pyrogram.Client,
         short_description: str,
         language_code: str = "",
-        for_my_bot: Optional[Union[int, str]] = None,
+        for_my_bot: int | str | None = None,
     ) -> bool:
         """Use this method to change the bot's short description, which is shown on the bot's profile page and is sent together with the link when users share the bot.
         

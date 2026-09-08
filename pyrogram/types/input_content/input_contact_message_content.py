@@ -16,8 +16,9 @@
 #  You should have received a copy of the GNU Lesser General Public License
 #  along with Pyrogram.  If not, see <http://www.gnu.org/licenses/>.
 
+from __future__ import annotations as _annotations
+
 import logging
-from typing import Optional
 
 import pyrogram
 from pyrogram import raw
@@ -48,8 +49,8 @@ class InputContactMessageContent(InputMessageContent):
         self,
         phone_number: str,
         first_name: str,
-        last_name: Optional[str] = None,
-        vcard: Optional[str] = None
+        last_name: str | None = None,
+        vcard: str | None = None
     ):
         super().__init__()
 
@@ -58,7 +59,7 @@ class InputContactMessageContent(InputMessageContent):
         self.last_name = last_name
         self.vcard = vcard
 
-    async def write(self, client: "pyrogram.Client", reply_markup):
+    async def write(self, client: pyrogram.Client, reply_markup):
         return raw.types.InputBotInlineMessageMediaContact(
             phone_number=self.phone_number,
             first_name=self.first_name,

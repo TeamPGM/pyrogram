@@ -16,7 +16,7 @@
 #  You should have received a copy of the GNU Lesser General Public License
 #  along with Pyrogram.  If not, see <http://www.gnu.org/licenses/>.
 
-from typing import Union
+from __future__ import annotations as _annotations
 
 import pyrogram
 from pyrogram import raw, types
@@ -24,9 +24,9 @@ from pyrogram import raw, types
 
 class GetChatSettings:
     async def get_chat_settings(
-        self: "pyrogram.Client",
-        chat_id: Union[int, str]
-    ) -> "types.ChatSettings":
+        self: pyrogram.Client,
+        chat_id: int | str
+    ) -> types.ChatSettings:
         """Get information about a chat settings.
 
         .. include:: /_includes/usable-by/users.rst

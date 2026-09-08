@@ -16,7 +16,7 @@
 #  You should have received a copy of the GNU Lesser General Public License
 #  along with Pyrogram.  If not, see <http://www.gnu.org/licenses/>.
 
-from typing import Optional, Union
+from __future__ import annotations as _annotations
 
 from pyrogram import raw
 
@@ -38,13 +38,13 @@ class SuggestedPostPriceStar(Object):
         self.star_count = star_count
 
     @staticmethod
-    def _parse(post_price: "raw.types.StarsAmount") -> Optional["SuggestedPostPriceStar"]:
+    def _parse(post_price: raw.types.StarsAmount) -> SuggestedPostPriceStar | None:
         if isinstance(post_price, raw.types.StarsAmount):
             return SuggestedPostPriceStar(
                 star_count=post_price.amount
             )
 
-    def write(self) -> "raw.types.StarsAmount":
+    def write(self) -> raw.types.StarsAmount:
         return raw.types.StarsAmount(
             amount=self.star_count,
             nanos=0
@@ -67,13 +67,13 @@ class SuggestedPostPriceTon(Object):
         self.toncoin_nano_count = toncoin_nano_count
 
     @staticmethod
-    def _parse(post_price: "raw.types.StarsTonAmount") -> Optional["SuggestedPostPriceTon"]:
+    def _parse(post_price: raw.types.StarsTonAmount) -> SuggestedPostPriceTon | None:
         if isinstance(post_price, raw.types.StarsTonAmount):
             return SuggestedPostPriceTon(
                 toncoin_nano_count=post_price.amount
             )
 
-    def write(self) -> "raw.types.StarsTonAmount":
+    def write(self) -> raw.types.StarsTonAmount:
         return raw.types.StarsTonAmount(
             amount=self.toncoin_nano_count
         )
@@ -95,12 +95,12 @@ class SuggestedPostPrice(Object):
 
     @staticmethod
     def _parse(
-        suggested_post_price: "raw.base.StarsAmount"
-    ) -> Optional[Union["SuggestedPostPriceStar", "SuggestedPostPriceTon"]]:
+        suggested_post_price: raw.base.StarsAmount
+    ) -> SuggestedPostPriceStar | SuggestedPostPriceTon | None:
         if isinstance(suggested_post_price, raw.types.StarsAmount):
             return SuggestedPostPriceStar._parse(suggested_post_price)
         elif isinstance(suggested_post_price, raw.types.StarsTonAmount):
             return SuggestedPostPriceTon._parse(suggested_post_price)
 
-    def write(self) -> "raw.base.StarsAmount":
+    def write(self) -> raw.base.StarsAmount:
         raise NotImplementedError

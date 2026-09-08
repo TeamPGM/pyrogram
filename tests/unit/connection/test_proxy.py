@@ -16,8 +16,10 @@
 #  You should have received a copy of the GNU Lesser General Public License
 #  along with Pyrogram.  If not, see <http://www.gnu.org/licenses/>.
 
+from __future__ import annotations as _annotations
+
 import base64
-from typing import Final, Optional
+from typing import Final
 
 import pytest
 
@@ -294,7 +296,7 @@ def test_client_proxy_address_reports_a_web_proxy_on_the_https_port() -> None:
         HTTPProxy(hostname="1.2.3.4", port=8080),
     ],
 )
-def test_client_proxy_address_reports_nothing_for_a_proxy_telegram_does_not_own(proxy: Optional[Proxy]) -> None:
+def test_client_proxy_address_reports_nothing_for_a_proxy_telegram_does_not_own(proxy: Proxy | None) -> None:
     assert client_proxy_address(proxy) is None
 
 

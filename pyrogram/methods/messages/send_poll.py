@@ -16,9 +16,10 @@
 #  You should have received a copy of the GNU Lesser General Public License
 #  along with Pyrogram.  If not, see <http://www.gnu.org/licenses/>.
 
+from __future__ import annotations as _annotations
+
 import logging
 from datetime import datetime
-from typing import List, Optional, Union
 
 import pyrogram
 from pyrogram import enums, raw, types, utils
@@ -27,46 +28,45 @@ log = logging.getLogger(__name__)
 
 class SendPoll:
     async def send_poll(
-        self: "pyrogram.Client",
-        chat_id: Union[int, str],
-        question: Union[str, "types.FormattedText"],
-        options: List[Union[str, "types.InputPollOption"]],
-        description: Optional[Union[str, "types.FormattedText"]] = None,
-        description_media: Optional["types.InputPollMedia"] = None,
-        message_thread_id: Optional[int] = None,
-        business_connection_id: Optional[str] = None,
+        self: pyrogram.Client,
+        chat_id: int | str,
+        question: str | types.FormattedText,
+        options: list[str | types.InputPollOption],
+        description: str | types.FormattedText | None = None,
+        description_media: types.InputPollMedia | None = None,
+        message_thread_id: int | None = None,
+        business_connection_id: str | None = None,
         is_anonymous: bool = True,
-        type: "enums.PollType" = enums.PollType.REGULAR,
-        allows_multiple_answers: Optional[bool] = None,
-        allows_revoting: Optional[bool] = None,
-        members_only: Optional[bool] = None,
-        country_codes: Optional[List[str]] = None,
-        shuffle_options: Optional[bool] = None,
-        allow_adding_options: Optional[bool] = None,
-        hide_results_until_closes: Optional[bool] = None,
-        correct_option_ids: Optional[List[int]] = None,
-        explanation: Optional[Union[str, "types.FormattedText"]] = None,
-        explanation_media: Optional["types.InputPollMedia"] = None,
-        open_period: Optional[int] = None,
-        close_date: Optional[datetime] = None,
-        is_closed: Optional[bool] = None,
-        disable_notification: Optional[bool] = None,
-        protect_content: Optional[bool] = None,
-        allow_paid_broadcast: Optional[bool] = None,
-        effect_id: Optional[int] = None,
-        reply_parameters: Optional["types.ReplyParameters"] = None,
-        schedule_date: Optional[datetime] = None,
-        repeat_period: Optional[int] = None,
-        paid_message_star_count: Optional[int] = None,
-        reply_markup: Optional[
-            Union[
-                "types.InlineKeyboardMarkup",
-                "types.ReplyKeyboardMarkup",
-                "types.ReplyKeyboardRemove",
-                "types.ForceReply"
-            ]
-        ] = None,
-    ) -> Optional["types.Message"]:
+        type: enums.PollType = enums.PollType.REGULAR,
+        allows_multiple_answers: bool | None = None,
+        allows_revoting: bool | None = None,
+        members_only: bool | None = None,
+        country_codes: list[str] | None = None,
+        shuffle_options: bool | None = None,
+        allow_adding_options: bool | None = None,
+        hide_results_until_closes: bool | None = None,
+        correct_option_ids: list[int] | None = None,
+        explanation: str | types.FormattedText | None = None,
+        explanation_media: types.InputPollMedia | None = None,
+        open_period: int | None = None,
+        close_date: datetime | None = None,
+        is_closed: bool | None = None,
+        disable_notification: bool | None = None,
+        protect_content: bool | None = None,
+        allow_paid_broadcast: bool | None = None,
+        effect_id: int | None = None,
+        reply_parameters: types.ReplyParameters | None = None,
+        schedule_date: datetime | None = None,
+        repeat_period: int | None = None,
+        paid_message_star_count: int | None = None,
+        reply_markup: (
+            types.InlineKeyboardMarkup
+            | types.ReplyKeyboardMarkup
+            | types.ReplyKeyboardRemove
+            | types.ForceReply
+            | None
+        ) = None,
+    ) -> types.Message | None:
         """A message with a poll.
 
         .. note::

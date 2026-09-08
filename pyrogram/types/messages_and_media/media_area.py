@@ -16,7 +16,7 @@
 #  You should have received a copy of the GNU Lesser General Public License
 #  along with Pyrogram.  If not, see <http://www.gnu.org/licenses/>.
 
-from typing import Dict, Optional, Union
+from __future__ import annotations as _annotations
 
 import pyrogram
 from pyrogram import enums, raw, types
@@ -102,27 +102,27 @@ class MediaArea(Object):
     def __init__(
         self,
         *,
-        client: Optional["pyrogram.Client"] = None,
+        client: pyrogram.Client | None = None,
         x: float,
         y: float,
         width: float,
         height: float,
         rotation: float,
-        type: "enums.MediaAreaType",
-        radius: Optional[float] = None,
-        sender_chat: Optional["types.Chat"] = None,
-        message_id: Optional[int] = None,
-        message: Optional["types.Message"] = None,
-        location: Optional["types.Location"] = None,
-        reaction: Optional["types.Reaction"] = None,
-        is_dark: Optional[bool] = None,
-        is_flipped: Optional[bool] = None,
-        url: Optional[str] = None,
-        venue: Optional["types.Venue"] = None,
-        emoji: Optional[str] = None,
-        temperature: Optional[float] = None,
-        color: Optional[int] = None,
-        gift: Optional["types.Gift"] = None
+        type: enums.MediaAreaType,
+        radius: float | None = None,
+        sender_chat: types.Chat | None = None,
+        message_id: int | None = None,
+        message: types.Message | None = None,
+        location: types.Location | None = None,
+        reaction: types.Reaction | None = None,
+        is_dark: bool | None = None,
+        is_flipped: bool | None = None,
+        url: str | None = None,
+        venue: types.Venue | None = None,
+        emoji: str | None = None,
+        temperature: float | None = None,
+        color: int | None = None,
+        gift: types.Gift | None = None
     ):
         super().__init__(client)
 
@@ -149,10 +149,10 @@ class MediaArea(Object):
 
     @staticmethod
     async def _parse(
-        client: "pyrogram.Client",
-        area: "raw.base.MediaArea",
-        chats: Dict[int, "raw.base.Chat"]
-    ) -> "MediaArea":
+        client: pyrogram.Client,
+        area: raw.base.MediaArea,
+        chats: dict[int, raw.base.Chat]
+    ) -> MediaArea:
         sender_chat = None
         message_id = None
         message = None
@@ -217,17 +217,16 @@ class MediaArea(Object):
         )
 
     async def write(
-        self, client: "pyrogram.Client"
-    ) -> Optional[
-        Union[
-            "raw.types.InputMediaAreaChannelPost",
-            "raw.types.MediaAreaGeoPoint",
-            "raw.types.MediaAreaSuggestedReaction",
-            "raw.types.MediaAreaUrl",
-            "raw.types.MediaAreaWeather",
-            "raw.types.MediaAreaStarGift"
-        ]
-    ]:
+        self, client: pyrogram.Client
+    ) -> (
+        raw.types.InputMediaAreaChannelPost
+        | raw.types.MediaAreaGeoPoint
+        | raw.types.MediaAreaSuggestedReaction
+        | raw.types.MediaAreaUrl
+        | raw.types.MediaAreaWeather
+        | raw.types.MediaAreaStarGift
+        | None
+    ):
         coordinates = raw.types.MediaAreaCoordinates(
             x=self.x,
             y=self.y,

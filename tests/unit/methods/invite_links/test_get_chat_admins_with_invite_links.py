@@ -16,7 +16,9 @@
 #  You should have received a copy of the GNU Lesser General Public License
 #  along with Pyrogram.  If not, see <http://www.gnu.org/licenses/>.
 
-from typing import Final, List
+from __future__ import annotations as _annotations
+
+from typing import Final
 
 import pytest
 
@@ -31,7 +33,7 @@ _CHAT_ID: Final[int] = -1001234567890
 class FakeClient(GetChatAdminsWithInviteLinks):
     """A client that answers `messages.GetAdminsWithInvites` with the admins it was given."""
 
-    def __init__(self, admins: List[raw.types.ChatAdminWithInvites]) -> None:
+    def __init__(self, admins: list[raw.types.ChatAdminWithInvites]) -> None:
         self.admins = admins
 
     async def resolve_peer(self, peer_id: int) -> raw.types.InputPeerChannel:

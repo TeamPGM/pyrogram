@@ -16,8 +16,10 @@
 #  You should have received a copy of the GNU Lesser General Public License
 #  along with Pyrogram.  If not, see <http://www.gnu.org/licenses/>.
 
+from __future__ import annotations as _annotations
+
 from pathlib import Path
-from typing import Dict, Final, Optional, Tuple, Type, Union
+from typing import Final
 
 import pytest
 
@@ -35,10 +37,10 @@ from pyrogram.errors import (
 )
 from tests.unit.errors import RPC_NAME, raise_it
 
-ATTRIBUTES: Final[Tuple[str, ...]] = ("ID", "CODE", "NAME", "MESSAGE")
+ATTRIBUTES: Final[tuple[str, ...]] = ("ID", "CODE", "NAME", "MESSAGE")
 
 
-def attributes_of(error_type: Type[RPCError]) -> Dict[str, Union[int, str, None]]:
+def attributes_of(error_type: type[RPCError]) -> dict[str, int | str | None]:
     return {name: getattr(error_type, name) for name in ATTRIBUTES}
 
 
@@ -53,8 +55,8 @@ def attributes_of(error_type: Type[RPCError]) -> Dict[str, Union[int, str, None]
 def test_a_known_error_takes_its_number_from_the_message(
     code: int,
     message: str,
-    error_type: Type[RPCError],
-    value: Optional[int]
+    error_type: type[RPCError],
+    value: int | None
 ) -> None:
     with pytest.raises(error_type) as raised:
         raise_it(code, message=message)
@@ -156,8 +158,8 @@ def test_a_known_error_records_nothing(tmp_path: Path, monkeypatch: pytest.Monke
     ]
 )
 def test_value_keeps_whatever_is_not_a_number(
-    value: Union[int, str, None],
-    expected: Union[int, str, None]
+    value: int | str | None,
+    expected: int | str | None
 ) -> None:
     error = FloodWait(value)
 
@@ -192,8 +194,8 @@ def test_value_can_also_hold_the_raw_error_object() -> None:
     ]
 )
 def test_an_error_class_declares_what_it_is(
-    error_type: Type[RPCError],
-    attributes: Dict[str, Union[int, str, None]]
+    error_type: type[RPCError],
+    attributes: dict[str, int | str | None]
 ) -> None:
     assert attributes_of(error_type) == attributes
 
@@ -269,7 +271,7 @@ def test_a_verification_error_keeps_its_parameters_whole(
     tmp_path: Path,
     monkeypatch: pytest.MonkeyPatch,
     message: str,
-    error_type: Type[RPCError],
+    error_type: type[RPCError],
     value: str,
     text: str
 ) -> None:

@@ -23,11 +23,14 @@ all, and nothing else reports the gap: both signatures are valid on their own, a
 only shows up as a caller wondering why the option has no effect.
 """
 
+from __future__ import annotations as _annotations
+
 import inspect
 import re
 import sys
 from types import ModuleType
-from typing import Final, Iterator, List, NamedTuple, Set
+from typing import Final, NamedTuple
+from collections.abc import Iterator
 
 import pytest
 
@@ -41,19 +44,19 @@ class Shortcut(NamedTuple):
     target_name: str
 
 
-_TARGET: Final["re.Pattern[str]"] = re.compile(r"Shortcut for method :obj:`~pyrogram\.Client\.(\w+)`")
+_TARGET: Final[re.Pattern[str]] = re.compile(r"Shortcut for method :obj:`~pyrogram\.Client\.(\w+)`")
 
 # The shortcut's own docstring lists what it fills from `self`, one bullet per attribute.
-_FILLED_FROM_SELF: Final["re.Pattern[str]"] = re.compile(r"^\* (\w+)$", re.MULTILINE)
+_FILLED_FROM_SELF: Final[re.Pattern[str]] = re.compile(r"^\* (\w+)$", re.MULTILINE)
 
 # Each `send_*` module warns about its own retired parameters with this exact wording, so which
 #  ones are retired is read off the target rather than listed here. A name can be deprecated in
 #  one target and current in another: `parse_mode` only feeds `quote_parse_mode` in
 #  `send_contact`, while in `send_photo` it parses the caption.
-_DEPRECATED: Final["re.Pattern[str]"] = re.compile(r"`(\w+)` is deprecated")
+_DEPRECATED: Final[re.Pattern[str]] = re.compile(r"`(\w+)` is deprecated")
 
 
-def shortcut_names() -> List[str]:
+def shortcut_names() -> list[str]:
     return sorted(name for name in vars(types.Message) if name.startswith(("reply_", "answer_")))
 
 
@@ -65,20 +68,20 @@ def shortcuts() -> Iterator[Shortcut]:
             yield Shortcut(name, match.group(1))
 
 
-_SHORTCUTS: Final[List[Shortcut]] = list(shortcuts())
+_SHORTCUTS: Final[list[Shortcut]] = list(shortcuts())
 
 
-def filled_from_self(shortcut: Shortcut) -> Set[str]:
+def filled_from_self(shortcut: Shortcut) -> set[str]:
     return set(_FILLED_FROM_SELF.findall(inspect.getdoc(getattr(types.Message, shortcut.name)) or ""))
 
 
-def deprecated_in(module: ModuleType) -> Set[str]:
+def deprecated_in(module: ModuleType) -> set[str]:
     return set(_DEPRECATED.findall(inspect.getsource(module)))
 
 
-def parameters_the_caller_must_supply(shortcut: Shortcut) -> List[str]:
+def parameters_the_caller_must_supply(shortcut: Shortcut) -> list[str]:
     target = getattr(Client, shortcut.target_name)
-    ignored: Set[str] = filled_from_self(shortcut) | deprecated_in(sys.modules[target.__module__]) | {"self"}
+    ignored: set[str] = filled_from_self(shortcut) | deprecated_in(sys.modules[target.__module__]) | {"self"}
 
     return [name for name in inspect.signature(target).parameters if name not in ignored]
 

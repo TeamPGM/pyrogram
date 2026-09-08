@@ -16,12 +16,12 @@
 #  You should have received a copy of the GNU Lesser General Public License
 #  along with Pyrogram.  If not, see <http://www.gnu.org/licenses/>.
 
+from __future__ import annotations as _annotations
 
 import re
 from importlib import import_module
 from pathlib import Path
 from types import ModuleType
-from typing import Type
 
 import pytest
 
@@ -61,8 +61,8 @@ from tests.unit.errors import raise_it
 def test_an_error_under_two_codes_is_caught_by_the_category_of_the_one_it_came_from(
     code: int,
     message: str,
-    error_type: Type[RPCError],
-    category: Type[RPCError]
+    error_type: type[RPCError],
+    category: type[RPCError]
 ) -> None:
     with pytest.raises(error_type) as raised:
         raise_it(code, message=message)
@@ -87,7 +87,7 @@ def test_an_error_under_two_codes_is_caught_by_the_category_of_the_one_it_came_f
 def test_the_name_the_two_codes_share_still_catches_both(
     code: int,
     message: str,
-    shared_type: Type[RPCError]
+    shared_type: type[RPCError]
 ) -> None:
     with pytest.raises(shared_type):
         raise_it(code, message=message)

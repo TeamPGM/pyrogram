@@ -16,8 +16,9 @@
 #  You should have received a copy of the GNU Lesser General Public License
 #  along with Pyrogram.  If not, see <http://www.gnu.org/licenses/>.
 
+from __future__ import annotations as _annotations
+
 import re
-from typing import Optional
 
 import pyrogram
 from pyrogram import raw, enums
@@ -66,17 +67,17 @@ class MessageEntity(Object):
     def __init__(
         self,
         *,
-        client: Optional["pyrogram.Client"] = None,
-        type: "enums.MessageEntityType",
+        client: pyrogram.Client | None = None,
+        type: enums.MessageEntityType,
         offset: int,
         length: int,
-        url: Optional[str] = None,
-        user: Optional["types.User"] = None,
-        language: Optional[str] = None,
-        custom_emoji_id: Optional[str] = None,
-        expandable: Optional[bool] = None,
-        unix_time: Optional[int] = None,
-        date_time_format: Optional[str] = None
+        url: str | None = None,
+        user: types.User | None = None,
+        language: str | None = None,
+        custom_emoji_id: str | None = None,
+        expandable: bool | None = None,
+        unix_time: int | None = None,
+        date_time_format: str | None = None
     ):
         super().__init__(client)
 
@@ -92,7 +93,7 @@ class MessageEntity(Object):
         self.date_time_format = date_time_format
 
     @staticmethod
-    async def _parse(client, entity: "raw.base.MessageEntity", users: dict) -> "MessageEntity":
+    async def _parse(client, entity: raw.base.MessageEntity, users: dict) -> MessageEntity:
         user_id = None
         unix_time = None
         date_time_format = None

@@ -15,7 +15,8 @@
 #
 #  You should have received a copy of the GNU Lesser General Public License
 #  along with Pyrogram.  If not, see <http://www.gnu.org/licenses/>.
-from typing import Dict, List, Optional
+
+from __future__ import annotations as _annotations
 
 import pyrogram
 from pyrogram import raw, types, utils
@@ -41,10 +42,10 @@ class FactCheck(Object):
     """
     def __init__(
         self, *,
-        need_check: Optional[bool] = None,
-        country: Optional[str] = None,
-        text: Optional[str] = None,
-        entities: Optional[List["types.MessageEntity"]] = None
+        need_check: bool | None = None,
+        country: str | None = None,
+        text: str | None = None,
+        entities: list[types.MessageEntity] | None = None
     ):
         super().__init__()
 
@@ -55,10 +56,10 @@ class FactCheck(Object):
 
     @staticmethod
     async def _parse(
-        client: "pyrogram.Client",
-        fact_check: "raw.types.FactCheck",
-        users: Dict[int, List["raw.base.User"]]
-    ) -> Optional["FactCheck"]:
+        client: pyrogram.Client,
+        fact_check: raw.types.FactCheck,
+        users: dict[int, list[raw.base.User]]
+    ) -> FactCheck | None:
         if not fact_check:
             return None
 

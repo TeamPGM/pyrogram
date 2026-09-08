@@ -16,7 +16,7 @@
 #  You should have received a copy of the GNU Lesser General Public License
 #  along with Pyrogram.  If not, see <http://www.gnu.org/licenses/>.
 
-from typing import Optional, Union
+from __future__ import annotations as _annotations
 
 from ..object import Object
 
@@ -41,9 +41,9 @@ class EphemeralMessageParameters(Object):
     def __init__(
         self,
         *,
-        receiver_user_id: Union[int, str],
-        callback_query_id: Optional[str] = None,
-        replace_callback_query_message: Optional[bool] = None,
+        receiver_user_id: int | str,
+        callback_query_id: str | None = None,
+        replace_callback_query_message: bool | None = None,
     ):
         super().__init__()
 

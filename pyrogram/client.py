@@ -16,6 +16,8 @@
 #  You should have received a copy of the GNU Lesser General Public License
 #  along with Pyrogram.  If not, see <http://www.gnu.org/licenses/>.
 
+from __future__ import annotations as _annotations
+
 import asyncio
 import functools
 import inspect
@@ -34,7 +36,8 @@ from importlib import import_module
 from io import BytesIO
 from mimetypes import MimeTypes
 from pathlib import Path
-from typing import Any, AsyncGenerator, Callable, List, Optional, Sequence, Tuple, Type, Union
+from typing import Any
+from collections.abc import AsyncGenerator, Callable, Sequence
 
 import pyrogram
 from pyrogram import __license__, __version__, enums, raw, utils
@@ -71,7 +74,7 @@ from .session.internals import MsgId
 log = logging.getLogger(__name__)
 
 
-def _plugin_handlers(target: Any) -> Optional[Sequence[Tuple[Handler, int]]]:
+def _plugin_handlers(target: Any) -> Sequence[tuple[Handler, int]] | None:
     handlers = getattr(target, "handlers", None)
 
     # A PyMongo collection answers any attribute with a sub-collection, so `hasattr` is
@@ -303,8 +306,8 @@ class Client(Methods):
     def __init__(
         self,
         name: str,
-        api_id: Optional[Union[int, str]] = None,
-        api_hash: Optional[str] = None,
+        api_id: int | str | None = None,
+        api_hash: str | None = None,
         app_version: str = APP_VERSION,
         device_model: str = DEVICE_MODEL,
         system_version: str = SYSTEM_VERSION,
@@ -312,37 +315,37 @@ class Client(Methods):
         lang_code: str = LANG_CODE,
         system_lang_code: str = SYSTEM_LANG_CODE,
         ipv6: bool = False,
-        proxy: Optional[Union[str, ProxyDict, Proxy]] = None,
+        proxy: str | ProxyDict | Proxy | None = None,
         test_mode: bool = False,
-        bot_token: Optional[str] = None,
-        session_string: Optional[str] = None,
-        in_memory: Optional[bool] = None,
-        phone_number: Optional[str] = None,
-        phone_code: Optional[str] = None,
-        password: Optional[str] = None,
+        bot_token: str | None = None,
+        session_string: str | None = None,
+        in_memory: bool | None = None,
+        phone_number: str | None = None,
+        phone_code: str | None = None,
+        password: str | None = None,
         workers: int = WORKERS,
-        workdir: Union[str, Path] = WORKDIR,
-        plugins: Optional[dict] = None,
-        parse_mode: "enums.ParseMode" = enums.ParseMode.DEFAULT,
-        no_updates: Optional[bool] = None,
+        workdir: str | Path = WORKDIR,
+        plugins: dict | None = None,
+        parse_mode: enums.ParseMode = enums.ParseMode.DEFAULT,
+        no_updates: bool | None = None,
         skip_updates: bool = True,
-        takeout: Optional[bool] = None,
+        takeout: bool | None = None,
         sleep_threshold: int = Session.SLEEP_THRESHOLD,
         hide_password: bool = False,
         max_concurrent_transmissions: int = MAX_CONCURRENT_TRANSMISSIONS,
         max_message_cache_size: int = MAX_MESSAGE_CACHE_SIZE,
         max_topic_cache_size: int = MAX_TOPIC_CACHE_SIZE,
-        storage_engine: Optional[Storage] = None,
-        client_platform: "enums.ClientPlatform" = enums.ClientPlatform.OTHER,
-        link_preview_options: Optional[LinkPreviewOptions] = None,
+        storage_engine: Storage | None = None,
+        client_platform: enums.ClientPlatform = enums.ClientPlatform.OTHER,
+        link_preview_options: LinkPreviewOptions | None = None,
         fetch_replies: bool = True,
         fetch_topics: bool = True,
         fetch_stories: bool = True,
         fetch_stickers: bool = True,
-        init_connection_params: Optional[Union[dict, "raw.base.JSONValue"]] = None,
-        connection_factory: Type[Connection] = Connection,
-        protocol_factory: Type[TCP] = TCPAbridged,
-        loop: Optional[asyncio.AbstractEventLoop] = None
+        init_connection_params: dict | raw.base.JSONValue | None = None,
+        connection_factory: type[Connection] = Connection,
+        protocol_factory: type[TCP] = TCPAbridged,
+        loop: asyncio.AbstractEventLoop | None = None
     ):
         super().__init__()
 
@@ -411,7 +414,7 @@ class Client(Methods):
 
         self.parser: Parser = Parser(self)
 
-        self.session: Optional[Session] = None
+        self.session: Session | None = None
 
         self.business_connections = {}
 
@@ -432,9 +435,9 @@ class Client(Methods):
         self.connect_handler = None
         self.disconnect_handler = None
 
-        self.me: Optional[User] = None
+        self.me: User | None = None
 
-        self.message_split_ranges: Optional[List["raw.base.MessageRange"]] = None
+        self.message_split_ranges: list[raw.base.MessageRange] | None = None
 
         self.message_cache = Cache(self.max_message_cache_size)
         self.topic_cache = Cache(self.max_topic_cache_size)
@@ -451,7 +454,7 @@ class Client(Methods):
         else:
             self.loop = None
 
-        self.__config: "raw.types.Config" = None
+        self.__config: raw.types.Config = None
 
     @property
     def loop(self) -> asyncio.AbstractEventLoop:
@@ -667,7 +670,7 @@ class Client(Methods):
 
         return signed_up
 
-    async def authorize_qr(self, except_ids: List[int] = []) -> "User":
+    async def authorize_qr(self, except_ids: list[int] = []) -> User:
         from qrcode import QRCode  # ty: ignore[unresolved-import] - optional, not a project dependency
 
         qr_login = QRLogin(self, except_ids)
@@ -740,7 +743,7 @@ class Client(Methods):
             else:
                 break
 
-    def set_parse_mode(self, parse_mode: Optional["enums.ParseMode"]):
+    def set_parse_mode(self, parse_mode: enums.ParseMode | None):
         """Set the parse mode to be used globally by the client.
 
         When setting the parse mode with this method, all other methods having a *parse_mode* parameter will follow the
@@ -778,7 +781,7 @@ class Client(Methods):
 
         self.parse_mode = parse_mode
 
-    async def fetch_peers(self, peers: List[Union["raw.base.User", "raw.base.Chat"]]) -> bool:
+    async def fetch_peers(self, peers: list[raw.base.User | raw.base.Chat]) -> bool:
         is_min = False
         parsed_peers = []
         parsed_usernames = []
@@ -1190,7 +1193,7 @@ class Client(Methods):
         file_size: int = 0,
         limit: int = 0,
         offset: int = 0,
-        progress: Optional[Callable] = None,
+        progress: Callable | None = None,
         progress_args: tuple = ()
     ) -> AsyncGenerator[bytes, None]:
         async with self.get_file_semaphore:
@@ -1384,15 +1387,15 @@ class Client(Methods):
 
     async def get_session(
         self,
-        dc_id: Optional[int] = None,
+        dc_id: int | None = None,
         is_media: bool = False,
         is_cdn: bool = False,
-        business_connection_id: Optional[str] = None,
+        business_connection_id: str | None = None,
         export_authorization: bool = True,
-        server_address: Optional[str] = None,
-        port: Optional[int] = None,
+        server_address: str | None = None,
+        port: int | None = None,
         temporary: bool = False
-    ) -> "Session":
+    ) -> Session:
         """Get existing session or create a new one.
 
         Parameters:
@@ -1511,11 +1514,11 @@ class Client(Methods):
 
     async def get_dc_option(
         self,
-        dc_id: Optional[int] = None,
+        dc_id: int | None = None,
         is_media: bool = False,
         is_cdn: bool = False,
         ipv6: bool = False
-    ) -> "raw.types.DcOption":
+    ) -> raw.types.DcOption:
         self.__config = await self.invoke(raw.functions.help.GetConfig())
 
         if dc_id is None:
@@ -1559,9 +1562,9 @@ class Client(Methods):
 
     async def set_dc(
         self,
-        dc_id: Optional[int] = None,
-        server_address: Optional[str] = None,
-        port: Optional[int] = None
+        dc_id: int | None = None,
+        server_address: str | None = None,
+        port: int | None = None
     ):
         """Set configuration for the specified datacenter.
 
@@ -1611,18 +1614,18 @@ class Client(Methods):
         self._server_time_offset = server_ts - time.time()
         log.info(f"Time synced: offset={self._server_time_offset:.3f}s, server_time={utils.timestamp_to_datetime(server_ts)}")
 
-    async def get_message_split_ranges(self) -> List["raw.base.MessageRange"]:
+    async def get_message_split_ranges(self) -> list[raw.base.MessageRange]:
         if self.message_split_ranges is None:
             self.message_split_ranges = await self.invoke(raw.functions.messages.GetSplitRanges())
         return self.message_split_ranges
 
-    def guess_mime_type(self, filename: Union[str, BytesIO]) -> Optional[str]:
+    def guess_mime_type(self, filename: str | BytesIO) -> str | None:
         if isinstance(filename, BytesIO):
             return self.mimetypes.guess_type(filename.name)[0]
 
         return self.mimetypes.guess_type(filename)[0]
 
-    def guess_extension(self, mime_type: str) -> Optional[str]:
+    def guess_extension(self, mime_type: str) -> str | None:
         return self.mimetypes.guess_extension(mime_type)
 
 

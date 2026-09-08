@@ -16,7 +16,7 @@
 #  You should have received a copy of the GNU Lesser General Public License
 #  along with Pyrogram.  If not, see <http://www.gnu.org/licenses/>.
 
-from typing import Optional
+from __future__ import annotations as _annotations
 
 from pyrogram import raw
 
@@ -46,11 +46,11 @@ class SwitchInlineQueryChosenChat(Object):
     def __init__(
         self,
         *,
-        query: Optional[str] = None,
-        allow_user_chats: Optional[bool] = None,
-        allow_bot_chats: Optional[bool] = None,
-        allow_group_chats: Optional[bool] = None,
-        allow_channel_chats: Optional[bool] = None,
+        query: str | None = None,
+        allow_user_chats: bool | None = None,
+        allow_bot_chats: bool | None = None,
+        allow_group_chats: bool | None = None,
+        allow_channel_chats: bool | None = None,
     ):
         super().__init__()
 
@@ -62,8 +62,8 @@ class SwitchInlineQueryChosenChat(Object):
 
     @staticmethod
     def _parse(
-        button_type: "raw.types.InlineButtonTypeSwitchInline",
-    ) -> Optional["SwitchInlineQueryChosenChat"]:
+        button_type: raw.types.InlineButtonTypeSwitchInline,
+    ) -> SwitchInlineQueryChosenChat | None:
         if not isinstance(button_type, raw.types.InlineButtonTypeSwitchInline):
             return None
 

@@ -16,7 +16,9 @@
 #  You should have received a copy of the GNU Lesser General Public License
 #  along with Pyrogram.  If not, see <http://www.gnu.org/licenses/>.
 
-from typing import AsyncGenerator
+from __future__ import annotations as _annotations
+
+from collections.abc import AsyncGenerator
 
 import pyrogram
 from pyrogram import raw
@@ -26,10 +28,10 @@ from pyrogram import utils
 
 class SearchPosts:
     async def search_posts(
-        self: "pyrogram.Client",
+        self: pyrogram.Client,
         hashtag: str,
         limit: int = 0,
-    ) -> AsyncGenerator["types.Message", None]:
+    ) -> AsyncGenerator[types.Message, None]:
         """Search posts globally by hashtag.
 
         If you want to get the posts count only, see :meth:`~pyrogram.Client.search_posts_count`.

@@ -16,8 +16,9 @@
 #  You should have received a copy of the GNU Lesser General Public License
 #  along with Pyrogram.  If not, see <http://www.gnu.org/licenses/>.
 
+from __future__ import annotations as _annotations
+
 from datetime import datetime
-from typing import Dict, Optional
 
 import pyrogram
 from pyrogram import raw, types, utils
@@ -77,22 +78,22 @@ class GroupCallMember(Object):
     def __init__(
         self,
         *,
-        client: Optional["pyrogram.Client"] = None,
-        chat: Optional["types.Chat"] = None,
-        date: Optional[datetime] = None,
-        active_date: Optional[datetime] = None,
-        volume: Optional[int] = None,
-        can_self_unmute: Optional[bool] = None,
-        is_muted: Optional[bool] = None,
-        is_left: Optional[bool] = None,
-        is_just_joined: Optional[bool] = None,
-        is_muted_by_you: Optional[bool] = None,
-        is_volume_by_admin: Optional[bool] = None,
-        is_self: Optional[bool] = None,
-        is_video_joined: Optional[bool] = None,
-        is_hand_raised: Optional[bool] = None,
-        is_video_enabled: Optional[bool] = None,
-        is_screen_sharing_enabled: Optional[bool] = None
+        client: pyrogram.Client | None = None,
+        chat: types.Chat | None = None,
+        date: datetime | None = None,
+        active_date: datetime | None = None,
+        volume: int | None = None,
+        can_self_unmute: bool | None = None,
+        is_muted: bool | None = None,
+        is_left: bool | None = None,
+        is_just_joined: bool | None = None,
+        is_muted_by_you: bool | None = None,
+        is_volume_by_admin: bool | None = None,
+        is_self: bool | None = None,
+        is_video_joined: bool | None = None,
+        is_hand_raised: bool | None = None,
+        is_video_enabled: bool | None = None,
+        is_screen_sharing_enabled: bool | None = None
     ):
         super().__init__(client)
 
@@ -114,11 +115,11 @@ class GroupCallMember(Object):
 
     @staticmethod
     async def _parse(
-        client: "pyrogram.Client",
-        member: "raw.types.GroupCallParticipant",
-        users: Dict[int, "raw.base.User"],
-        chats: Dict[int, "raw.base.Chat"]
-    ) -> "GroupCallMember":
+        client: pyrogram.Client,
+        member: raw.types.GroupCallParticipant,
+        users: dict[int, raw.base.User],
+        chats: dict[int, raw.base.Chat]
+    ) -> GroupCallMember:
         peer = member.peer
         peer_id = utils.get_raw_peer_id(peer)
 

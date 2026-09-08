@@ -15,7 +15,8 @@
 #
 #  You should have received a copy of the GNU Lesser General Public License
 #  along with Pyrogram.  If not, see <http://www.gnu.org/licenses/>.
-from typing import List, Optional
+
+from __future__ import annotations as _annotations
 
 from pyrogram import raw
 
@@ -38,9 +39,9 @@ class GiftResaleParameters(Object):
     def __init__(
         self,
         *,
-        star_count: Optional[int] = None,
-        toncoin_cent_count: Optional[int] = None,
-        toncoin_only: Optional[bool] = None
+        star_count: int | None = None,
+        toncoin_cent_count: int | None = None,
+        toncoin_only: bool | None = None
     ):
         super().__init__()
 
@@ -49,7 +50,7 @@ class GiftResaleParameters(Object):
         self.toncoin_only = toncoin_only
 
     @staticmethod
-    def _parse(resell_amount: List["raw.base.StarsAmount"], ton_only: bool) -> Optional["GiftResaleParameters"]:
+    def _parse(resell_amount: list[raw.base.StarsAmount], ton_only: bool) -> GiftResaleParameters | None:
         if not resell_amount:
             return None
 

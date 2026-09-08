@@ -16,20 +16,20 @@
 #  You should have received a copy of the GNU Lesser General Public License
 #  along with Pyrogram.  If not, see <http://www.gnu.org/licenses/>.
 
-from typing import List, Optional, Union
+from __future__ import annotations as _annotations
 
 import pyrogram
 from pyrogram import enums, raw, types
 
 class EditStoryPrivacy:
     async def edit_story_privacy(
-        self: "pyrogram.Client",
-        chat_id: Union[int, str],
+        self: pyrogram.Client,
+        chat_id: int | str,
         story_id: int,
-        privacy: "enums.StoriesPrivacyRules" = enums.StoriesPrivacyRules.PUBLIC,
-        allowed_users: Optional[List[Union[int, str]]] = None,
-        disallowed_users: Optional[List[Union[int, str]]] = None,
-    ) -> "types.Story":
+        privacy: enums.StoriesPrivacyRules = enums.StoriesPrivacyRules.PUBLIC,
+        allowed_users: list[int | str] | None = None,
+        disallowed_users: list[int | str] | None = None,
+    ) -> types.Story:
         """Edit the privacy of story.
 
         .. include:: /_includes/usable-by/users.rst

@@ -16,8 +16,10 @@
 #  You should have received a copy of the GNU Lesser General Public License
 #  along with Pyrogram.  If not, see <http://www.gnu.org/licenses/>.
 
+from __future__ import annotations as _annotations
+
 from io import BytesIO
-from typing import Any, List
+from typing import Any
 
 from .future_salt import FutureSalt
 from .primitives.int import Int, Long
@@ -31,13 +33,13 @@ class FutureSalts(TLObject):
 
     QUALNAME = "FutureSalts"
 
-    def __init__(self, req_msg_id: int, now: int, salts: List[FutureSalt]):
+    def __init__(self, req_msg_id: int, now: int, salts: list[FutureSalt]):
         self.req_msg_id = req_msg_id
         self.now = now
         self.salts = salts
 
     @staticmethod
-    def read(data: BytesIO, *args: Any) -> "FutureSalts":
+    def read(data: BytesIO, *args: Any) -> FutureSalts:
         req_msg_id = Long.read(data)
         now = Int.read(data)
 

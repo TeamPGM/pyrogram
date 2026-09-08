@@ -16,8 +16,9 @@
 #  You should have received a copy of the GNU Lesser General Public License
 #  along with Pyrogram.  If not, see <http://www.gnu.org/licenses/>.
 
+from __future__ import annotations as _annotations
+
 from datetime import datetime
-from typing import Optional
 
 from pyrogram import enums, types
 
@@ -46,11 +47,11 @@ class MessageOriginChannel(MessageOrigin):
     def __init__(
         self,
         *,
-        type: "enums.MessageOriginType" = enums.MessageOriginType.CHANNEL,
-        date: Optional[datetime] = None,
-        chat: Optional["types.Chat"] = None,
-        message_id: Optional[int] = None,
-        author_signature: Optional[str] = None
+        type: enums.MessageOriginType = enums.MessageOriginType.CHANNEL,
+        date: datetime | None = None,
+        chat: types.Chat | None = None,
+        message_id: int | None = None,
+        author_signature: str | None = None
     ):
         super().__init__(
             type=type,

@@ -16,7 +16,7 @@
 #  You should have received a copy of the GNU Lesser General Public License
 #  along with Pyrogram.  If not, see <http://www.gnu.org/licenses/>.
 
-from typing import Optional, Union
+from __future__ import annotations as _annotations
 
 import pyrogram
 from pyrogram import raw
@@ -25,10 +25,10 @@ from pyrogram import types
 
 class RevokeChatInviteLink:
     async def revoke_chat_invite_link(
-        self: "pyrogram.Client",
-        chat_id: Union[int, str],
+        self: pyrogram.Client,
+        chat_id: int | str,
         invite_link: str,
-    ) -> Optional["types.ChatInviteLink"]:
+    ) -> types.ChatInviteLink | None:
         """Revoke a previously created invite link.
 
         If the primary link is revoked, a new link is automatically generated.

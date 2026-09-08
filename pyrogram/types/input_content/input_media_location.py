@@ -16,7 +16,7 @@
 #  You should have received a copy of the GNU Lesser General Public License
 #  along with Pyrogram.  If not, see <http://www.gnu.org/licenses/>.
 
-from typing import Optional, Union
+from __future__ import annotations as _annotations
 
 from pyrogram import raw
 
@@ -51,13 +51,13 @@ class InputMediaLocation(InputMedia):
 
     def __init__(
         self,
-        longitude: Optional[float] = None,
-        latitude: Optional[float] = None,
-        accuracy_radius: Optional[int] = None,
-        address: Optional[str] = None,
-        live_period: Optional[int] = None,
-        heading: Optional[int] = None,
-        proximity_alert_radius: Optional[int] = None,
+        longitude: float | None = None,
+        latitude: float | None = None,
+        accuracy_radius: int | None = None,
+        address: str | None = None,
+        live_period: int | None = None,
+        heading: int | None = None,
+        proximity_alert_radius: int | None = None,
     ):
         super().__init__()
 
@@ -71,7 +71,7 @@ class InputMediaLocation(InputMedia):
 
     async def write(
         self, **kwargs
-    ) -> Union["raw.types.InputMediaGeoPoint", "raw.types.InputMediaGeoLive"]:
+    ) -> raw.types.InputMediaGeoPoint | raw.types.InputMediaGeoLive:
         if self.live_period is not None:
             return raw.types.InputMediaGeoLive(
                 geo_point=raw.types.InputGeoPoint(

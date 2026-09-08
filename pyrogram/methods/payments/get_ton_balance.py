@@ -16,7 +16,7 @@
 #  You should have received a copy of the GNU Lesser General Public License
 #  along with Pyrogram.  If not, see <http://www.gnu.org/licenses/>.
 
-from typing import Optional, Union
+from __future__ import annotations as _annotations
 
 import pyrogram
 from pyrogram import raw
@@ -24,7 +24,7 @@ from pyrogram import raw
 
 class GetTonBalance:
     async def get_ton_balance(
-        self: "pyrogram.Client"
+        self: pyrogram.Client
     ) -> float:
         """Get the current TON balance of the current account.
 

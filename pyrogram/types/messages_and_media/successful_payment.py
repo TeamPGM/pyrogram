@@ -16,8 +16,9 @@
 #  You should have received a copy of the GNU Lesser General Public License
 #  along with Pyrogram.  If not, see <http://www.gnu.org/licenses/>.
 
+from __future__ import annotations as _annotations
+
 from datetime import datetime
-from typing import Optional, Union
 
 from pyrogram import raw, types, utils
 
@@ -69,12 +70,12 @@ class SuccessfulPayment(Object):
         invoice_payload: str,
         telegram_payment_charge_id: str,
         provider_payment_charge_id: str,
-        shipping_option_id: Optional[str] = None,
-        order_info: Optional["types.OrderInfo"] = None,
-        is_recurring: Optional[bool] = None,
-        is_first_recurring: Optional[bool] = None,
-        invoice_slug: Optional[str] = None,
-        subscription_expiration_date: Optional[datetime] = None,
+        shipping_option_id: str | None = None,
+        order_info: types.OrderInfo | None = None,
+        is_recurring: bool | None = None,
+        is_first_recurring: bool | None = None,
+        invoice_slug: str | None = None,
+        subscription_expiration_date: datetime | None = None,
     ):
         super().__init__()
 
@@ -92,10 +93,7 @@ class SuccessfulPayment(Object):
 
     @staticmethod
     def _parse(
-        payment: Union[
-            "raw.types.MessageActionPaymentSent",
-            "raw.types.MessageActionPaymentSentMe"
-        ]) -> "SuccessfulPayment":
+        payment: raw.types.MessageActionPaymentSent | raw.types.MessageActionPaymentSentMe) -> SuccessfulPayment:
         invoice_payload = None
         telegram_payment_charge_id = None
         provider_payment_charge_id = None

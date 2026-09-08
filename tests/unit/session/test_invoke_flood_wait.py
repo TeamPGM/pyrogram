@@ -16,6 +16,8 @@
 #  You should have received a copy of the GNU Lesser General Public License
 #  along with Pyrogram.  If not, see <http://www.gnu.org/licenses/>.
 
+from __future__ import annotations as _annotations
+
 import asyncio
 
 import pytest
@@ -49,7 +51,7 @@ class _Query:
 
 @pytest.mark.asyncio
 async def test_flood_wait_with_no_parsed_seconds_reraises() -> None:
-    # FloodWait.seconds is Optional[int]: when Telegram's message doesn't match the
+    # `FloodWait.seconds` is `int | None`: when Telegram's message doesn't match the
     #  expected pattern, `amount` ends up None, and `amount > sleep_threshold >= 0`
     #  raised TypeError instead of the intended FloodWait re-raise.
     session = _Session(seconds=None)

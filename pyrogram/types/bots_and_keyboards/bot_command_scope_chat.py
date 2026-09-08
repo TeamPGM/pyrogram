@@ -16,7 +16,7 @@
 #  You should have received a copy of the GNU Lesser General Public License
 #  along with Pyrogram.  If not, see <http://www.gnu.org/licenses/>.
 
-from typing import Union
+from __future__ import annotations as _annotations
 
 import pyrogram
 from pyrogram import raw
@@ -32,12 +32,12 @@ class BotCommandScopeChat(BotCommandScope):
             @supergroupusername).
     """
 
-    def __init__(self, chat_id: Union[int, str]):
+    def __init__(self, chat_id: int | str):
         super().__init__("chat")
 
         self.chat_id = chat_id
 
-    async def write(self, client: "pyrogram.Client") -> "raw.base.BotCommandScope":
+    async def write(self, client: pyrogram.Client) -> raw.base.BotCommandScope:
         return raw.types.BotCommandScopePeer(
             peer=await client.resolve_peer(self.chat_id)
         )

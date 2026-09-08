@@ -16,8 +16,10 @@
 #  You should have received a copy of the GNU Lesser General Public License
 #  along with Pyrogram.  If not, see <http://www.gnu.org/licenses/>.
 
+from __future__ import annotations as _annotations
+
 import inspect
-from typing import Callable, Optional
+from collections.abc import Callable
 
 import pyrogram
 from pyrogram.filters import Filter
@@ -25,11 +27,11 @@ from pyrogram.types import Update
 
 
 class Handler:
-    def __init__(self, callback: Callable, filters: Optional[Filter] = None):
+    def __init__(self, callback: Callable, filters: Filter | None = None):
         self.callback = callback
         self.filters = filters
 
-    async def check(self, client: "pyrogram.Client", update: Update):
+    async def check(self, client: pyrogram.Client, update: Update):
         if callable(self.filters):
             if inspect.iscoroutinefunction(self.filters.__call__):
                 return await self.filters(client, update)

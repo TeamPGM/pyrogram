@@ -16,7 +16,7 @@
 #  You should have received a copy of the GNU Lesser General Public License
 #  along with Pyrogram.  If not, see <http://www.gnu.org/licenses/>.
 
-from typing import List, Dict
+from __future__ import annotations as _annotations
 
 from pyrogram import raw, types
 from ..object import Object
@@ -33,7 +33,7 @@ class VideoChatMembersInvited(Object):
 
     def __init__(
         self, *,
-        users: List["types.User"]
+        users: list[types.User]
     ):
         super().__init__()
 
@@ -42,9 +42,9 @@ class VideoChatMembersInvited(Object):
     @staticmethod
     async def _parse(
         client,
-        action: "raw.types.MessageActionInviteToGroupCall",
-        users: Dict[int, "raw.types.User"]
-    ) -> "VideoChatMembersInvited":
+        action: raw.types.MessageActionInviteToGroupCall,
+        users: dict[int, raw.types.User]
+    ) -> VideoChatMembersInvited:
         users = [await types.User._parse(client, users[i]) for i in action.users]
 
         return VideoChatMembersInvited(users=users)

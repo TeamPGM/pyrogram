@@ -16,8 +16,9 @@
 #  You should have received a copy of the GNU Lesser General Public License
 #  along with Pyrogram.  If not, see <http://www.gnu.org/licenses/>.
 
+from __future__ import annotations as _annotations
+
 import random
-from typing import Optional
 
 from pyrogram import raw, types, utils
 from ..object import Object
@@ -70,17 +71,17 @@ class PremiumGiftCode(Object):
     def __init__(
         self,
         *,
-        creator: Optional["types.Chat"] = None,
-        text: Optional["types.FormattedText"] = None,
-        is_from_giveaway: Optional[bool] = None,
-        is_unclaimed: Optional[bool] = None,
-        currency: Optional[str] = None,
-        amount: Optional[int] = None,
-        cryptocurrency: Optional[str] = None,
-        cryptocurrency_amount: Optional[int] = None,
+        creator: types.Chat | None = None,
+        text: types.FormattedText | None = None,
+        is_from_giveaway: bool | None = None,
+        is_unclaimed: bool | None = None,
+        currency: str | None = None,
+        amount: int | None = None,
+        cryptocurrency: str | None = None,
+        cryptocurrency_amount: int | None = None,
         month_count: int,
         day_count: int,
-        sticker: Optional["types.Sticker"] = None,
+        sticker: types.Sticker | None = None,
         code: str
     ):
         super().__init__()
@@ -99,7 +100,7 @@ class PremiumGiftCode(Object):
         self.code = code
 
     @staticmethod
-    async def _parse(client, giftcode: "raw.types.MessageActionGiftCode", users, chats):
+    async def _parse(client, giftcode: raw.types.MessageActionGiftCode, users, chats):
         raw_peer_id = utils.get_raw_peer_id(giftcode.boost_peer)
 
         raw_stickers = await client.invoke(

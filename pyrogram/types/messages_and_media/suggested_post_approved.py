@@ -16,8 +16,9 @@
 #  You should have received a copy of the GNU Lesser General Public License
 #  along with Pyrogram.  If not, see <http://www.gnu.org/licenses/>.
 
+from __future__ import annotations as _annotations
+
 from datetime import datetime
-from typing import Optional
 
 import pyrogram
 from pyrogram import raw, types, utils
@@ -44,10 +45,10 @@ class SuggestedPostApproved(Object):
     """
     def __init__(
         self, *,
-        suggested_post_message_id: Optional[int] = None,
-        suggested_post_message: Optional["types.Message"] = None,
-        price: Optional["types.SuggestedPostPrice"] = None,
-        send_date: Optional[datetime] = None
+        suggested_post_message_id: int | None = None,
+        suggested_post_message: types.Message | None = None,
+        price: types.SuggestedPostPrice | None = None,
+        send_date: datetime | None = None
     ):
         super().__init__()
 
@@ -58,10 +59,10 @@ class SuggestedPostApproved(Object):
 
     @staticmethod
     async def _parse(
-        client: "pyrogram.Client",
-        message: "raw.types.MessageService"
-    ) -> "SuggestedPostApproved":
-        action: "raw.types.MessageActionSuggestedPostApproval" = message.action
+        client: pyrogram.Client,
+        message: raw.types.MessageService
+    ) -> SuggestedPostApproved:
+        action: raw.types.MessageActionSuggestedPostApproval = message.action
 
         if not isinstance(action, raw.types.MessageActionSuggestedPostApproval):
             return None

@@ -16,9 +16,10 @@
 #  You should have received a copy of the GNU Lesser General Public License
 #  along with Pyrogram.  If not, see <http://www.gnu.org/licenses/>.
 
+from __future__ import annotations as _annotations
+
 import inspect
 from datetime import datetime
-from typing import Optional
 
 import pytest
 
@@ -317,8 +318,8 @@ def test_callback_query_chat_stays_out_of_the_serialized_form():
 
 def a_reaction(
     *,
-    user: Optional[User] = None,
-    actor_chat: Optional[Chat] = None,
+    user: User | None = None,
+    actor_chat: Chat | None = None,
 ) -> types.MessageReactionUpdated:
     return types.MessageReactionUpdated(
         chat=CHANNEL,

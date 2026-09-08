@@ -48,7 +48,7 @@ but its operator has. Fill in .env.test from .env.test.example, then::
     make test-integration
 """
 
-from typing import Type
+from __future__ import annotations as _annotations
 
 from pyrogram import Client
 from pyrogram.connection.proxy import WebProxy, normalize_proxy
@@ -66,7 +66,7 @@ from tests.integrations.connection.transport.tcp.conftest import (
 async def test_req_pq_multi_round_trip_through_live_relay(
     relay_config: RelayConfig,
     relay_proxy: WebProxy,
-    relay_transport_class: Type[TCP],
+    relay_transport_class: type[TCP],
 ) -> None:
     transport = relay_transport_class(ipv6=False, proxy=relay_proxy, dc_id=relay_config.dc_id)
 
@@ -79,7 +79,7 @@ async def test_req_pq_multi_round_trip_through_live_relay(
 
 async def test_string_link_form_connects_through_live_relay(
     relay_config: RelayConfig,
-    relay_transport_class: Type[TCP],
+    relay_transport_class: type[TCP],
 ) -> None:
     """Covers the tg://webproxy?server=...&secret=... / t.me/webproxy string
     form specifically (normalize_proxy's link parsing) - the other tests here
