@@ -20,12 +20,15 @@ from __future__ import annotations as _annotations
 
 import os
 from datetime import datetime
-from typing import BinaryIO, Literal, overload
-from collections.abc import Callable
+from pathlib import Path
+from typing import TYPE_CHECKING, BinaryIO, Literal, overload
 
 import pyrogram
 from pyrogram import types, utils
-from pyrogram.file_id import FileId, FileType, PHOTO_TYPES
+from pyrogram.file_id import PHOTO_TYPES, FileId, FileType
+
+if TYPE_CHECKING:
+    from collections.abc import Callable
 
 DEFAULT_DOWNLOAD_DIR = "downloads/"
 
@@ -50,6 +53,7 @@ class DownloadMedia:
             | types.Thumbnail
             | types.StrippedThumbnail
             | types.PaidMediaPreview
+            | types.ChatPhoto
         ),
         file_name: str = DEFAULT_DOWNLOAD_DIR,
         in_memory: Literal[False] = False,
@@ -77,6 +81,7 @@ class DownloadMedia:
             | types.Thumbnail
             | types.StrippedThumbnail
             | types.PaidMediaPreview
+            | types.ChatPhoto
         ),
         file_name: str = DEFAULT_DOWNLOAD_DIR,
         in_memory: Literal[True] = True,
@@ -104,6 +109,7 @@ class DownloadMedia:
             | types.Thumbnail
             | types.StrippedThumbnail
             | types.PaidMediaPreview
+            | types.ChatPhoto
         ),
         file_name: str = DEFAULT_DOWNLOAD_DIR,
         *,
@@ -132,6 +138,7 @@ class DownloadMedia:
             | types.Thumbnail
             | types.StrippedThumbnail
             | types.PaidMediaPreview
+            | types.ChatPhoto
         ),
         file_name: str,
         in_memory: bool,
@@ -159,6 +166,7 @@ class DownloadMedia:
             | types.Thumbnail
             | types.StrippedThumbnail
             | types.PaidMediaPreview
+            | types.ChatPhoto
         ),
         file_name: str = DEFAULT_DOWNLOAD_DIR,
         in_memory: bool = False,
@@ -185,6 +193,7 @@ class DownloadMedia:
             | types.Thumbnail
             | types.StrippedThumbnail
             | types.PaidMediaPreview
+            | types.ChatPhoto
         ),
         file_name: str = DEFAULT_DOWNLOAD_DIR,
         in_memory: bool = False,
@@ -197,7 +206,7 @@ class DownloadMedia:
         .. include:: /_includes/usable-by/users-bots.rst
 
         Parameters:
-            message (``str`` | :obj:`~pyrogram.types.Message` | :obj:`~pyrogram.types.Story` | :obj:`~pyrogram.types.Audio` | :obj:`~pyrogram.types.Document` | :obj:`~pyrogram.types.Photo` | :obj:`~pyrogram.types.Sticker` | :obj:`~pyrogram.types.Animation` | :obj:`~pyrogram.types.Video` | :obj:`~pyrogram.types.Voice` | :obj:`~pyrogram.types.VideoNote` | :obj:`~pyrogram.types.PaidMediaInfo` | :obj:`~pyrogram.types.Thumbnail` | :obj:`~pyrogram.types.StrippedThumbnail` | :obj:`~pyrogram.types.PaidMediaPreview`):
+            message (``str`` | :obj:`~pyrogram.types.Message` | :obj:`~pyrogram.types.Story` | :obj:`~pyrogram.types.Audio` | :obj:`~pyrogram.types.Document` | :obj:`~pyrogram.types.Photo` | :obj:`~pyrogram.types.Sticker` | :obj:`~pyrogram.types.Animation` | :obj:`~pyrogram.types.Video` | :obj:`~pyrogram.types.Voice` | :obj:`~pyrogram.types.VideoNote` | :obj:`~pyrogram.types.PaidMediaInfo` | :obj:`~pyrogram.types.Thumbnail` | :obj:`~pyrogram.types.StrippedThumbnail` | :obj:`~pyrogram.types.PaidMediaPreview` | :obj:`~pyrogram.types.ChatPhoto`):
                 Pass a object containing the media, the media itself (message.audio, message.video, ...) or a file id
                 as string.
 
@@ -291,6 +300,7 @@ class DownloadMedia:
         )
 
         media = None
+        paid_media = None
 
         if isinstance(message, types.Message) and message.media:
             story = message.story or message.reply_to_story
@@ -300,22 +310,8 @@ class DownloadMedia:
                     if isinstance(message.paid_media.media[0], types.PaidMediaPreview):
                         break
 
-                    results = []
-
-                    for item in message.paid_media.media:
-                        result = await self.download_media(
-                            item,
-                            file_name=file_name,
-                            in_memory=in_memory,
-                            block=block,
-                            progress=progress,
-                            progress_args=progress_args,
-                        )
-
-                        if result:
-                            results.append(result)
-
-                    return results or None
+                    paid_media = message.paid_media.media
+                    break
 
                 if story:
                     if self.me and self.me.is_bot:
@@ -335,22 +331,7 @@ class DownloadMedia:
         elif isinstance(message, types.PaidMediaInfo) and not isinstance(
             message.media[0], types.PaidMediaPreview
         ):
-            results = []
-
-            for item in message.media:
-                result = await self.download_media(
-                    item,
-                    file_name=file_name,
-                    in_memory=in_memory,
-                    block=block,
-                    progress=progress,
-                    progress_args=progress_args,
-                )
-
-                if result:
-                    results.append(result)
-
-            return results or None
+            paid_media = message.media
         elif isinstance(message, (types.StrippedThumbnail, types.PaidMediaPreview)):
             data = (
                 message.data
@@ -366,27 +347,45 @@ class DownloadMedia:
             directory, file_name = os.path.split(file_name)
             file_name = file_name or thumb.name
 
-            if not os.path.isabs(directory):
+            if not Path(directory).is_absolute():
                 directory = self.workdir / (directory or DEFAULT_DOWNLOAD_DIR)
 
-            os.makedirs(directory, exist_ok=True) if not in_memory else None
+            if not in_memory:
+                Path(directory).mkdir(parents=True, exist_ok=True)
 
-            with open(os.path.join(directory, file_name), "wb") as file:
+            with (Path(directory) / file_name).open("wb") as file:
                 file.write(thumb.getbuffer())
 
-            return os.path.join(directory, file_name)
-        elif isinstance(message, str):
+            return str(Path(directory) / file_name)
+        elif isinstance(message, types.ChatPhoto):
+            media = message.animation.animation if message.animation else message.big_file_id
+        elif isinstance(message, str):  # noqa: SIM114
             media = message
         elif hasattr(message, "file_id"):
             media = message
 
+        if paid_media is not None:
+            results = []
+
+            for item in paid_media:
+                result = await self.download_media(
+                    item,
+                    file_name=file_name,
+                    in_memory=in_memory,
+                    block=block,
+                    progress=progress,
+                    progress_args=progress_args,
+                )
+
+                if result:
+                    results.append(result)
+
+            return results or None
+
         if not media:
             raise ValueError("This message doesn't contain any downloadable media")
 
-        if isinstance(media, str):
-            file_id_str = media
-        else:
-            file_id_str = media.file_id
+        file_id_str = media if isinstance(media, str) else media.file_id
 
         file_id_obj = FileId.decode(file_id_str)
 
@@ -399,11 +398,13 @@ class DownloadMedia:
         directory, file_name = os.path.split(file_name)
         file_name = file_name or media_file_name or ""
 
-        if not os.path.isabs(directory):
+        if not Path(directory).is_absolute():
             directory = self.workdir / (directory or DEFAULT_DOWNLOAD_DIR)
 
         if not file_name:
             guessed_extension = self.guess_extension(mime_type)
+
+            extension = ""
 
             if file_type in PHOTO_TYPES:
                 extension = ".jpg"
@@ -417,8 +418,6 @@ class DownloadMedia:
                 extension = guessed_extension or ".webp"
             elif file_type == FileType.AUDIO:
                 extension = guessed_extension or ".mp3"
-            else:
-                extension = ".unknown"
 
             file_name = "{}_{}_{}{}".format(
                 FileType(file_id_obj.file_type).name.lower(),
@@ -433,5 +432,5 @@ class DownloadMedia:
 
         if block:
             return await downloader
-        else:
-            self.loop.create_task(downloader)
+
+        self.loop.create_task(downloader)
