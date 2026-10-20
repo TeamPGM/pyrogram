@@ -29,7 +29,7 @@ from typing import TYPE_CHECKING, Any
 from pyrogram import raw
 
 from .. import utils
-from .storage import Storage, UpdateState
+from .storage import MISSING, Storage, UpdateState
 
 if TYPE_CHECKING:
     from collections.abc import Iterable
@@ -460,40 +460,37 @@ class SQLiteStorage(Storage):
         with self.conn:
             self.conn.execute(f"UPDATE {table} SET {attr} = ?", (value,))
 
-    async def _accessor(self, table: str, attr: str, value: Any = object):
+    async def _accessor(self, table: str, attr: str, value: Any = MISSING):
         return (
-            await self._get(table, attr) if value is object else await self._set(table, attr, value)
+            await self._get(table, attr) if value is MISSING else await self._set(table, attr, value)
         )
 
-    # `object` (the class, not an instance) is the sentinel for "no value passed"
-    #  (read the column instead of writing to it), so every accessor's parameter type
-    #  has to include it alongside the column's real type.
-    async def dc_id(self, value: int | None | type[object] = object) -> int | None:
+    async def dc_id(self, value: int | None | type[object] = MISSING) -> int | None:
         return await self._accessor("sessions", "dc_id", value)
 
-    async def server_address(self, value: str | None | type[object] = object) -> str | None:
+    async def server_address(self, value: str | None | type[object] = MISSING) -> str | None:
         return await self._accessor("sessions", "server_address", value)
 
-    async def port(self, value: int | None | type[object] = object) -> int | None:
+    async def port(self, value: int | None | type[object] = MISSING) -> int | None:
         return await self._accessor("sessions", "port", value)
 
-    async def api_id(self, value: int | None | type[object] = object) -> int | None:
+    async def api_id(self, value: int | None | type[object] = MISSING) -> int | None:
         return await self._accessor("sessions", "api_id", value)
 
-    async def test_mode(self, value: bool | None | type[object] = object) -> bool | None:
+    async def test_mode(self, value: bool | None | type[object] = MISSING) -> bool | None:
         return await self._accessor("sessions", "test_mode", value)
 
-    async def auth_key(self, value: bytes | None | type[object] = object) -> bytes | None:
+    async def auth_key(self, value: bytes | None | type[object] = MISSING) -> bytes | None:
         return await self._accessor("sessions", "auth_key", value)
 
-    async def date(self, value: int | None | type[object] = object) -> int | None:
+    async def date(self, value: int | None | type[object] = MISSING) -> int | None:
         return await self._accessor("sessions", "date", value)
 
-    async def user_id(self, value: int | None | type[object] = object) -> int | None:
+    async def user_id(self, value: int | None | type[object] = MISSING) -> int | None:
         return await self._accessor("sessions", "user_id", value)
 
-    async def is_bot(self, value: bool | None | type[object] = object) -> bool | None:
+    async def is_bot(self, value: bool | None | type[object] = MISSING) -> bool | None:
         return await self._accessor("sessions", "is_bot", value)
 
-    async def version(self, value: int | None | type[object] = object) -> int | None:
+    async def version(self, value: int | None | type[object] = MISSING) -> int | None:
         return await self._accessor("version", "number", value)
