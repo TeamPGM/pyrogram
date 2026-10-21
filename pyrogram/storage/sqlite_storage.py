@@ -462,7 +462,9 @@ class SQLiteStorage(Storage):
 
     async def _accessor(self, table: str, attr: str, value: Any = MISSING):
         return (
-            await self._get(table, attr) if value is MISSING else await self._set(table, attr, value)
+            await self._get(table, attr)
+            if value is MISSING
+            else await self._set(table, attr, value)
         )
 
     async def dc_id(self, value: int | None | type[object] = MISSING) -> int | None:
